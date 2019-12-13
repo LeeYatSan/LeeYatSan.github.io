@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Dynamic_Programming - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="近期在刷LeetCode算法时遇到几题动态规划(DP, Dynamic Programming)题型，由于先前没有系统学习算法相关知识，导致做题时比较迷茫、吃力。因此，借此机会，在这简要总结一下现阶段我所学习的动态规划相关知识。算法新手，如有纰漏，欢迎指正🙏">
+<meta name="keywords" content="Algorithm,Java,Dynamic_Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dynamic_Programming">
+<meta property="og:url" content="https://leeyatsan.github.io/2019/02/23/Dynamic-Programming/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="近期在刷LeetCode算法时遇到几题动态规划(DP, Dynamic Programming)题型，由于先前没有系统学习算法相关知识，导致做题时比较迷茫、吃力。因此，借此机会，在这简要总结一下现阶段我所学习的动态规划相关知识。算法新手，如有纰漏，欢迎指正🙏">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://leeyatsan.github.io/images/og_image.png">
+<meta property="og:updated_time" content="2019-12-12T03:48:02.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dynamic_Programming">
+<meta name="twitter:description" content="近期在刷LeetCode算法时遇到几题动态规划(DP, Dynamic Programming)题型，由于先前没有系统学习算法相关知识，导致做题时比较迷茫、吃力。因此，借此机会，在这简要总结一下现阶段我所学习的动态规划相关知识。算法新手，如有纰漏，欢迎指正🙏">
+<meta name="twitter:image" content="https://leeyatsan.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Dynamic_Programming" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>Dynamic_Programming
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2019-02-23T10:18:08.981Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-02-23</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-12T03:48:02.635Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-12</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Algorithm/">Algorithm</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1260 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>近期在刷<a href="https://leetcode.com/" target="_blank" rel="noopener">LeetCode</a>算法时遇到几题<strong>动态规划(DP, Dynamic Programming)</strong>题型，由于先前没有系统学习算法相关知识，导致做题时比较迷茫、吃力。因此，借此机会，在这简要总结一下现阶段我所学习的动态规划相关知识。算法新手，如有纰漏，欢迎指正🙏<br><img src="https://he-s3.s3.amazonaws.com/media/uploads/6b68f98.png" alt="Dynamic Programming"><br><a id="more"></a></p>
+<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><h2 id="什么是动态规划"><a href="#什么是动态规划" class="headerlink" title="什么是动态规划"></a>什么是动态规划</h2><p>我们首先来看一段对话</p>
+<blockquote>
+<p>A: Writes down “1+1+1+1+1+1+1+1 =” on a sheet of paper.<br>  B: “What’s that equal to?”<br>  A: Counting “Eight!”<br>  B: Writes down another “1+” on the left.<br>  A: “What about that?”<br>  B: “Nine!” “ How’d you know it was nine so fast?”<br>  A: “You just added one more!”<br>  B: “So you didn’t need to recount because you remembered there were eight! Dynamic Programming is just a fancy way to say remembering stuff to save time later!”  </p>
+</blockquote>
+<p>结合这段对话以及上面本文的主题封面图，可以得出动态规划的核心思想——记住已经解决的子问题的的结果。</p>
+<h2 id="动态规划的原理"><a href="#动态规划的原理" class="headerlink" title="动态规划的原理"></a>动态规划的原理</h2><blockquote>
+<p>The core idea of Dynamic Programming is to avoid repeated work by remembering partial results and this concept finds it application in a lot of real life situations.  </p>
+</blockquote>
+<p>动态规划的核心思想，就是记住部分结果，并且在将来应用它们。为了达到此目的，动态规划以空间换取时间，通常使用一个数组记住子问题的结果，并在将来调用它们。<br>值得注意的是，动态规划问题往往可以使用递归的方式进行解决，但单纯的直接递归会存在一个严重的问题：重复计算过多，耗时过大。我们以经典的<a href="https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97" target="_blank" rel="noopener">Fibonacci numbers</a>问题为例，来解释一下动态规划与直接递归的不同。</p>
+<blockquote>
+<p>Fibonacci numbers计算方法：第n项的值为其前两项的值之和<br>Fibonacci (n) = 1; if n = 0<br>Fibonacci (n) = 1; if n = 1<br>Fibonacci (n) = Fibonacci(n-1) + Fibonacci(n-2)<br>由此算法计算出的序列为：1, 1, 2, 3, 5, 8, 13, 21…   </p>
+</blockquote>
+<p>我们首先来看看Fibonacci numbers问题的分解图：<br><img src="http://ugweb.cs.ualberta.ca/~c274/web/ConcreteComputing/image/fib_tree.png" alt="Fibonacci numbers ing"><br>下面是本问题分别使用直接纯递归算法和使用动态规划算法的代码：<br><strong>直接纯递归</strong><br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int fib (int n) &#123;</span><br><span class="line">      if (n &lt; 2)</span><br><span class="line">          return 1;</span><br><span class="line">      return fib(n-1) + fib(n-2);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>动态规划</strong><br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void fib () &#123;</span><br><span class="line">        fibresult[0] = 1;</span><br><span class="line">        fibresult[1] = 1;</span><br><span class="line">        for (int i = 2; i&lt;n; i++)</span><br><span class="line">           fibresult[i] = fibresult[i-1] + fibresult[i-2];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>由上述问题分解图我们可以看出，由于存在大量的重复计算（例如上图中fib(2)被计算了5次），浪费了大量的时间。因此，直接纯递归算法的效率是极低的。而使用动态规划算法，则避免了重复计算，节约了大量的时间，显著提升了算法的效率。因此我们可以得出推论：动态规划问题避免了直接纯递归算法的重复计算问题，减少了运算时间，提升了算法效率。</p>
+<h1 id="动态规划的两种解决形式"><a href="#动态规划的两种解决形式" class="headerlink" title="动态规划的两种解决形式"></a>动态规划的两种解决形式</h1><p>动态规划主要有两种实现形式：自顶向下的备忘录法和自底向上法。但是由于自顶向下的备忘录法仍保留了递归运算，而递归运算会产生额外的开销，因此这种方法没有自底向上法高效。</p>
+<h2 id="自顶向下的备忘录法"><a href="#自顶向下的备忘录法" class="headerlink" title="自顶向下的备忘录法"></a>自顶向下的备忘录法</h2><p>这种方法比较容易理解，是直接纯递归算法的改进版本：创建一个数组，用于记录计算结果值。初始时，该数组所有元素为-1（这个没有规定，可以自定其他数值），然后进行递归计算。每一次递归时，首先在该数组中查找是否存在对应的值，若果存在对应的值（不为-1），则直接调用之即可，无须计算；若不存在对应的值（数组该项为-1），则计算该值，并将计算结果存入数组中，以便将来使用。<br>在这，依旧以Fibonacci numbers问题为例，给出其以自顶向下的备忘录法的实现代码：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public static int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">        if(n&lt;=0)</span><br><span class="line">            return n;</span><br><span class="line">        int []Memo=new int[n+1];        </span><br><span class="line">        for(int i=0;i&lt;=n;i++)</span><br><span class="line">            Memo[i]=-1;</span><br><span class="line">        return fib(n, Memo);</span><br><span class="line">    &#125;</span><br><span class="line">    public static int fib(int n,int []Memo)</span><br><span class="line">    &#123;</span><br><span class="line">        if(Memo[n]!=-1)</span><br><span class="line">            return Memo[n];</span><br><span class="line">    //如果已经求出了fib（n）的值直接返回，否则将求出的值保存在Memo备忘录中。               </span><br><span class="line">        if(n&lt;=2)</span><br><span class="line">            Memo[n]=1;</span><br><span class="line">        else Memo[n]=fib( n-1,Memo)+fib(n-2,Memo);  </span><br><span class="line">        return Memo[n];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="自底向上法"><a href="#自底向上法" class="headerlink" title="自底向上法"></a>自底向上法</h2><p>自顶向下的备忘录法仍然使用了递归解法，就意味每次计算到对应子问题时还需查找数组看判断是否已经计算过，这就意味着存在额外开销。那么，我们为什么不能直接从子问题出发，先计算子问题，再计算其上一级问题呢？自底向上法就利用了这种思想。自底向上方法也是利用数组保存了先计算的值，为后面的调用服务。<br>在这，依旧以Fibonacci numbers问题为例，给出其以自顶向下的备忘录法的实现代码：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public static int fib(int n)</span><br><span class="line">    &#123;</span><br><span class="line">        if(n&lt;=1)</span><br><span class="line">            return n;</span><br><span class="line"></span><br><span class="line">        int Memo_i_2=0;</span><br><span class="line">        int Memo_i_1=1;</span><br><span class="line">        int Memo_i=1;</span><br><span class="line">        for(int i=2;i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            Memo_i=Memo_i_2+Memo_i_1;</span><br><span class="line">            Memo_i_2=Memo_i_1;</span><br><span class="line">            Memo_i_1=Memo_i;</span><br><span class="line">        &#125;       </span><br><span class="line">        return Memo_i;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="动态规划适用情况"><a href="#动态规划适用情况" class="headerlink" title="动态规划适用情况"></a>动态规划适用情况</h1><p>那么，我们什么时候会用到动态规划呢？总的来说，在遇到以下两种问题时，可以使用动态规划算法。</p>
+<h2 id="最优子结构"><a href="#最优子结构" class="headerlink" title="最优子结构"></a>最优子结构</h2><p>用动态规划求解最优化问题的第一步就是刻画最优解的结构，如果一个问题的解结构包含其子问题的最优解，就称此问题具有最优子结构性质。因此，某个问题是否适合应用动态规划算法，它是否具有最优子结构性质是一个很好的线索。使用动态规划算法时，用子问题的最优解来构造原问题的最优解。因此必须考查最优解中用到的所有子问题。  </p>
+<h2 id="重叠子问题"><a href="#重叠子问题" class="headerlink" title="重叠子问题"></a>重叠子问题</h2><p>如在Fibonacci numbers问题中，如fib（2）被调用了5次等，如果一个问题中存在大量重复的子问题时，即递归算法反复求解相同的子问题，就称为具有重叠子问题（overlapping subproblems）性质。在动态规划算法中使用数组来保存子问题的解，这样子问题多次求解的时候可以直接查表不用调用函数递归。</p>
+<h1 id="动态规划的经典模型"><a href="#动态规划的经典模型" class="headerlink" title="动态规划的经典模型"></a>动态规划的经典模型</h1><p>下面介绍一下动态规划的经典模型。</p>
+<h2 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h2><p>线性模型的是动态规划中最常用的模型，这里的线性指的是状态的排布是呈线性的。</p>
+<h2 id="区间模型"><a href="#区间模型" class="headerlink" title="区间模型"></a>区间模型</h2><p>区间模型的状态表示一般为d[i][j]，表示区间[i, j]上的最优解，然后通过状态转移计算出[i+1, j]或者[i, j+1]上的最优解，逐步扩大区间的范围，最终求得[1, len]的最优解。</p>
+<h2 id="背包模型"><a href="#背包模型" class="headerlink" title="背包模型"></a>背包模型</h2><p>有N种物品（每种物品数量见下规定）和一个容量为V的背包。放入第 i 种物品耗费的空间是Ci，得到的价值是Wi。求解将哪些物品装入背包可使价值总和最大。决策第i个物品在前i-1个物品放置完毕后，是选择放还是不放。</p>
+<blockquote>
+<p>f[i][v]表示前i种物品恰好放入一个容量为v的背包可以获得的最大价值  </p>
+</blockquote>
+<h3 id="01背包模型"><a href="#01背包模型" class="headerlink" title="01背包模型"></a>01背包模型</h3><p>N种物品，每种物品数量为1</p>
+<blockquote>
+<p>状态转移方程为：<br>f[i][v] = max{ f[i-1][v], f[i-1][v - Ci] +Wi }  </p>
+</blockquote>
+<p>时间复杂度O(VN)，空间复杂度O(VN) （空间复杂度可利用滚动数组进行优化达到O(V)，下文会介绍滚动数组优化）。</p>
+<h3 id="完全背包模型"><a href="#完全背包模型" class="headerlink" title="完全背包模型"></a>完全背包模型</h3><p>N种物品，每种物品数量无限</p>
+<blockquote>
+<p>状态转移方程为：<br>f[i][v] = max{ f[i-1][v], f[i][v - Ci] +Wi } </p>
+</blockquote>
+<p>时间复杂度O(VN)，空间复杂度在用滚动数组优化后可以达到O(V)。</p>
+<h3 id="多重背包模型"><a href="#多重背包模型" class="headerlink" title="多重背包模型"></a>多重背包模型</h3><p>N种物品，每种物品数量为Mi</p>
+<blockquote>
+<p>状态转移方程为：<br>f[i][v] = max{ f[i-1][v - kCi] + kWi | 0 &lt;= k &lt;= Mi }</p>
+</blockquote>
+<p>时间复杂度O(Vsum(Mi))，空间复杂度仍然可以用滚动数组优化后可以达到O(V)。  </p>
+<blockquote>
+<p><strong>优化：</strong><br>采用二进制拆分物品，将Mi个物品拆分成容量为1、2、4、8、… 2^k、Mi-( 2^(k+1) - 1 ) 个对应价值为Wi、2Wi、4Wi、8Wi、…、2^kWi、（Mi-( 2^(k+1) - 1 )）Wi的物品，然后采用01背包求解。这样做的时间复杂度降为O(Vsum(logMi))。</p>
+</blockquote>
+<h1 id="动态规划题集"><a href="#动态规划题集" class="headerlink" title="动态规划题集"></a>动态规划题集</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Problem</th>
+<th style="text-align:center">Difficulty</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/maximum-subarray/" target="_blank" rel="noopener">Maximum Subarray</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/Maximum%20Subarray/src" target="_blank" rel="noopener">Maximum Subarray</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/climbing-stairs/" target="_blank" rel="noopener">Climbing Stairs</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">线性模型</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/Climbing%20Stairs" target="_blank" rel="noopener">Climbing Stairs</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">Best Time to Buy and Sell Stock</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">线性模型</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/Best%20Time%20to%20Buy%20and%20Sell%20Stock" target="_blank" rel="noopener">Best Time to Buy and Sell Stock</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/house-robber/" target="_blank" rel="noopener">House Robber</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">线性模型</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/House%20Robber" target="_blank" rel="noopener">House Robber</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/range-sum-query-immutable/" target="_blank" rel="noopener">Range Sum Query - Immutable</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">线性模型</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/Range%20Sum%20Query%20-%20Immutable" target="_blank" rel="noopener">Range Sum Query - Immutable</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">Min Cost Climbing Stairs</a></td>
+<td style="text-align:center">EASY</td>
+<td style="text-align:center">线性模型</td>
+<td style="text-align:center"><a href="https://github.com/LeeYatSan/Algorithms/tree/master/Min%20Cost%20Climbing%20Stairs" target="_blank" rel="noopener">Min Cost Climbing Stairs</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<p>[1] <a href="https://zh.wikipedia.org/wiki/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92" target="_blank" rel="noopener">动态规划</a><br>[2] <a href="https://blog.csdn.net/u013309870/article/details/75193592" target="_blank" rel="noopener">算法-动态规划 Dynamic Programming–从菜鸟到老鸟</a><br>[3] <a href="https://www.hackerearth.com/practice/algorithms/dynamic-programming/introduction-to-dynamic-programming-1/tutorial/" target="_blank" rel="noopener">Introduction to Dynamic Programming</a><br>[4] <a href="https://www.hackerearth.com/practice/algorithms/dynamic-programming/2-dimensional/tutorial/" target="_blank" rel="noopener">2 Dimensional</a><br>[5] <a href="https://www.hackerearth.com/practice/algorithms/dynamic-programming/state-space-reduction/tutorial/" target="_blank" rel="noopener">State space reduction</a><br>[6] <a href="https://www.hackerearth.com/practice/algorithms/dynamic-programming/bit-masking/tutorial/" target="_blank" rel="noopener">Dynamic Programming and Bit Masking</a><br>[7] <a href="https://zhuanlan.zhihu.com/p/32146048" target="_blank" rel="noopener">动态规划经典模型-背包模型</a>  </p>
+</blockquote>
+
+        </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Algorithm/">Algorithm</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Dynamic-Programming/">Dynamic_Programming</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Java/">Java</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/02/27/Moore-Voting-Algorithm/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Boyer–Moore majority vote algorithm 摩尔投票法</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/02/16/JAVA整型溢出问题/">
+                <span class="level-item">JAVA 整型溢出问题</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: 'fab35e0b35a353b7b94faffa21ab8faf',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#概要">
+        <span class="has-mr-6">1</span>
+        <span>概要</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#什么是动态规划">
+        <span class="has-mr-6">1.1</span>
+        <span>什么是动态规划</span>
+        </a></li><li>
+        <a class="is-flex" href="#动态规划的原理">
+        <span class="has-mr-6">1.2</span>
+        <span>动态规划的原理</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#动态规划的两种解决形式">
+        <span class="has-mr-6">2</span>
+        <span>动态规划的两种解决形式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#自顶向下的备忘录法">
+        <span class="has-mr-6">2.1</span>
+        <span>自顶向下的备忘录法</span>
+        </a></li><li>
+        <a class="is-flex" href="#自底向上法">
+        <span class="has-mr-6">2.2</span>
+        <span>自底向上法</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#动态规划适用情况">
+        <span class="has-mr-6">3</span>
+        <span>动态规划适用情况</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#最优子结构">
+        <span class="has-mr-6">3.1</span>
+        <span>最优子结构</span>
+        </a></li><li>
+        <a class="is-flex" href="#重叠子问题">
+        <span class="has-mr-6">3.2</span>
+        <span>重叠子问题</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#动态规划的经典模型">
+        <span class="has-mr-6">4</span>
+        <span>动态规划的经典模型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#线性模型">
+        <span class="has-mr-6">4.1</span>
+        <span>线性模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#区间模型">
+        <span class="has-mr-6">4.2</span>
+        <span>区间模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#背包模型">
+        <span class="has-mr-6">4.3</span>
+        <span>背包模型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#01背包模型">
+        <span class="has-mr-6">4.3.1</span>
+        <span>01背包模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#完全背包模型">
+        <span class="has-mr-6">4.3.2</span>
+        <span>完全背包模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#多重背包模型">
+        <span class="has-mr-6">4.3.3</span>
+        <span>多重背包模型</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#动态规划题集">
+        <span class="has-mr-6">5</span>
+        <span>动态规划题集</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考文献">
+        <span class="has-mr-6">6</span>
+        <span>参考文献</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Dynamic_Programming" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

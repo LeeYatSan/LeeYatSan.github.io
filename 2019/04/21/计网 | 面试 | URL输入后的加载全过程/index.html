@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>计网 | 面试 | URL输入后的加载全过程 - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="最近复习计算机网络，本以为熟记于心，但一面才发现暴露了不少知识遗忘区，一些基本的计算机网络知识尚未理清。因此，在这总结一下经典面试题：URL从输入地址栏到加载出页面的全过程。">
+<meta name="keywords" content="Computer Networking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网 | 面试 | URL输入后的加载全过程">
+<meta property="og:url" content="https://leeyatsan.github.io/2019/04/21/计网 | 面试 | URL输入后的加载全过程/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="最近复习计算机网络，本以为熟记于心，但一面才发现暴露了不少知识遗忘区，一些基本的计算机网络知识尚未理清。因此，在这总结一下经典面试题：URL从输入地址栏到加载出页面的全过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://leeyatsan.github.io/images/og_image.png">
+<meta property="og:updated_time" content="2019-04-21T08:21:59.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计网 | 面试 | URL输入后的加载全过程">
+<meta name="twitter:description" content="最近复习计算机网络，本以为熟记于心，但一面才发现暴露了不少知识遗忘区，一些基本的计算机网络知识尚未理清。因此，在这总结一下经典面试题：URL从输入地址栏到加载出页面的全过程。">
+<meta name="twitter:image" content="https://leeyatsan.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="计网 | 面试 | URL输入后的加载全过程" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>计网 | 面试 | URL输入后的加载全过程
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2019-04-21T07:29:34.069Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-04-21</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-04-21T08:21:59.905Z"><i class="far fa-calendar-check">&nbsp;</i>2019-04-21</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Computer-Networking/">Computer Networking</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 973 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>最近复习计算机网络，本以为熟记于心，但一面才发现暴露了不少知识遗忘区，一些基本的计算机网络知识尚未理清。因此，在这总结一下经典面试题：<strong>URL从输入地址栏到加载出页面的全过程</strong>。</p>
+<p><img src="https://camo.githubusercontent.com/797e891dc1fa83f905a18f60554c48b29b954817/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f352f382f313633336561643331366430373731333f773d38343126683d3131393326663d706e6726733d363039353133" alt="sorted-algorithms"> </p>
+<a id="more"></a>
+<h1 id="总体流程"><a href="#总体流程" class="headerlink" title="总体流程"></a>总体流程</h1><p>总的来说，URL从输入地址栏到浏览器加载出来大致经历如下步骤：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. DNS解析</span><br><span class="line">2. TCP连接</span><br><span class="line">3. 发送HTTP请求</span><br><span class="line">4. 服务器处理请求并返回HTTP报文</span><br><span class="line">5. 浏览器解析渲染页面</span><br><span class="line">6. 连接结束</span><br></pre></td></tr></table></figure>
+<p>下面将对上述各步进行详细说明。</p>
+<h1 id="1-DNS解析-应用层"><a href="#1-DNS解析-应用层" class="headerlink" title="1. DNS解析 | 应用层"></a>1. DNS解析 | 应用层</h1><p>当用户在浏览器中输入网址的地址后，浏览器要做的第一件事就是解析 DNS：</p>
+<h2 id="1-检查浏览器缓存"><a href="#1-检查浏览器缓存" class="headerlink" title="1. 检查浏览器缓存"></a>1. 检查浏览器缓存</h2><p>浏览器检查缓存中是否有域名对应的 IP，如果有就结束DNS解析过程。浏览器中的DNS缓存有时间和大小双重限制，时间一般为几分钟到几个小时不等。DNS缓存时间过长会导致如果IP地址发生变化，无法解析到正确的IP地址；时间过短会导致浏览器重复解析域名。</p>
+<h2 id="2-检查系统缓存"><a href="#2-检查系统缓存" class="headerlink" title="2. 检查系统缓存"></a>2. 检查系统缓存</h2><p>如果浏览器缓存中没有对应的IP地址，浏览器会继续查找操作系统缓存中是否有域名对应的DNS解析结果。我们可以通过在操作系统中设置hosts文件来设置IP与域名的关系。</p>
+<h2 id="3-向本地DNS服务器发送解析请求"><a href="#3-向本地DNS服务器发送解析请求" class="headerlink" title="3. 向本地DNS服务器发送解析请求"></a>3. 向本地DNS服务器发送解析请求</h2><p>如果还没有拿到解析结果，操作系统就会把域名发送给本地区的域名服务器（LDNS），LDNS 通常由互联网服务提供商（ISP）提供，比如电信或者联通。这个域名服务器一般在城市某个角落，并且性能较好。</p>
+<blockquote>
+<p>DNS解析过程第3步实际上是一种<strong>递归解析</strong>过程  </p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/100954-7d3f7e0c5b12d23a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="递归解析">  </p>
+<h3 id="1-查找DNS服务器缓存"><a href="#1-查找DNS服务器缓存" class="headerlink" title="1. 查找DNS服务器缓存"></a>1. 查找DNS服务器缓存</h3><p>当拿到域名后，首先也是从缓存中查找，看是否有匹配的结果。一般来说，大多数的DNS解析到这里就结束了，所以LDNS/ISP DNS承担了大部分的域名解析工作。如果缓存中有IP地址，就直接返回，并且会被标记为非权威服务器应答。</p>
+<h3 id="2-请求根服务器"><a href="#2-请求根服务器" class="headerlink" title="2. 请求根服务器"></a>2. 请求根服务器</h3><p>如果前面三步还没有命中DNS缓存，那只能到Root Server域名服务器中请求解析了。根域名服务器拿到请求后，首先判断域名是哪个顶级域名下的，比如 <code>.com</code>, <code>.cn</code>, <code>.org</code>等，全球一共 13 台顶级域名服务器。<strong>根域名服务器返回对应的顶级域名服务器（gTLD Server）地址</strong>。</p>
+<h3 id="3-请求顶级服务器"><a href="#3-请求顶级服务器" class="headerlink" title="3. 请求顶级服务器"></a>3. 请求顶级服务器</h3><p>本地域名服务器（LDNS）拿到地址后，向gTLD Server发送请求，gTLD服务器查找并且返回此域名对应的 Name Server 域名服务器地址。这个Name Server通常就是用户注册的域名服务器，例如用户在某个域名服务提供商申请的域名，那么这个域名解析任务就由这个域名提供商的服务器来完成。  </p>
+<h1 id="2-TCP连接-传输层"><a href="#2-TCP连接-传输层" class="headerlink" title="2. TCP连接 | 传输层"></a>2. TCP连接 | 传输层</h1><h1 id="3-发送HTTP请求"><a href="#3-发送HTTP请求" class="headerlink" title="3. 发送HTTP请求"></a>3. 发送HTTP请求</h1><h1 id="4-服务器处理请求并返回HTTP报文"><a href="#4-服务器处理请求并返回HTTP报文" class="headerlink" title="4. 服务器处理请求并返回HTTP报文"></a>4. 服务器处理请求并返回HTTP报文</h1><h1 id="5-浏览器解析渲染页面"><a href="#5-浏览器解析渲染页面" class="headerlink" title="5. 浏览器解析渲染页面"></a>5. 浏览器解析渲染页面</h1><h1 id="6-连接结束"><a href="#6-连接结束" class="headerlink" title="6. 连接结束"></a>6. 连接结束</h1>
+        </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Computer-Networking/">Computer Networking</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/30/ThreadPoolExecutor/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java 线程池-ThreadPoolExecutor.execute()</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/03/hello-world/">
+                <span class="level-item">Hello World</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: 'd19fd316cab7ff95509b6ebc59569f8d',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#总体流程">
+        <span class="has-mr-6">1</span>
+        <span>总体流程</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-DNS解析-应用层">
+        <span class="has-mr-6">2</span>
+        <span>1. DNS解析 | 应用层</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-检查浏览器缓存">
+        <span class="has-mr-6">2.1</span>
+        <span>1. 检查浏览器缓存</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-检查系统缓存">
+        <span class="has-mr-6">2.2</span>
+        <span>2. 检查系统缓存</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-向本地DNS服务器发送解析请求">
+        <span class="has-mr-6">2.3</span>
+        <span>3. 向本地DNS服务器发送解析请求</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-查找DNS服务器缓存">
+        <span class="has-mr-6">2.3.1</span>
+        <span>1. 查找DNS服务器缓存</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-请求根服务器">
+        <span class="has-mr-6">2.3.2</span>
+        <span>2. 请求根服务器</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-请求顶级服务器">
+        <span class="has-mr-6">2.3.3</span>
+        <span>3. 请求顶级服务器</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#2-TCP连接-传输层">
+        <span class="has-mr-6">3</span>
+        <span>2. TCP连接 | 传输层</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-发送HTTP请求">
+        <span class="has-mr-6">4</span>
+        <span>3. 发送HTTP请求</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-服务器处理请求并返回HTTP报文">
+        <span class="has-mr-6">5</span>
+        <span>4. 服务器处理请求并返回HTTP报文</span>
+        </a></li><li>
+        <a class="is-flex" href="#5-浏览器解析渲染页面">
+        <span class="has-mr-6">6</span>
+        <span>5. 浏览器解析渲染页面</span>
+        </a></li><li>
+        <a class="is-flex" href="#6-连接结束">
+        <span class="has-mr-6">7</span>
+        <span>6. 连接结束</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="计网 | 面试 | URL输入后的加载全过程" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

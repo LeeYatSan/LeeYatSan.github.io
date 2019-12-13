@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>JAVA 整型溢出问题 - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="最近在做一道经典算法水题：整数反转问题时，无意间发现自己没有仔细学习下Java数据类型的溢出问题。因此，在此以整型(Integer)为例，简要谈谈我对Java整型溢出问题的理解。其中参考了部分文献资料以及网上优秀技术博客。新人学识浅陋，若存纰漏错误，欢迎指正🙏！">
+<meta name="keywords" content="Algorithm,Java,Numeric Types">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA 整型溢出问题">
+<meta property="og:url" content="https://leeyatsan.github.io/2019/02/16/JAVA整型溢出问题/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="最近在做一道经典算法水题：整数反转问题时，无意间发现自己没有仔细学习下Java数据类型的溢出问题。因此，在此以整型(Integer)为例，简要谈谈我对Java整型溢出问题的理解。其中参考了部分文献资料以及网上优秀技术博客。新人学识浅陋，若存纰漏错误，欢迎指正🙏！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://leeyatsan.github.io/images/og_image.png">
+<meta property="og:updated_time" content="2019-12-12T03:48:07.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA 整型溢出问题">
+<meta name="twitter:description" content="最近在做一道经典算法水题：整数反转问题时，无意间发现自己没有仔细学习下Java数据类型的溢出问题。因此，在此以整型(Integer)为例，简要谈谈我对Java整型溢出问题的理解。其中参考了部分文献资料以及网上优秀技术博客。新人学识浅陋，若存纰漏错误，欢迎指正🙏！">
+<meta name="twitter:image" content="https://leeyatsan.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="JAVA 整型溢出问题" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>JAVA 整型溢出问题
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2019-02-16T08:38:48.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-02-16</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-12T03:48:07.649Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-12</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Algorithm/">Algorithm</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 minutes read (About 1606 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>最近在做一道经典算法水题：<a href="https://leetcode-cn.com/problems/reverse-integer/" target="_blank" rel="noopener">整数反转问题</a>时，无意间发现自己没有仔细学习下Java数据类型的溢出问题。因此，在此以整型(Integer)为例，简要谈谈我对Java整型溢出问题的理解。其中参考了部分文献资料以及网上优秀技术博客。新人学识浅陋，若存纰漏错误，欢迎指正🙏！<br><img src="https://github.com/LeeYatSan/Algorithms/blob/master/theme%20images/Java%20Integer%20Problem.001.png?raw=true" alt="JAVA Integer Overflow Problem"><br><a id="more"></a></p>
+<h1 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h1><p>在讨论Java基本数据类型溢出问题之前，我们首先要了解Java各种基本数据类型的数值范围。详细见下图。<br><img src="https://img-blog.csdn.net/20170824162534959?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUTM4Mzg0MTg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Java基本数据类型数值范围"><br>因此，在处理大量数值问题时，我们要各位注意Java的各种基本数据类型的数值范围，新手程序猿很容易忽视这一点。还有一点需要注意的是，对于有符号的数据类型，其存储单元的首位存储符号：1为负，0为正。但补码消除了消除了+0和-0的冗余和歧义，使0只用1个表达式：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000 00000000 00000000 00000000</span><br></pre></td></tr></table></figure></p>
+<p>因此负数范围比正数范围多1个。</p>
+<h1 id="Java基本数据类型溢出表现"><a href="#Java基本数据类型溢出表现" class="headerlink" title="Java基本数据类型溢出表现"></a>Java基本数据类型溢出表现</h1><p>说了那么多，终于进入到类我们的主题。现在让我们来看看Java基本数据类型发生溢出时会出现什么情况。这里以整型为例。</p>
+<h2 id="视频快速了解"><a href="#视频快速了解" class="headerlink" title="视频快速了解"></a>视频快速了解</h2><p><iframe width="560" height="315" src="https://www.youtube.com/embed/lTnUbx5Gi6o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<h2 id="具体表现"><a href="#具体表现" class="headerlink" title="具体表现"></a>具体表现</h2><h3 id="编程设值期间"><a href="#编程设值期间" class="headerlink" title="编程设值期间"></a>编程设值期间</h3><p>在编程过程中，当我们输入的数值超过对应基本数据类型的合法表示范围时，当前主流IDE都基本能够识别并在编译过程中跑出错误，这里以我的IntelliJ IDEA为例，代码：</p>
+<blockquote>
+<p>例1<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">int</span> a = <span class="hljs-number">20000000000</span>;</span><br><span class="line">System.out.println(<span class="hljs-string">"a= "</span>+a);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>如上所示，我赋予a一个超过Integer合法范围的数值（200亿），则抛出如下错误<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:(12, 17) java: 过大的整数: 20000000000</span><br></pre></td></tr></table></figure></p>
+<h3 id="运行输出期间（动态语义错误）"><a href="#运行输出期间（动态语义错误）" class="headerlink" title="运行输出期间（动态语义错误）"></a>运行输出期间（动态语义错误）</h3><p>然后我们再来看看程序运行期间所产生的动态语义错误：</p>
+<blockquote>
+<p>例2<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">int</span> a = <span class="hljs-number">2000000000</span>;</span><br><span class="line"><span class="hljs-keyword">int</span> b = <span class="hljs-number">2</span>*a;</span><br><span class="line">System.out.println(<span class="hljs-string">"a= "</span>+a);</span><br><span class="line">System.out.println(<span class="hljs-string">"b= "</span>+ b);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>如上代码，a为2000000000（20亿），正常输出，说明没有超过Integer的合法表示范围，没有出现溢出情况。按照一般思维，b为2倍的a，应该输出的是4000000000（40亿），然而实际情况却不是这样：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a= 2000000000</span><br><span class="line">b= -294967296</span><br></pre></td></tr></table></figure></p>
+<p>由上面可以看出，b并没有按照预期输出4000000000，也没有抛出异常，而是输出了一个负值。</p>
+<blockquote>
+<p>例3<br>让我们再来看看刚好超过Integer合法范围的情况<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Integer.MAX_VALUE);</span><br><span class="line">System.out.println(Integer.MIN_VALUE);</span><br><span class="line">System.out.println(Integer.MAX_VALUE+<span class="hljs-number">1</span>);</span><br><span class="line">System.out.println(Integer.MIN_VALUE-<span class="hljs-number">1</span>);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>输出：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2147483647</span><br><span class="line">-2147483648</span><br><span class="line">-2147483648</span><br><span class="line">2147483647</span><br></pre></td></tr></table></figure></p>
+<p>由此，我们可以得出推论：</p>
+<blockquote>
+<p>在恰好要溢出的情况下：<br>当结果超出了integer的最大表示范围时，结果变成负数<br>当结果超出了integer的最小表示范围时，结果变成正数   </p>
+</blockquote>
+<h1 id="Java基本数据类型溢出机制"><a href="#Java基本数据类型溢出机制" class="headerlink" title="Java基本数据类型溢出机制"></a>Java基本数据类型溢出机制</h1><p>为什么会出现上述情况呢？我们再回忆下最开头我们所讲的：”对于有符号的数据类型，其存储单元的首位存储符号：1为负，0为正”。在例2中，因为4000000000超出了integer的合法表示范围，使得计算结果二进制表示时占用了存储单元的第一位符号位，使得符号位由0变为1，因此输出结果为负数。例3同理，在此不再赘述。<br>让我们再来看看下面这个例子：</p>
+<blockquote>
+<p>例4<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">int</span> num = <span class="hljs-number">907654321</span>;</span><br><span class="line">System.out.println(<span class="hljs-string">"1："</span>+Integer.toHexString(num));</span><br><span class="line">System.out.println(<span class="hljs-string">"2："</span>+Long.toHexString(num * <span class="hljs-number">16L</span>));</span><br><span class="line">System.out.println(<span class="hljs-string">"3："</span>+num * <span class="hljs-number">16L</span>);</span><br><span class="line">System.out.println(<span class="hljs-string">"4："</span>+(<span class="hljs-keyword">int</span>)((num * <span class="hljs-number">16L</span>) &amp; <span class="hljs-number">0xffffffff</span>));</span><br><span class="line">System.out.println(<span class="hljs-string">"5："</span>+num * <span class="hljs-number">16</span>);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>结果：<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1：3619b4b1</span><br><span class="line">2：3619b4b10</span><br><span class="line">3：14522469136</span><br><span class="line">4：1637567248</span><br><span class="line">5：1637567248</span><br></pre></td></tr></table></figure></p>
+<p>我们可以得知，num*16的结果是超过Integer的合法表示范围的，但奇怪的是，它似乎与上面的推论相悖：两个int类型的数相乘，溢出后没有变为负数。这是为什么呢？这是因为它在溢出后又发生过至少1此溢出，使得符号位由1又改为0，使得结果为正。而由3可以看出：通过类型提升来输出正确结果，详细将在下一节详细介绍。而从4和5中我们可以发现，实际上溢出后输出的结果是对底32位（因为Integer的存储单位为32位）截断后的结果。查阅<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.2.2" target="_blank" rel="noopener"><em>The Java Language Specification (JLS)</em>§4.2.2, “Integer Operations” </a>，得知:</p>
+<blockquote>
+<p>The built-in integer operators do not indicate overflow or underflow in any way. Integer operators can throw a NullPointerException if unboxing conversion of a null reference is required. Other than that, the only integer operators that can throw an exception are the integer divide operator / and the integer remainder operator %, which throw an ArithmeticException if the right-hand operand is zero, and the increment and decrement operators ++ and – which can throw an OutOfMemoryError if boxing conversion is required and there is insufficient memory to perform the conversion.    </p>
+</blockquote>
+<p>由上可知，在运行期间发生的数据溢出不会抛出任何异常，而是直接截断输出。对于整型数据，则是截断输出低32位数据。</p>
+<h1 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h1><p>JDK8的Math为我们实现了对基本运算的结果是否溢出判断：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">addExact</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subtractExact</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">multiplyExact</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span><span class="hljs-comment">//int型乘法</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">multiplyExact</span><span class="hljs-params">(<span class="hljs-keyword">long</span> x, <span class="hljs-keyword">long</span> y)</span><span class="hljs-comment">//long型乘法</span></span></span><br><span class="line"><span class="hljs-function">......</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="防止溢出措施"><a href="#防止溢出措施" class="headerlink" title="防止溢出措施"></a>防止溢出措施</h1><blockquote>
+<ul>
+<li>使用前提条件;即范围检查输入使得溢出是不可能的</li>
+<li>使用上述检测方法</li>
+<li>类型提升：<br>byte ➡ short, int, long, float, double<br>short ➡ int, long, float, double<br>char ➡ int, long, float, double<br>int ➡ long, float, double<br>long ➡ float, double<br>float ➡ double  </li>
+</ul>
+</blockquote>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<p>[1] <a href="https://njucz.github.io/2017/08/16/java-int%E6%BA%A2%E5%87%BA%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">java int溢出总结</a><br>[2] <a href="https://docs.oracle  .com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2" target="_blank" rel="noopener">Widening Primitive Conversion</a><br>[3] <a href="https://wiki.sei.cmu.edu/confluence/display/java/NUM00-J.+Detect+or+prevent+integer+overflow" target="_blank" rel="noopener">NUM00-J. Detect or prevent integer overflow</a>  </p>
+</blockquote>
+
+        </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Algorithm/">Algorithm</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Numeric-Types/">Numeric Types</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/02/23/Dynamic-Programming/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Dynamic_Programming</span>
+            </a>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: '9acad626edb371c7dd6dbe0511da2462',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#基本知识">
+        <span class="has-mr-6">1</span>
+        <span>基本知识</span>
+        </a></li><li>
+        <a class="is-flex" href="#Java基本数据类型溢出表现">
+        <span class="has-mr-6">2</span>
+        <span>Java基本数据类型溢出表现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#视频快速了解">
+        <span class="has-mr-6">2.1</span>
+        <span>视频快速了解</span>
+        </a></li><li>
+        <a class="is-flex" href="#具体表现">
+        <span class="has-mr-6">2.2</span>
+        <span>具体表现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#编程设值期间">
+        <span class="has-mr-6">2.2.1</span>
+        <span>编程设值期间</span>
+        </a></li><li>
+        <a class="is-flex" href="#运行输出期间（动态语义错误）">
+        <span class="has-mr-6">2.2.2</span>
+        <span>运行输出期间（动态语义错误）</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#Java基本数据类型溢出机制">
+        <span class="has-mr-6">3</span>
+        <span>Java基本数据类型溢出机制</span>
+        </a></li><li>
+        <a class="is-flex" href="#检测方法">
+        <span class="has-mr-6">4</span>
+        <span>检测方法</span>
+        </a></li><li>
+        <a class="is-flex" href="#防止溢出措施">
+        <span class="has-mr-6">5</span>
+        <span>防止溢出措施</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考文献">
+        <span class="has-mr-6">6</span>
+        <span>参考文献</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="JAVA 整型溢出问题" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>
