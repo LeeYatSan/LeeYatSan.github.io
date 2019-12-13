@@ -14,16 +14,16 @@
 <meta name="keywords" content="Algorithm,Java,Sort">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10种经典排序算法总结">
-<meta property="og:url" content="https://leeyatsan.github.io/2019/03/03/排序算法总结/index.html">
+<meta property="og:url" content="https://leeyatsan.cn/2019/03/03/排序算法总结/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
 <meta property="og:description" content="最近复习数据结构与算法，先从基本的排序算法开始。在此，对10种经典的排序算法进行总结，加深自己对相关算法的理解与掌握，其中也参考了维基百科以及部分网上优秀博客的总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://leeyatsan.github.io/images/og_image.png">
+<meta property="og:image" content="https://leeyatsan.cn/images/og_image.png">
 <meta property="og:updated_time" content="2019-12-12T03:36:05.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="10种经典排序算法总结">
 <meta name="twitter:description" content="最近复习数据结构与算法，先从基本的排序算法开始。在此，对10种经典的排序算法进行总结，加深自己对相关算法的理解与掌握，其中也参考了维基百科以及部分网上优秀博客的总结。">
-<meta name="twitter:image" content="https://leeyatsan.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://leeyatsan.cn/images/og_image.png">
 
 
 
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -216,7 +216,7 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/3661808-fbb5c9798328ac79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/336/format/webp" alt="只有一半的节点有子节点">  </p>
 <p>我们需要注意的是，假设当前节点的序号为k，则其父母节点的序号为k/2向下取整的值，而其左子节点的序号为2k+1，其右节点的序号为2k+2。如上图所示，3号节点的父母节点为3/2向下取整即为1号节点，其左子节点为3*2+1=7号节点，其右节点为3*2+2=8号节点。  </p>
 <p>一个共有 n 个结点的堆在第 h 层最多的结点数为：  </p>
-<p><img src="//leeyatsan.github.io/2019/03/03/排序算法总结/1.png" alt="一个共有 n 个结点的堆在第 h 层最多的结点数为">    </p>
+<p><img src="//leeyatsan.cn/2019/03/03/排序算法总结/1.png" alt="一个共有 n 个结点的堆在第 h 层最多的结点数为">    </p>
 <p><strong>heapify()</strong>：堆化操作：它的时间复杂度等于当前元素的层数k = lgn ， 即 O(lgn).<br><strong>buildMaxHeap()</strong>：建堆操作：O(n).    </p>
 <blockquote>
 <p><strong>STEP1:</strong> 先将长度为n的待排序数组建立一个大顶堆<br><strong>STEP2:</strong> 交换堆顶与结尾的元素，即将大顶堆的顶（即最大的元素）放在数组最后Rn，此时产生了一个R[1…n-1]的无序序列与一个Rn的有序序列<br><strong>STEP3:</strong> 由于交换可能导致失序，因此重新对对进行”堆化”<br><strong>STEP4:</strong> 对无序序列重复STEP1，STEP2，STEP3，完成排序  </p>
@@ -374,7 +374,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -409,7 +409,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catalogue
+                Catálogo
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#算法概述">
@@ -678,10 +678,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
