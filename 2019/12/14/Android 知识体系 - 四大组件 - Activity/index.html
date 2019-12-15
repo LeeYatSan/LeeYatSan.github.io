@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T11:43:33.430Z">
+<meta property="og:updated_time" content="2019-12-15T16:39:40.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:43:33.430Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T16:39:40.392Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 minutes read (About 2340 words)
+                    25 minutes read (About 3783 words)
                 </span>
                 
                 
@@ -237,12 +237,76 @@
 <li>高优先级的应用急需要内存，此时处于低优先级的此应用就会被 kill 掉，内存回收遵循<a href="#process_priority">进行优先级</a>，优先回收空进程，其次是处于后台的活动进程，最后才是可见和前台的活动以降低对用户交互体验的影响。</li>
 <li>用户返回原活动。</li>
 </ol>
-<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause">只执行 onPause() 而不执行 onStop()</span></h4><p>如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
+<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h4 id="资源相关的系统配置发生改变导致活动被杀死并重新创建"><a href="#资源相关的系统配置发生改变导致活动被杀死并重新创建" class="headerlink" title="资源相关的系统配置发生改变导致活动被杀死并重新创建"></a>资源相关的系统配置发生改变导致活动被杀死并重新创建</h4><p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/ActivityAbnormal.png" alt="资源相关的系统配置发生改变导致活动被杀死并重新创建"></p>
+<p>首先介绍两个在异常情况下会被调用的系统回调方法：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">onSaveInstanceState()</td>
+<td style="text-align:left">用于保存当前活动状态，包括相关活动数据、当前活动的视图结构等等。它总是在 onStop() 之前被调用，但会发生在 onPause()之前或之后</td>
+</tr>
+<tr>
+<td style="text-align:center">onRestoreInstanceState()</td>
+<td style="text-align:left">当活动被重新创建后（且 onStart() 方法执行完成后），系统会调用该方法，并把活动销毁时 onSaveInstanceState()方法所保存的 Bundle 对象作为参数传递给该方法和 onCreate()，以便重启活动时恢复原先活动数据、活动视图结构等</td>
+</tr>
+</tbody>
+</table>
+<p>当系统配置发生改变时，活动会被销毁，其 onPause()、onStop()、onDestroy()函数均会被调用，同时由于活动是在异常情况下终止的，系统会调用 onSaveInstanceState()来保存当前活动状态。我们可以通过 onRestoreInstanceState()和 onCreate()方法来判断活动是否被重建了，如果被重建了，那么我们就可以取出之前保存的数据并恢复。</p>
+<p>同时，在 onSaveInstanceState()和 onRestoreInstanceState()方法中，系统自动为我们做了一定的恢复工作。<strong>当活动在异常情况下需要重新创建时，系统会默认为我们保存当前活动的视图结构</strong>。当活动在异常情况下需要重新创建时，系统会默认为我们保存当前活动的视图结构，并且在活动重启后为我们恢复这些数据，比如：文本框中用户输入的数据，ListView 滚动的位置等，这些 View 相关的状态系统都能够默认为我们恢复。具体针对某一个特定的 View 系统 能为我们恢复哪些数据，我们可以查看 View 的源码。和活动一样，每个 View 都有 onSaveInstanceState()和 onRestoreInstanceState()这两个方法，看一下它们的具体实现，就能知道系统能够自动为每个 View 恢复哪些数据。</p>
+<blockquote>
+<p><strong>关于保存和恢复View层次结构，系统的工作流程是这样的</strong>：</p>
+<p>首先活动被意外终止时，它会调用 onSaveInstanceState()去保存数据，然后活动会委托 Window 去保存数据，接着 Window 在委托它上面的顶级容器去保存数据。顶级容器是一个 ViewGroup，一般来说它很可能是 DecorView。最后顶层容器再去一一通知它的子元素来保存数据，这样整个数据保存过程就完成了。可以发现，这是一个典型的委托思想，上层委托下层，父容器去委托子元素去处理一件事情，这种思想在 Android 中有很多应用，比如：View 的绘制过程，事件分发等都是采用类似的思想。至于数据恢复过程也是类似的，这样就不再重复介绍了。</p>
+</blockquote>
+<p>因此在<strong>通常情况下，系统配置改变会导致活动的重建</strong>，但是我们可以给活动指定 configChanges 属性使其不被重建，例如<a href="#orientationAlteration">活动的横竖屏切换</a>。</p>
+<h4 id="资源内存不足导致低优先级的活动被杀死"><a href="#资源内存不足导致低优先级的活动被杀死" class="headerlink" title="资源内存不足导致低优先级的活动被杀死"></a>资源内存不足导致低优先级的活动被杀死</h4><p>当内存严重不足时，系统就会按照<a href="#process_priority">进程优先级</a>去 kill 掉目前活动所在的进程，并在后续通过 onSaveInstanceState() 和 onRestoreInstanceState() 来存储和恢复数据。如果一个进程中没有四大组件的执行，那么这个进程将很快被系统杀死，因此，一些后台工作不适合脱离四大组件独立运行在后台中，这样进程更容易被杀死。比较好的方法就是将后台工作放入 Service 中从而保证进程有一定的优先级，这样就不会轻易地被系统杀死。</p>
+<h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause">只执行 onPause() 而不执行 onStop()</span></h4><p>如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondActivity 的属性：</p>
 <ul>
 <li>方案一：添加  android:theme=”@android:style/Theme.Dialog” 。将该活动修改为Dialog样式。</li>
 <li>方案二：修改 android:theme=”@android:style/Theme.Translucent” ，将该活动变为一个透明活动</li>
 </ul>
 <p>并使用 FirstActivity 调用 SecondActivity，此时 FirstActivity 只会单独执行执行 onPause()，而不会继续执行 onStop()，详细过程见博文<a href="https://blog.csdn.net/a872822645/article/details/62217965" target="_blank" rel="noopener">《Android什么时候只会调用onPause()而不会调用onStop()完全解析？》</a></p>
+<h4 id="活动的横竖屏切换"><a href="#活动的横竖屏切换" class="headerlink" title="活动的横竖屏切换"></a><span id="orientationAlteration">活动的横竖屏切换</span></h4><p>与横竖屏生命周期函数有关调用的属性是  <code>android:configChanges</code>  ，关于它的属性值设置影响如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">orientation</td>
+<td style="text-align:left">消除横竖屏的影响</td>
+</tr>
+<tr>
+<td style="text-align:center">keyboardHidden</td>
+<td style="text-align:left">消除键盘的影响</td>
+</tr>
+<tr>
+<td style="text-align:center">screenSize</td>
+<td style="text-align:left">消除屏幕大小的影响</td>
+</tr>
+</tbody>
+</table>
+<p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation 或者 orientation|keyboardHidden 或者不设置这个属性的时候，它的生命周期会走如下流程：</p>
+<blockquote>
+<p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
+<p>由横竖屏互切时：onPause() -&gt; onSaveInstanceState -&gt; onStop() -&gt; onDestroy() -&gt; onCreate() -&gt; onStart() -&gt; onRestoreInstanceState() -&gt; onResume</p>
+</blockquote>
+<p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation|screenSize 或者orientation|screenSize|keyboardHidden 的时候，它的生命周期会走如下流程：</p>
+<blockquote>
+<p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
+<p>由横竖屏互切时：什么都没调用</p>
+</blockquote>
+<p>注意：<strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong></p>
+<h4 id="什么时候活动不执行onDestory-？"><a href="#什么时候活动不执行onDestory-？" class="headerlink" title="什么时候活动不执行onDestory()？"></a>什么时候活动不执行onDestory()？</h4><p><strong>返回栈里面的第一个没有销毁的活动会执行 onDestroy()，其他活动不会执行。</strong></p>
+<p>例：从 mainActivity 跳转到 activity-A（或者继续从 activity-A 再跳转到 activity-B），这时候，从后台强杀，只会执行 mainActivity 的 onDestroy()，activity-A（以及activity-B）的onDestroy() 方法都不会执行。</p>
 <h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a><span id="process_priority">进程优先级</span></h2><ul>
 <li><strong><span id="foreground">前台</span></strong>：与当前用户正在交互的 Activity 所在的进程。</li>
 <li><strong><span id="visible">可见</span></strong>：Activity 可见但是没有在前台所在的进程。</li>
