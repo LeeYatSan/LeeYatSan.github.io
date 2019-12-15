@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T11:41:07.226Z">
+<meta property="og:updated_time" content="2019-12-15T11:43:33.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:41:07.226Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:43:33.430Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 minutes read (About 2341 words)
+                    16 minutes read (About 2340 words)
                 </span>
                 
                 
@@ -237,7 +237,7 @@
 <li>高优先级的应用急需要内存，此时处于低优先级的此应用就会被 kill 掉，内存回收遵循<a href="#process_priority">进行优先级</a>，优先回收空进程，其次是处于后台的活动进程，最后才是可见和前台的活动以降低对用户交互体验的影响。</li>
 <li>用户返回原活动。</li>
 </ol>
-<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause">只执行 onPause() 而不执行 onStop()</span></h4><p>但如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
+<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause">只执行 onPause() 而不执行 onStop()</span></h4><p>如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
 <ul>
 <li>方案一：添加  android:theme=”@android:style/Theme.Dialog” 。将该活动修改为Dialog样式。</li>
 <li>方案二：修改 android:theme=”@android:style/Theme.Translucent” ，将该活动变为一个透明活动</li>
