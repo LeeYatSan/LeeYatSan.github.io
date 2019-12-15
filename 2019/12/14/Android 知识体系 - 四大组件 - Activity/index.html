@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T11:36:58.017Z">
+<meta property="og:updated_time" content="2019-12-15T11:41:07.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:36:58.017Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:41:07.226Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
             
                 
                 <div class="level-item">
@@ -204,7 +204,7 @@
 </tr>
 <tr>
 <td style="text-align:center">onPaused()</td>
-<td style="text-align:left">表示活动正在暂停，大多数情况下，活动执行完 onPause()函数后会继续执行 onStop()函  数，造成这种函数调用的原因是当前的活动启动了另外一个活动或者回切到上一个活动。  还有一种情况就是  onPause()函数被单独执行了，并没有附带执行 onStop()方法，详细过程见下面”<a href="#only_onPause(">onPause()单独执行情况</a>)”。</td>
+<td style="text-align:left">表示活动正在暂停，大多数情况下，活动执行完 onPause()函数后会继续执行 onStop()函  数，造成这种函数调用的原因是当前的活动启动了另外一个活动或者回切到上一个活动。  还有一种情况就是  onPause()函数被单独执行了，并没有附带执行 onStop()方法，详细过程见下面”<a href="#only_onPause">onPause()单独执行情况</a>“。</td>
 </tr>
 <tr>
 <td style="text-align:center">onStop()</td>
@@ -231,13 +231,13 @@
 <li>如上所述，一般情况下调用完 onPause()后还会调用 <strong>onStop()</strong>，执行完该方法后才真正意味着当前的活动已经退出前台，存在于<a href="#background">后台</a>。</li>
 <li>若当前活动即将执行 <strong>onDestory()</strong>函数，则代表着这个活动即将进入生命的终点，这是活动生命周期中的最后一次回调生命周期，我们可以在该函数中，进行一些回收工作和资源的释放工作，比如：广播接收器的注销工作等。</li>
 <li>执行完 onDestory()方法后的活动接下来面对的是被 GC 回收，宣告生命终结。</li>
-<li>通常情况下生命周期不会执行本路径。但也有特殊情况，详细见下面「<a href="#only_onPause(">只执行 onPause() 而不执行 onStop()</a>)」</li>
+<li>通常情况下生命周期不会执行本路径。但也有特殊情况，详细见下面「<a href="#only_onPause">只执行 onPause() 而不执行 onStop()</a>」</li>
 <li>当用户在其他的活动或者桌面回切到当前活动时，这个活动就会先去执行 <strong>onRestart()</strong>函数。</li>
 <li>被重启的接下来执行 <strong>onStart()</strong>函数，接着和普通活动一样执行 <strong>onResume()</strong>函数进入到运行状态。</li>
 <li>高优先级的应用急需要内存，此时处于低优先级的此应用就会被 kill 掉，内存回收遵循<a href="#process_priority">进行优先级</a>，优先回收空进程，其次是处于后台的活动进程，最后才是可见和前台的活动以降低对用户交互体验的影响。</li>
 <li>用户返回原活动。</li>
 </ol>
-<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause()">只执行 onPause() 而不执行 onStop()</span></h4><p>但如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
+<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause">只执行 onPause() 而不执行 onStop()</span></h4><p>但如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
 <ul>
 <li>方案一：添加  android:theme=”@android:style/Theme.Dialog” 。将该活动修改为Dialog样式。</li>
 <li>方案二：修改 android:theme=”@android:style/Theme.Translucent” ，将该活动变为一个透明活动</li>
