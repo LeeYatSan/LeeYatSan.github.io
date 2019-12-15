@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T06:31:12.446Z">
+<meta property="og:updated_time" content="2019-12-15T11:36:58.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T06:31:12.446Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T11:36:58.017Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-15</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1291 words)
+                    16 minutes read (About 2341 words)
                 </span>
                 
                 
@@ -181,7 +181,7 @@
 <blockquote>
 <p>系统回收优先即从高到低：<strong>销毁状态 &gt; 停止状态 &gt; 暂停状态 &gt; 运行状态</strong></p>
 </blockquote>
-<h2 id="Activity-状态分析"><a href="#Activity-状态分析" class="headerlink" title="Activity 状态分析"></a>Activity 状态分析</h2><p>Activity 类定义了7个<a href="https://www.jianshu.com/p/c0c33cabfa0f" target="_blank" rel="noopener">回调方法</a>，覆盖了活动生命周期的每一个环节。</p>
+<h2 id="Activity-状态"><a href="#Activity-状态" class="headerlink" title="Activity 状态"></a>Activity 状态</h2><p>Activity 类定义了7个<a href="https://www.jianshu.com/p/c0c33cabfa0f" target="_blank" rel="noopener">回调方法</a>，覆盖了活动生命周期的每一个环节。</p>
 <table>
 <thead>
 <tr>
@@ -204,7 +204,7 @@
 </tr>
 <tr>
 <td style="text-align:center">onPaused()</td>
-<td style="text-align:left">表示活动正在暂停，大多数情况下，活动执行完 onPause()函数后会继续执行 onStop()函  数，造成这种函数调用的原因是当前的活动启动了另外一个活动或者回切到上一个活动。  还有一种情况就是  onPause()函数被单独执行了，并没有附带执行 onStop()方法，造成这  种函数调用的原因很简单，就是当前活动里启动了类似于对话框的组件。</td>
+<td style="text-align:left">表示活动正在暂停，大多数情况下，活动执行完 onPause()函数后会继续执行 onStop()函  数，造成这种函数调用的原因是当前的活动启动了另外一个活动或者回切到上一个活动。  还有一种情况就是  onPause()函数被单独执行了，并没有附带执行 onStop()方法，详细过程见下面”<a href="#only_onPause(">onPause()单独执行情况</a>)”。</td>
 </tr>
 <tr>
 <td style="text-align:center">onStop()</td>
@@ -220,19 +220,45 @@
 </tr>
 </tbody>
 </table>
-<h3 id="正常情况"><a href="#正常情况" class="headerlink" title="正常情况"></a>正常情况</h3><h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a>进程优先级</h2><ul>
-<li><strong>前台</strong>：与当前用户正在交互的 Activity 所在的进程。</li>
-<li><strong>可见</strong>：Activity 可见但是没有在前台所在的进程。</li>
+<h2 id="Activity-状态分析"><a href="#Activity-状态分析" class="headerlink" title="Activity 状态分析"></a>Activity 状态分析</h2><p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/Activity%20Life%20Cycle.png" alt="活动生命周期"></p>
+<h3 id="正常情况"><a href="#正常情况" class="headerlink" title="正常情况"></a>正常情况</h3><p>注：以下序号对应上图对应序号</p>
+<ol>
+<li>启动一个活动 Activity，通常是由一个 Intent 完成。当活动启动后首先调用 <strong>onCreate()</strong>进行初始化操作，包括布局绑定、控件和数据的初始化等。</li>
+<li>初始化完成后调用 <strong>onStart()</strong>使得活动<a href="#visible">可见</a>，但此时还未出现在<a href="#foreground">前台</a>，尚无法与用户进行交互操作，此时通常表明活动已经在后台准备就绪。</li>
+<li>调用 <strong>onResume()</strong>使得活动出现在前台，此时活动可与用户进行交互。</li>
+<li>由于活动执行了onResume()函数，所以活动出现在了前台。也就是活动处于运行状态（Active）。</li>
+<li>当处于运行状态的活动因为一个新启动的活动或者用户要返回上一个活动时，就会执行 <strong>onPause()</strong>，相当于当前活动必须将手头上的工作暂停下来。<strong>正常情况下，onPause()不会单独执行，还会继续调用 onStop()</strong>。</li>
+<li>如上所述，一般情况下调用完 onPause()后还会调用 <strong>onStop()</strong>，执行完该方法后才真正意味着当前的活动已经退出前台，存在于<a href="#background">后台</a>。</li>
+<li>若当前活动即将执行 <strong>onDestory()</strong>函数，则代表着这个活动即将进入生命的终点，这是活动生命周期中的最后一次回调生命周期，我们可以在该函数中，进行一些回收工作和资源的释放工作，比如：广播接收器的注销工作等。</li>
+<li>执行完 onDestory()方法后的活动接下来面对的是被 GC 回收，宣告生命终结。</li>
+<li>通常情况下生命周期不会执行本路径。但也有特殊情况，详细见下面「<a href="#only_onPause(">只执行 onPause() 而不执行 onStop()</a>)」</li>
+<li>当用户在其他的活动或者桌面回切到当前活动时，这个活动就会先去执行 <strong>onRestart()</strong>函数。</li>
+<li>被重启的接下来执行 <strong>onStart()</strong>函数，接着和普通活动一样执行 <strong>onResume()</strong>函数进入到运行状态。</li>
+<li>高优先级的应用急需要内存，此时处于低优先级的此应用就会被 kill 掉，内存回收遵循<a href="#process_priority">进行优先级</a>，优先回收空进程，其次是处于后台的活动进程，最后才是可见和前台的活动以降低对用户交互体验的影响。</li>
+<li>用户返回原活动。</li>
+</ol>
+<h3 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h3><h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><h4 id="只执行-onPause-而不执行-onStop"><a href="#只执行-onPause-而不执行-onStop" class="headerlink" title="只执行 onPause() 而不执行 onStop()"></a><span id="only_onPause()">只执行 onPause() 而不执行 onStop()</span></h4><p>但如果使用两个活动（FirstActivity 和 SecondActivity），并修改 AndroidManifest.xml 中 SecondAcitvity 的属性：</p>
+<ul>
+<li>方案一：添加  android:theme=”@android:style/Theme.Dialog” 。将该活动修改为Dialog样式。</li>
+<li>方案二：修改 android:theme=”@android:style/Theme.Translucent” ，将该活动变为一个透明活动</li>
+</ul>
+<p>并使用 FirstActivity 调用 SecondActivity，此时 FirstActivity 只会单独执行执行 onPause()，而不会继续执行 onStop()，详细过程见博文<a href="https://blog.csdn.net/a872822645/article/details/62217965" target="_blank" rel="noopener">《Android什么时候只会调用onPause()而不会调用onStop()完全解析？》</a></p>
+<h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a><span id="process_priority">进程优先级</span></h2><ul>
+<li><strong><span id="foreground">前台</span></strong>：与当前用户正在交互的 Activity 所在的进程。</li>
+<li><strong><span id="visible">可见</span></strong>：Activity 可见但是没有在前台所在的进程。</li>
 <li><strong>服务</strong>：Activity 在后台开启了 Service 服务所在的进程。</li>
-<li><strong>后台</strong>：Activity 完全处于后台所在的进程。</li>
+<li><strong><span id="background">后台</span></strong>：Activity 完全处于后台所在的进程。</li>
 <li><strong>空</strong>：没有任何 Activity 存在的进程，优先级也是最低的。</li>
 </ul>
 <blockquote>
 <p>进程优先级从高到低：<strong>前台 &gt; 可见 &gt; 服务 &gt; 后台 &gt; 空</strong></p>
 </blockquote>
-<h1 id="Activity-启动模式"><a href="#Activity-启动模式" class="headerlink" title="Activity 启动模式"></a>Activity 启动模式</h1><h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="Activity-启动模式"><a href="#Activity-启动模式" class="headerlink" title="Activity 启动模式"></a>Activity 启动模式</h1><h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
+<h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://blog.csdn.net/ClAndEllen/article/details/89886833" target="_blank" rel="noopener">Android面试系列文章2018之Android部分Activity篇 ｜ ClAndEllen </a> （遵循 CC 4.0 BY-SA 版权协议）</li>
 <li><a href="https://www.jianshu.com/p/c0c33cabfa0f" target="_blank" rel="noopener">Java中的回调方法</a></li>
+<li><a href="https://blog.csdn.net/a872822645/article/details/62217965" target="_blank" rel="noopener">Android什么时候只会调用onPause()而不会调用onStop()完全解析？ | 娃哈哈19910206</a>（遵循 CC 4.0 BY-SA 版权协议）</li>
+<li><a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议 | 一片枫叶_刘超</a>（遵循 CC 4.0 BY-SA 版权协议）</li>
 </ul>
 
         </div>
@@ -344,20 +370,28 @@
         <span class="has-mr-6">3.1.1</span>
         <span>系统回收活动状态的优先级</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#Activity-状态分析">
+        <a class="is-flex" href="#Activity-状态">
         <span class="has-mr-6">3.2</span>
+        <span>Activity 状态</span>
+        </a></li><li>
+        <a class="is-flex" href="#Activity-状态分析">
+        <span class="has-mr-6">3.3</span>
         <span>Activity 状态分析</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#正常情况">
-        <span class="has-mr-6">3.2.1</span>
+        <span class="has-mr-6">3.3.1</span>
         <span>正常情况</span>
         </a></li><li>
         <a class="is-flex" href="#异常情况">
-        <span class="has-mr-6">3.2.2</span>
+        <span class="has-mr-6">3.3.2</span>
         <span>异常情况</span>
+        </a></li><li>
+        <a class="is-flex" href="#特殊情况">
+        <span class="has-mr-6">3.3.3</span>
+        <span>特殊情况</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#进程优先级">
-        <span class="has-mr-6">3.3</span>
+        <span class="has-mr-6">3.4</span>
         <span>进程优先级</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#Activity-启动模式">
