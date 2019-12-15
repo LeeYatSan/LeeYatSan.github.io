@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T16:39:40.392Z">
+<meta property="og:updated_time" content="2019-12-15T16:45:17.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T16:39:40.392Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T16:45:17.988Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    25 minutes read (About 3783 words)
+                    25 minutes read (About 3785 words)
                 </span>
                 
                 
@@ -302,9 +302,8 @@
 <p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation|screenSize 或者orientation|screenSize|keyboardHidden 的时候，它的生命周期会走如下流程：</p>
 <blockquote>
 <p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-<p>由横竖屏互切时：什么都没调用</p>
+<p>由横竖屏互切时：什么都没调用（注意：<strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong>）</p>
 </blockquote>
-<p>注意：<strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong></p>
 <h4 id="什么时候活动不执行onDestory-？"><a href="#什么时候活动不执行onDestory-？" class="headerlink" title="什么时候活动不执行onDestory()？"></a>什么时候活动不执行onDestory()？</h4><p><strong>返回栈里面的第一个没有销毁的活动会执行 onDestroy()，其他活动不会执行。</strong></p>
 <p>例：从 mainActivity 跳转到 activity-A（或者继续从 activity-A 再跳转到 activity-B），这时候，从后台强杀，只会执行 mainActivity 的 onDestroy()，activity-A（以及activity-B）的onDestroy() 方法都不会执行。</p>
 <h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a><span id="process_priority">进程优先级</span></h2><ul>
