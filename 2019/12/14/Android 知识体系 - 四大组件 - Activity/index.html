@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-16T06:53:05.137Z">
+<meta property="og:updated_time" content="2019-12-16T06:57:40.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:53:05.137Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:57:40.968Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -297,8 +297,6 @@ protected void onCreate(Bundle savedInstanceState) {
     Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
     intent.putExtras(bundle);
     startActivity(intent);
-
-
 }
 </code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 全局变量</span><br><span class="line">创建一个类，里面定义一批静态变量，活动之间通信都可以访问这个类里面的静态变量。</span><br><span class="line"></span><br><span class="line">## Activity -&gt; Service</span><br><span class="line">### 绑定服务的方式，利用 ServiceConnection 接口</span><br><span class="line">首先我们需要在要绑定的服务中声明一个Binder类</span><br></pre></td></tr></table></figure></p>
 <p>public class MyService1 extends Service {</p>
@@ -313,16 +311,12 @@ public IBinder onBind(Intent intent) {
     return new Binder();
 }
 
-
-
 public class Binder extends android.os.Binder{
 
     public void sendData(String data){
 
         MyService1.this.data = data;
-
     }
-
 }
 </code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后我们让活动实现 ServiceConnection 这个接口，并且在 onServiceConnected() 方法中获取到 Service 提供给活动的 Binder 实例对象，通过这个对象我们就可以与 Service 进行通信可以通过上述代码的 Binder 类中的 sendData() 方法进行通信。</span><br></pre></td></tr></table></figure></p>
 <p>ublic class ServiceBindActivity extends AppCompatActivity implements ServiceConnection,View.OnClickListener {</p>
@@ -342,8 +336,6 @@ protected void onCreate(Bundle savedInstanceState) {
     bt0.setOnClickListener(this);
     bt1.setOnClickListener(this);
     bt2.setOnClickListener(this);
-
-
 }
 
 @Override
@@ -391,9 +383,7 @@ public void onClick(View view) {
             binder.sendData(&quot;bt2&quot;);
 
            break;
-
     }
-
 }
 </code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Intent</span><br><span class="line">这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</span><br></pre></td></tr></table></figure>
 <p>// Activity<br>public class ServiceStartActivity extends AppCompatActivity implements View.OnClickListener {</p>
