@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-15T16:45:17.988Z">
+<meta property="og:updated_time" content="2019-12-16T06:01:15.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-15T16:45:17.988Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:01:15.566Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    25 minutes read (About 3785 words)
+                    36 minutes read (About 5336 words)
                 </span>
                 
                 
@@ -302,7 +302,7 @@
 <p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation|screenSize 或者orientation|screenSize|keyboardHidden 的时候，它的生命周期会走如下流程：</p>
 <blockquote>
 <p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-<p>由横竖屏互切时：什么都没调用（注意：<strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong>）</p>
+<p>由横竖屏互切时：什么都没调用（⚠️ <strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong>）</p>
 </blockquote>
 <h4 id="什么时候活动不执行onDestory-？"><a href="#什么时候活动不执行onDestory-？" class="headerlink" title="什么时候活动不执行onDestory()？"></a>什么时候活动不执行onDestory()？</h4><p><strong>返回栈里面的第一个没有销毁的活动会执行 onDestroy()，其他活动不会执行。</strong></p>
 <p>例：从 mainActivity 跳转到 activity-A（或者继续从 activity-A 再跳转到 activity-B），这时候，从后台强杀，只会执行 mainActivity 的 onDestroy()，activity-A（以及activity-B）的onDestroy() 方法都不会执行。</p>
@@ -316,12 +316,53 @@
 <blockquote>
 <p>进程优先级从高到低：<strong>前台 &gt; 可见 &gt; 服务 &gt; 后台 &gt; 空</strong></p>
 </blockquote>
-<h1 id="Activity-启动模式"><a href="#Activity-启动模式" class="headerlink" title="Activity 启动模式"></a>Activity 启动模式</h1><h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
-<h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="Activity-启动模式"><a href="#Activity-启动模式" class="headerlink" title="Activity 启动模式"></a>Activity 启动模式</h1><p>返回栈的结构可能导致同一个活动在多次调用的时候被重复创建，造成资源浪费，因此，我们需要先学习活动的启动模式。</p>
+<h2 id="standrad"><a href="#standrad" class="headerlink" title="standrad"></a>standrad</h2><p>standard 是活动的默认启动模式，<strong>在 standard 模式下，每当启动一个新的活动，它（新活动）就会在返回栈种入栈，并处于栈顶位置。</strong>对于使用该模式的活动，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建一个新的实例。</p>
+<p>在这种模式下，<strong>被启动的活动（standard 模式）会进入启动它的那个活动的任务栈中</strong>。</p>
+<blockquote>
+<p>例如：activityA 启动了 activityB（activityB 为 standard模式），则 activityB 就会进入 activityA 所在的返回栈中。</p>
+</blockquote>
+<p>⚠️ 当我们<strong>用 ApplicationContext 去启动 standard 模式的活动就会报错</strong>，这是因为 standard 模式的活动默认会进入启动它的活动所属的返回栈中，但是由于非 Activity 类型的 Context(如 ApplicationContext)并没有所谓的返回栈，所以这就会出现错误。解决这个问题的方法就是为待启动的活动指定  <code>FLAG_ACTIVITY_NEW_TASK</code>  标记位，这样启动的时候就会为它创建一个新的返回栈，这个时候启动活动实际上以 <strong>singleTask</strong> 模式启动的。</p>
+<h2 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h2><p>standard 模式也有它不合理的地方：活动明明已经在栈顶了，再次启动这个活动时又会创建一个新的活动实例，并把它压入栈顶，造成资源浪费。因此 singleTop 模式就是为解决这个问题而生。</p>
+<p><strong>在 singleTop 模式下，在启动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，同时它的 onNewIntent() 被回调，通过此方法的参数我们可以取出当前请求的信息。</strong></p>
+<blockquote>
+<p>例：<br>有4个活动：A、B、C、D，其中 C 为 singleTop 模式，此时返回栈为 [ABCD]：</p>
+<p>–<br>若此时再启动活动 D：</p>
+<p>若 D 为 singleTop 模式：<br>返回栈：[ABCD]</p>
+<p>若 D 为 standrad 模式：<br>返回栈：[ABCDD]</p>
+<p>–<br>若此时再启动活动 C：<br>返回栈：[ABCDC]</p>
+</blockquote>
+<h2 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h2><p>如上例所示，如果返回栈中的任务不在栈顶位置，当再次启动它的时候依然会重新创建一个新的实例，因此 singeTask 就是用来解决这个问题的。</p>
+<p><strong>在 singleTask 模式下，每次启动活动时，系统首先会在返回栈中检查是否已经存在该活动的实例，如果存在，则直接使用该实例，系统也会回调其 onNewIntent()，并把在这个活动之上的所有活动出栈；如果没有发现则创建一个新的活动实例并入栈。</strong></p>
+<blockquote>
+<p>例1：<br>有4个活动：A、B、C，有两个返回栈 S1：[ABC] 和 S2：[]（S2 尚未有实例），现在要启动活动 D（singeTask模式）：</p>
+<p>–<br>若 S1 启动活动 D：<br>返回栈：S1：[ABCD]</p>
+<p>–<br>若 S2 启动活动 D：<br>先创建返回栈 S2 的实例，再启动活动 D<br>返回栈：S1：[ABC]  S2：[D]</p>
+<p>–<br>若此时返回栈 S1：[ADBC]，要启动活动 D（singeTask模式）<br>返回栈：S1：[AD]<br>活动 D 到栈顶后其 onNewIntent() 会被系统调用</p>
+<hr>
+<p>例2：<br>假设目前有2个返回栈，<a href="#foreground">前台</a>返回栈为[AB],而<a href="#background">后台</a>返回栈为[CD]，假设活动 C、D 的启动模式均为 singleTask。</p>
+<p>若请求启动活动 D，那么整个后台返回栈都会被切换到前台，这个时候整个后台返回栈变成了[ABCD]。当用户按back键的时候，列表中的Activity会一一出栈。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask1.png" alt="请求活动 D"></p>
+<p>但若请求启动活动 C，则活动 D 会先出栈，然后后台返回栈再被切换到前台，这时整个后台返回栈变成[ABC]，当用户按back键的时候，列表中的Activity会一一出栈。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask2.png" alt="请求活动 C"></p>
+</blockquote>
+<p>⚠️ 如果 singleTask 模式指定不同的 taskAffinity，会启动一个新的返回栈，就如同 singeInstance 模式一样。</p>
+<h2 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h2><p><strong>当活动被指定为 singleInstance 模式时被启动，则会启动一个新的返回栈来管理这个活动。</strong>这样就实现了不同应用程序启动同一个活动时都共用一个返回栈，实现了共享活动实例。</p>
+<p>singleInstance 模式有一下特点：</p>
+<ul>
+<li>以 singleInstance 模式启动的活动具有全局唯一性，即整个系统中只会存在一个这样的实例。</li>
+<li>以 singleInstance 模式启动的活动在整个系统中是单例的，如果在启动这样的活动时，已经存在了一个实例，那么会把它所在的任务调度到前台，重用这个实例。</li>
+<li>以 singleInstance 模式启动的活动具有独占性，即它会独自占用一个任务（返回栈），被他开启的任何活动都会运行在其他任务（返回栈）中。</li>
+<li>被 singleInstance 模式的活动开启的其他活动，能够在新的任务（返回栈）中启动，但不一定开启新的任务（返回栈），也可能在已有的一个任务（返回栈）中开启。</li>
+</ul>
+<h1 id="Activity-组件之间的通信"><a href="#Activity-组件之间的通信" class="headerlink" title="Activity 组件之间的通信"></a>Activity 组件之间的通信</h1><h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过<br>自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
+<h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><p>参见博文《<a href="https://blog.csdn.net/pihailailou/article/details/78545391" target="_blank" rel="noopener">Android Activity的启动流程源码解析(8.0) | 小王君</a>》</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://blog.csdn.net/ClAndEllen/article/details/89886833" target="_blank" rel="noopener">Android面试系列文章2018之Android部分Activity篇 ｜ ClAndEllen </a> （遵循 CC 4.0 BY-SA 版权协议）</li>
 <li><a href="https://www.jianshu.com/p/c0c33cabfa0f" target="_blank" rel="noopener">Java中的回调方法</a></li>
 <li><a href="https://blog.csdn.net/a872822645/article/details/62217965" target="_blank" rel="noopener">Android什么时候只会调用onPause()而不会调用onStop()完全解析？ | 娃哈哈19910206</a>（遵循 CC 4.0 BY-SA 版权协议）</li>
 <li><a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议 | 一片枫叶_刘超</a>（遵循 CC 4.0 BY-SA 版权协议）</li>
+<li><a href="https://blog.csdn.net/pihailailou/article/details/78545391" target="_blank" rel="noopener">Android Activity的启动流程源码解析(8.0) | 小王君</a>（遵循 CC 4.0 BY-SA 版权协议）</li>
 </ul>
 
         </div>
@@ -375,7 +416,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -410,7 +451,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catalogue
+                Catálogo
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#Activity-是什么？">
@@ -460,17 +501,37 @@
         <a class="is-flex" href="#Activity-启动模式">
         <span class="has-mr-6">4</span>
         <span>Activity 启动模式</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#standrad">
+        <span class="has-mr-6">4.1</span>
+        <span>standrad</span>
+        </a></li><li>
+        <a class="is-flex" href="#singleTop">
+        <span class="has-mr-6">4.2</span>
+        <span>singleTop</span>
+        </a></li><li>
+        <a class="is-flex" href="#singleTask">
+        <span class="has-mr-6">4.3</span>
+        <span>singleTask</span>
+        </a></li><li>
+        <a class="is-flex" href="#singleInstance">
+        <span class="has-mr-6">4.4</span>
+        <span>singleInstance</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Activity-组件之间的通信">
+        <span class="has-mr-6">5</span>
+        <span>Activity 组件之间的通信</span>
         </a></li><li>
         <a class="is-flex" href="#scheme-跳转协议">
-        <span class="has-mr-6">5</span>
+        <span class="has-mr-6">6</span>
         <span>scheme 跳转协议</span>
         </a></li><li>
         <a class="is-flex" href="#源码解析：startActivity">
-        <span class="has-mr-6">6</span>
+        <span class="has-mr-6">7</span>
         <span>源码解析：startActivity()</span>
         </a></li><li>
         <a class="is-flex" href="#参考">
-        <span class="has-mr-6">7</span>
+        <span class="has-mr-6">8</span>
         <span>参考</span>
         </a></li></ul>
         </div>
@@ -623,10 +684,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
