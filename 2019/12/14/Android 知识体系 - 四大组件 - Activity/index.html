@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-16T06:49:33.901Z">
+<meta property="og:updated_time" content="2019-12-16T06:53:05.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:49:33.901Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:53:05.137Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    an hour read (About 6761 words)
+                    an hour read (About 6753 words)
                 </span>
                 
                 
@@ -271,415 +271,283 @@
 <li>方案二：修改 android:theme=”@android:style/Theme.Translucent” ，将该活动变为一个透明活动</li>
 </ul>
 <p>并使用 FirstActivity 调用 SecondActivity，此时 FirstActivity 只会单独执行执行 onPause()，而不会继续执行 onStop()，详细过程见博文<a href="https://blog.csdn.net/a872822645/article/details/62217965" target="_blank" rel="noopener">《Android什么时候只会调用onPause()而不会调用onStop()完全解析？》</a></p>
-<h4 id="活动的横竖屏切换"><a href="#活动的横竖屏切换" class="headerlink" title="活动的横竖屏切换"></a><span id="orientationAlteration">活动的横竖屏切换</span></h4><p>与横竖屏生命周期函数有关调用的属性是  <code>android:configChanges</code>  ，关于它的属性值设置影响如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">参数</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">orientation</td>
-<td style="text-align:left">消除横竖屏的影响</td>
-</tr>
-<tr>
-<td style="text-align:center">keyboardHidden</td>
-<td style="text-align:left">消除键盘的影响</td>
-</tr>
-<tr>
-<td style="text-align:center">screenSize</td>
-<td style="text-align:left">消除屏幕大小的影响</td>
-</tr>
-</tbody>
-</table>
-<p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation 或者 orientation|keyboardHidden 或者不设置这个属性的时候，它的生命周期会走如下流程：</p>
-<blockquote>
-<p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-<p>由横竖屏互切时：onPause() -&gt; onSaveInstanceState -&gt; onStop() -&gt; onDestroy() -&gt; onCreate() -&gt; onStart() -&gt; onRestoreInstanceState() -&gt; onResume</p>
-</blockquote>
-<p>当我们设置活动的  <code>android:configChanges</code>  属性为 orientation|screenSize 或者orientation|screenSize|keyboardHidden 的时候，它的生命周期会走如下流程：</p>
-<blockquote>
-<p>刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-<p>由横竖屏互切时：什么都没调用（⚠️ <strong>设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！</strong>）</p>
-</blockquote>
-<h4 id="什么时候活动不执行onDestory-？"><a href="#什么时候活动不执行onDestory-？" class="headerlink" title="什么时候活动不执行onDestory()？"></a>什么时候活动不执行onDestory()？</h4><p><strong>返回栈里面的第一个没有销毁的活动会执行 onDestroy()，其他活动不会执行。</strong></p>
-<p>例：从 mainActivity 跳转到 activity-A（或者继续从 activity-A 再跳转到 activity-B），这时候，从后台强杀，只会执行 mainActivity 的 onDestroy()，activity-A（以及activity-B）的onDestroy() 方法都不会执行。</p>
-<h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a><span id="process_priority">进程优先级</span></h2><ul>
-<li><strong><span id="foreground">前台</span></strong>：与当前用户正在交互的 Activity 所在的进程。</li>
-<li><strong><span id="visible">可见</span></strong>：Activity 可见但是没有在前台所在的进程。</li>
-<li><strong>服务</strong>：Activity 在后台开启了 Service 服务所在的进程。</li>
-<li><strong><span id="background">后台</span></strong>：Activity 完全处于后台所在的进程。</li>
-<li><strong>空</strong>：没有任何 Activity 存在的进程，优先级也是最低的。</li>
-</ul>
-<blockquote>
-<p>进程优先级从高到低：<strong>前台 &gt; 可见 &gt; 服务 &gt; 后台 &gt; 空</strong>  </p>
-</blockquote>
-<h1 id="Activity-启动模式"><a href="#Activity-启动模式" class="headerlink" title="Activity 启动模式"></a>Activity 启动模式</h1><p>返回栈的结构可能导致同一个活动在多次调用的时候被重复创建，造成资源浪费，因此，我们需要先学习活动的启动模式。</p>
-<h2 id="standrad"><a href="#standrad" class="headerlink" title="standrad"></a>standrad</h2><p>standard 是活动的默认启动模式，<strong>在 standard 模式下，每当启动一个新的活动，它（新活动）就会在返回栈种入栈，并处于栈顶位置。</strong>对于使用该模式的活动，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建一个新的实例。</p>
-<p>在这种模式下，<strong>被启动的活动（standard 模式）会进入启动它的那个活动的任务栈中</strong>。</p>
-<blockquote>
-<p>例如：activityA 启动了 activityB（activityB 为 standard模式），则 activityB 就会进入 activityA 所在的返回栈中。</p>
-</blockquote>
-<p>⚠️ 当我们<strong>用 ApplicationContext 去启动 standard 模式的活动就会报错</strong>，这是因为 standard 模式的活动默认会进入启动它的活动所属的返回栈中，但是由于非 Activity 类型的 Context(如 ApplicationContext)并没有所谓的返回栈，所以这就会出现错误。解决这个问题的方法就是为待启动的活动指定  <code>FLAG_ACTIVITY_NEW_TASK</code>  标记位，这样启动的时候就会为它创建一个新的返回栈，这个时候启动活动实际上以 <strong>singleTask</strong> 模式启动的。</p>
-<h2 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h2><p>standard 模式也有它不合理的地方：活动明明已经在栈顶了，再次启动这个活动时又会创建一个新的活动实例，并把它压入栈顶，造成资源浪费。因此 singleTop 模式就是为解决这个问题而生。</p>
-<p><strong>在 singleTop 模式下，在启动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，同时它的 onNewIntent() 被回调，通过此方法的参数我们可以取出当前请求的信息。</strong></p>
-<blockquote>
-<p>例：<br>有4个活动：A、B、C、D，其中 C 为 singleTop 模式，此时返回栈为 [ABCD]：</p>
-<p>–<br>若此时再启动活动 D：</p>
-<p>若 D 为 singleTop 模式：<br>返回栈：[ABCD]</p>
-<p>若 D 为 standrad 模式：<br>返回栈：[ABCDD]</p>
-<p>–<br>若此时再启动活动 C：<br>返回栈：[ABCDC]</p>
-</blockquote>
-<h2 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h2><p>如上例所示，如果返回栈中的任务不在栈顶位置，当再次启动它的时候依然会重新创建一个新的实例，因此 singeTask 就是用来解决这个问题的。</p>
-<p><strong>在 singleTask 模式下，每次启动活动时，系统首先会在返回栈中检查是否已经存在该活动的实例，如果存在，则直接使用该实例，系统也会回调其 onNewIntent()，并把在这个活动之上的所有活动出栈；如果没有发现则创建一个新的活动实例并入栈。</strong></p>
-<p>⚠️ 如果 singleTask 模式指定不同的 taskAffinity，会启动一个新的返回栈，就如同 <strong>singeInstance</strong> 模式一样。</p>
-<blockquote>
-<p>例1：<br>有4个活动：A、B、C，有两个返回栈 S1：[ABC] 和 S2：[]（S2 尚未有实例），现在要启动活动 D（singeTask模式）：</p>
-<p>–<br>若 S1 启动活动 D：<br>返回栈：S1：[ABCD]</p>
-<p>–<br>若 S2 启动活动 D：<br>先创建返回栈 S2 的实例，再启动活动 D<br>返回栈：S1：[ABC]  S2：[D]</p>
-<p>–<br>若此时返回栈 S1：[ADBC]，要启动活动 D（singeTask模式）<br>返回栈：S1：[AD]<br>活动 D 到栈顶后其 onNewIntent() 会被系统调用</p>
-<hr>
-<p>例2：<br>假设目前有2个返回栈，<a href="#foreground">前台</a>返回栈为[AB],而<a href="#background">后台</a>返回栈为[CD]，假设活动 C、D 的启动模式均为 singleTask。</p>
-<p>若请求启动活动 D，那么整个后台返回栈都会被切换到前台，这个时候整个后台返回栈变成了[ABCD]。当用户按back键的时候，列表中的Activity会一一出栈。</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask1.png" alt="请求活动 D"></p>
-<p>但若请求启动活动 C，则活动 D 会先出栈，然后后台返回栈再被切换到前台，这时整个后台返回栈变成[ABC]，当用户按back键的时候，列表中的Activity会一一出栈。</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask2.png" alt="请求活动 C"></p>
-</blockquote>
-<h2 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h2><p><strong>当活动被指定为 singleInstance 模式时被启动，则会启动一个新的返回栈来管理这个活动。</strong>这样就实现了不同应用程序启动同一个活动时都共用一个返回栈，实现了共享活动实例。</p>
-<p>singleInstance 模式有一下特点：</p>
-<ul>
-<li>以 singleInstance 模式启动的活动具有全局唯一性，即整个系统中只会存在一个这样的实例。</li>
-<li>以 singleInstance 模式启动的活动在整个系统中是单例的，如果在启动这样的活动时，已经存在了一个实例，那么会把它所在的任务调度到前台，重用这个实例。</li>
-<li>以 singleInstance 模式启动的活动具有独占性，即它会独自占用一个任务（返回栈），被他开启的任何活动都会运行在其他任务（返回栈）中。</li>
-<li>被 singleInstance 模式的活动开启的其他活动，能够在新的任务（返回栈）中启动，但不一定开启新的任务（返回栈），也可能在已有的一个任务（返回栈）中开启。</li>
-</ul>
-<h1 id="Activity-组件之间的通信"><a href="#Activity-组件之间的通信" class="headerlink" title="Activity 组件之间的通信"></a>Activity 组件之间的通信</h1><h2 id="Activity-gt-Activity"><a href="#Activity-gt-Activity" class="headerlink" title="Activity -&gt; Activity"></a>Activity -&gt; Activity</h2><h3 id="Intent-Bundle"><a href="#Intent-Bundle" class="headerlink" title="Intent/Bundle"></a>Intent/Bundle</h3><p>此方式多用于Activity之间传递数据。</p>
-<pre><code class="java"><span class="comment">//首先创建一个Bundle对象</span>
-   Bundle bundle = <span class="keyword">new</span> Bundle();
-   bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
-   bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
-   bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
+<h4 id="活动的横竖屏切换"><a href="#活动的横竖屏切换" class="headerlink" title="活动的横竖屏切换"></a><span id="orientationAlteration">活动的横竖屏切换</span></h4><p>与横竖屏生命周期函数有关调用的属性是  <figure class="highlight plain hljs"><figcaption><span>，关于它的属性值设置影响如下：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">|参数|说明|</span><br><span class="line">|:--:|:--|</span><br><span class="line">|orientation|消除横竖屏的影响|</span><br><span class="line">|keyboardHidden|消除键盘的影响|</span><br><span class="line">|screenSize|消除屏幕大小的影响|</span><br><span class="line">  </span><br><span class="line">当我们设置活动的  ```android:configChanges```  属性为 orientation 或者 orientation|keyboardHidden 或者不设置这个属性的时候，它的生命周期会走如下流程：</span><br><span class="line">  </span><br><span class="line">&gt; 刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</span><br><span class="line">&gt; </span><br><span class="line">&gt; 由横竖屏互切时：onPause() -&gt; onSaveInstanceState -&gt; onStop() -&gt; onDestroy() -&gt; onCreate() -&gt; onStart() -&gt; onRestoreInstanceState() -&gt; onResume</span><br><span class="line">  </span><br><span class="line">当我们设置活动的  ```android:configChanges```  属性为 orientation|screenSize 或者orientation|screenSize|keyboardHidden 的时候，它的生命周期会走如下流程：</span><br><span class="line">  </span><br><span class="line">&gt; 刚启动活动：onCreate() -&gt; onStart() -&gt; onResume()</span><br><span class="line">&gt; </span><br><span class="line">&gt; 由横竖屏互切时：什么都没调用（⚠️ **设置了 orientation|screenSize 属性之后，在进行横竖屏切换的时候调用的方法是onConfigurationChanged()，而不会回调Activity的各个生命周期函数！**）</span><br><span class="line">  </span><br><span class="line">#### 什么时候活动不执行onDestory()？</span><br><span class="line">**返回栈里面的第一个没有销毁的活动会执行 onDestroy()，其他活动不会执行。**</span><br><span class="line"></span><br><span class="line">例：从 mainActivity 跳转到 activity-A（或者继续从 activity-A 再跳转到 activity-B），这时候，从后台强杀，只会执行 mainActivity 的 onDestroy()，activity-A（以及activity-B）的onDestroy() 方法都不会执行。</span><br><span class="line">  </span><br><span class="line">## &lt;span id=&quot;process_priority&quot;&gt;进程优先级&lt;/span&gt;</span><br><span class="line">- **&lt;span id=&quot;foreground&quot;&gt;前台&lt;/span&gt;**：与当前用户正在交互的 Activity 所在的进程。</span><br><span class="line">- **&lt;span id=&quot;visible&quot;&gt;可见&lt;/span&gt;**：Activity 可见但是没有在前台所在的进程。</span><br><span class="line">- **服务**：Activity 在后台开启了 Service 服务所在的进程。</span><br><span class="line">- **&lt;span id=&quot;background&quot;&gt;后台&lt;/span&gt;**：Activity 完全处于后台所在的进程。</span><br><span class="line">- **空**：没有任何 Activity 存在的进程，优先级也是最低的。</span><br><span class="line"></span><br><span class="line">&gt; 进程优先级从高到低：**前台 &gt; 可见 &gt; 服务 &gt; 后台 &gt; 空**  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"># Activity 启动模式</span><br><span class="line">返回栈的结构可能导致同一个活动在多次调用的时候被重复创建，造成资源浪费，因此，我们需要先学习活动的启动模式。</span><br><span class="line">## standrad</span><br><span class="line">standard 是活动的默认启动模式，**在 standard 模式下，每当启动一个新的活动，它（新活动）就会在返回栈种入栈，并处于栈顶位置。**对于使用该模式的活动，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建一个新的实例。</span><br><span class="line">  </span><br><span class="line">在这种模式下，**被启动的活动（standard 模式）会进入启动它的那个活动的任务栈中**。</span><br><span class="line">  </span><br><span class="line">&gt; 例如：activityA 启动了 activityB（activityB 为 standard模式），则 activityB 就会进入 activityA 所在的返回栈中。</span><br><span class="line">  </span><br><span class="line">⚠️ 当我们**用 ApplicationContext 去启动 standard 模式的活动就会报错**，这是因为 standard 模式的活动默认会进入启动它的活动所属的返回栈中，但是由于非 Activity 类型的 Context(如 ApplicationContext)并没有所谓的返回栈，所以这就会出现错误。解决这个问题的方法就是为待启动的活动指定  ```FLAG_ACTIVITY_NEW_TASK```  标记位，这样启动的时候就会为它创建一个新的返回栈，这个时候启动活动实际上以 **singleTask** 模式启动的。</span><br><span class="line"></span><br><span class="line">## singleTop</span><br><span class="line">standard 模式也有它不合理的地方：活动明明已经在栈顶了，再次启动这个活动时又会创建一个新的活动实例，并把它压入栈顶，造成资源浪费。因此 singleTop 模式就是为解决这个问题而生。</span><br><span class="line">  </span><br><span class="line">**在 singleTop 模式下，在启动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，同时它的 onNewIntent() 被回调，通过此方法的参数我们可以取出当前请求的信息。**</span><br><span class="line">  </span><br><span class="line">&gt; 例：</span><br><span class="line">&gt; 有4个活动：A、B、C、D，其中 C 为 singleTop 模式，此时返回栈为 [ABCD]：</span><br><span class="line">&gt; </span><br><span class="line">&gt; --</span><br><span class="line">&gt; 若此时再启动活动 D：</span><br><span class="line">&gt; </span><br><span class="line">&gt; 若 D 为 singleTop 模式：</span><br><span class="line">&gt; 返回栈：[ABCD]</span><br><span class="line">&gt; </span><br><span class="line">&gt; 若 D 为 standrad 模式：</span><br><span class="line">&gt; 返回栈：[ABCDD]</span><br><span class="line">&gt; </span><br><span class="line">&gt; --</span><br><span class="line">&gt; 若此时再启动活动 C：</span><br><span class="line">&gt; 返回栈：[ABCDC]</span><br><span class="line">  </span><br><span class="line">## singleTask</span><br><span class="line">如上例所示，如果返回栈中的任务不在栈顶位置，当再次启动它的时候依然会重新创建一个新的实例，因此 singeTask 就是用来解决这个问题的。</span><br><span class="line"></span><br><span class="line">**在 singleTask 模式下，每次启动活动时，系统首先会在返回栈中检查是否已经存在该活动的实例，如果存在，则直接使用该实例，系统也会回调其 onNewIntent()，并把在这个活动之上的所有活动出栈；如果没有发现则创建一个新的活动实例并入栈。**</span><br><span class="line"></span><br><span class="line">⚠️ 如果 singleTask 模式指定不同的 taskAffinity，会启动一个新的返回栈，就如同 **singeInstance** 模式一样。</span><br><span class="line"></span><br><span class="line">&gt; 例1：</span><br><span class="line">&gt; 有4个活动：A、B、C，有两个返回栈 S1：[ABC] 和 S2：[]（S2 尚未有实例），现在要启动活动 D（singeTask模式）：</span><br><span class="line">&gt; </span><br><span class="line">&gt; --</span><br><span class="line">&gt; 若 S1 启动活动 D：</span><br><span class="line">&gt; 返回栈：S1：[ABCD]</span><br><span class="line">&gt; </span><br><span class="line">&gt; --</span><br><span class="line">&gt; 若 S2 启动活动 D：</span><br><span class="line">&gt; 先创建返回栈 S2 的实例，再启动活动 D</span><br><span class="line">&gt; 返回栈：S1：[ABC]  S2：[D]</span><br><span class="line">&gt; </span><br><span class="line">&gt; --</span><br><span class="line">&gt; 若此时返回栈 S1：[ADBC]，要启动活动 D（singeTask模式）</span><br><span class="line">&gt; 返回栈：S1：[AD]</span><br><span class="line">&gt; 活动 D 到栈顶后其 onNewIntent() 会被系统调用</span><br><span class="line">&gt; </span><br><span class="line">&gt; ---</span><br><span class="line">&gt; 例2：</span><br><span class="line">&gt; 假设目前有2个返回栈，[前台](#foreground)返回栈为[AB],而[后台](#background)返回栈为[CD]，假设活动 C、D 的启动模式均为 singleTask。</span><br><span class="line">&gt; </span><br><span class="line">&gt; 若请求启动活动 D，那么整个后台返回栈都会被切换到前台，这个时候整个后台返回栈变成了[ABCD]。当用户按back键的时候，列表中的Activity会一一出栈。</span><br><span class="line">&gt; </span><br><span class="line">&gt; ![请求活动 D](https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask1.png)</span><br><span class="line">&gt; </span><br><span class="line">&gt; 但若请求启动活动 C，则活动 D 会先出栈，然后后台返回栈再被切换到前台，这时整个后台返回栈变成[ABC]，当用户按back键的时候，列表中的Activity会一一出栈。</span><br><span class="line">&gt; </span><br><span class="line">&gt; ![请求活动 C](https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/singleTask2.png)</span><br><span class="line">  </span><br><span class="line">## singleInstance</span><br><span class="line">**当活动被指定为 singleInstance 模式时被启动，则会启动一个新的返回栈来管理这个活动。**这样就实现了不同应用程序启动同一个活动时都共用一个返回栈，实现了共享活动实例。</span><br><span class="line">  </span><br><span class="line">singleInstance 模式有一下特点：</span><br><span class="line">  </span><br><span class="line">- 以 singleInstance 模式启动的活动具有全局唯一性，即整个系统中只会存在一个这样的实例。</span><br><span class="line">- 以 singleInstance 模式启动的活动在整个系统中是单例的，如果在启动这样的活动时，已经存在了一个实例，那么会把它所在的任务调度到前台，重用这个实例。</span><br><span class="line">- 以 singleInstance 模式启动的活动具有独占性，即它会独自占用一个任务（返回栈），被他开启的任何活动都会运行在其他任务（返回栈）中。</span><br><span class="line">- 被 singleInstance 模式的活动开启的其他活动，能够在新的任务（返回栈）中启动，但不一定开启新的任务（返回栈），也可能在已有的一个任务（返回栈）中开启。</span><br><span class="line"></span><br><span class="line"># Activity 组件之间的通信</span><br><span class="line">## Activity -&gt; Activity</span><br><span class="line">### Intent/Bundle</span><br><span class="line">此方式多用于Activity之间传递数据。</span><br></pre></td></tr></table></figure></p>
+<p> //首先创建一个Bundle对象<br>    Bundle bundle = new Bundle();<br>    bundle.putString(“data_string”,”数据”);<br>    bundle.putInt(“data_int”,10);<br>    bundle.putChar(“da_char”,’a’);</p>
+<pre><code>//然后创建一个Intent对象
+Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+intent.putExtras(bundle);
+startActivity(intent);
+</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">### 类静态变量</span><br><span class="line">在活动内部定义静态的变量，这种方式见于少量的数据通信，如果数据过多，还是使用上一种方式。</span><br></pre></td></tr></table></figure>
+<p>public class FirstActivity extends AppCompatActivity {</p>
+<pre><code>//声明为静态
+static boolean isFlag = false;  
 
-   <span class="comment">//然后创建一个Intent对象</span>
-   Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);
-   intent.putExtras(bundle);
-   startActivity(intent);
-</code></pre>
-<h3 id="类静态变量"><a href="#类静态变量" class="headerlink" title="类静态变量"></a>类静态变量</h3><p>在活动内部定义静态的变量，这种方式见于少量的数据通信，如果数据过多，还是使用上一种方式。</p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>{
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_first);
 
-    <span class="comment">//声明为静态</span>
-    <span class="keyword">static</span> <span class="keyword">boolean</span> isFlag = <span class="keyword">false</span>;  
+    //首先创建一个Bundle对象
+    Bundle bundle = new Bundle();
+    bundle.putString(&quot;data_string&quot;,&quot;数据&quot;);
+    bundle.putInt(&quot;data_int&quot;,10);
+    bundle.putChar(&quot;da_char&quot;,&apos;a&apos;);
 
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
-        <span class="keyword">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+    //然后创建一个Intent对象
+    Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+    intent.putExtras(bundle);
+    startActivity(intent);
 
-        <span class="comment">//首先创建一个Bundle对象</span>
-        Bundle bundle = <span class="keyword">new</span> Bundle();
-        bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
-        bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
-        bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
 
-        <span class="comment">//然后创建一个Intent对象</span>
-        Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+}
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 全局变量</span><br><span class="line">创建一个类，里面定义一批静态变量，活动之间通信都可以访问这个类里面的静态变量。</span><br><span class="line"></span><br><span class="line">## Activity -&gt; Service</span><br><span class="line">### 绑定服务的方式，利用 ServiceConnection 接口</span><br><span class="line">首先我们需要在要绑定的服务中声明一个Binder类</span><br></pre></td></tr></table></figure></p>
+<p>public class MyService1 extends Service {</p>
+<pre><code>public String data = &quot;&quot;;
 
+public MyService1() {
+}
+
+@Override
+public IBinder onBind(Intent intent) {
+    // TODO: Return the communication channel to the service.
+    return new Binder();
+}
+
+
+
+public class Binder extends android.os.Binder{
+
+    public void sendData(String data){
+
+        MyService1.this.data = data;
 
     }
 
 }
-</code></pre>
-<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>创建一个类，里面定义一批静态变量，活动之间通信都可以访问这个类里面的静态变量。</p>
-<h2 id="Activity-gt-Service"><a href="#Activity-gt-Service" class="headerlink" title="Activity -&gt; Service"></a>Activity -&gt; Service</h2><h3 id="绑定服务的方式，利用-ServiceConnection-接口"><a href="#绑定服务的方式，利用-ServiceConnection-接口" class="headerlink" title="绑定服务的方式，利用 ServiceConnection 接口"></a>绑定服务的方式，利用 ServiceConnection 接口</h3><p>首先我们需要在要绑定的服务中声明一个Binder类</p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService1</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后我们让活动实现 ServiceConnection 这个接口，并且在 onServiceConnected() 方法中获取到 Service 提供给活动的 Binder 实例对象，通过这个对象我们就可以与 Service 进行通信可以通过上述代码的 Binder 类中的 sendData() 方法进行通信。</span><br></pre></td></tr></table></figure></p>
+<p>ublic class ServiceBindActivity extends AppCompatActivity implements ServiceConnection,View.OnClickListener {</p>
+<pre><code>private Button bt0,bt1,bt2;
 
-    <span class="keyword">public</span> String data = <span class="string">""</span>;
+public MyService1.Binder binder = null;
 
-    <span class="function"><span class="keyword">public</span> <span class="title">MyService1</span><span class="params">()</span> </span>{
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_service_bind);
+
+    bt0 = findViewById(R.id.bt0);
+    bt1 = findViewById(R.id.bt1);
+    bt2 = findViewById(R.id.bt2);
+
+    bt0.setOnClickListener(this);
+    bt1.setOnClickListener(this);
+    bt2.setOnClickListener(this);
+
+
+}
+
+@Override
+protected void onDestroy() {
+   super.onDestroy();
+   unbindService(this);
+}
+
+//这个是服务绑定的时候调用
+@Override
+public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+    binder = (MyService1.Binder) iBinder;
+}
+
+//这个是服务解绑的时候调用
+@Override
+public void onServiceDisconnected(ComponentName componentName) {
+
+}
+
+@Override
+public void onClick(View view) {
+
+    switch (view.getId()){
+
+        case R.id.bt0:
+
+            //绑定服务
+            Intent intent = new Intent(ServiceBindActivity.this,MyService1.class);
+            bindService(intent,this, Context.BIND_AUTO_CREATE);
+
+           break;
+
+        case R.id.bt1:
+
+            //通过binder对象来和Service进行通信
+            if(binder != null)
+            binder.sendData(&quot;bt1&quot;);
+
+            break;
+        case R.id.bt2:
+
+            //通过binder对象来和Service进行通信
+            if(binder != null)
+            binder.sendData(&quot;bt2&quot;);
+
+           break;
+
     }
 
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
-        <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> Binder();
+}
+</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Intent</span><br><span class="line">这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</span><br></pre></td></tr></table></figure>
+<p>// Activity<br>public class ServiceStartActivity extends AppCompatActivity implements View.OnClickListener {</p>
+<pre><code>private Button bt0,bt1;
+
+private Intent intent ;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_service_start);
+
+    intent = new Intent(this, MyService2.class);
+
+    bt0 = findViewById(R.id.bt0);
+    bt1 = findViewById(R.id.bt1);
+
+    bt0.setOnClickListener(this);
+    bt1.setOnClickListener(this);
+
+
+}
+
+@Override
+public void onClick(View view) {
+
+    switch (view.getId()){
+
+        case R.id.bt0:
+
+            //开启服务并且传递数据
+            intent.putExtra(&quot;data_stirng&quot;,&quot;string数据&quot;);
+            startActivity(intent);
+
+            break;
+
+        case R.id.bt1:
+
+            //结束服务
+            stopService(intent);
+
+            break;
+
     }
 
+}
+</code></pre><p>}</p>
+<p>// Service<br>public class MyService2 extends Service {</p>
+<pre><code>public String data = &quot;&quot;;
 
+public MyService2() {
+}
 
-    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Binder</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span></span>{
+@Override
+public IBinder onBind(Intent intent) {
+    // TODO: Return the communication channel to the service.
+    return null;
+}
 
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendData</span><span class="params">(String data)</span></span>{
+@Override
+public int onStartCommand(Intent intent, int flags, int startId) {
+    //得到Activity传递过来的数据
+    data = intent.getStringExtra(&quot;data_string&quot;);
+    return super.onStartCommand(intent, flags, startId);
+}
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### CallBack + Handler 监听服务的进程变化</span><br><span class="line">当 ServiceBind2Activity 去绑定服务 MyService3 的时候,那么在活动中的 onServiceConnected()方法被调用，此时位于 MyService3 的 CallBack 接口引用被实例化，并且 onDataChange()方法被实现，可以看到里面是一段 Handler 通信的代码，这个方法是为 MyService3 做耗时操作调用的，也印证了标题：监听服务的进程变化。</span><br></pre></td></tr></table></figure></p>
+<p>// Service<br>public class MyService3 extends Service {</p>
+<pre><code>//在Service中如果要进行耗时任务，可以通过CallBack接口提供的方法与Activity进行通信
+public Callback callback;
 
-            MyService1.<span class="keyword">this</span>.data = data;
+public MyService3() {
+}
 
+@Override
+public IBinder onBind(Intent intent) {
+   // TODO: Return the communication channel to the service.
+   return new Binder();
+}
+
+public void setCallBack(CallBack callBack){
+    this.callback = callback;
+}
+
+public Callback getCallback() {
+    return callback;
+}
+
+public interface CallBack{
+    void onDataChange(String data);
+}
+
+public class Binder extends android.os.Binder{
+
+    public MyService3 getMyService3(){
+        return MyService3.this;
+    }
+
+}
+</code></pre><p>}</p>
+<p>// Activity<br>public class ServiceBind2Activity extends AppCompatActivity implements ServiceConnection{</p>
+<pre><code>public MyService3.Binder binder = null;
+
+private Handler handler = new Handler(){
+
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+
+        Bundle bundle = msg.getData();
+        String data_string = bundle.getString(&quot;data_string&quot;);
+
+        //接下来就是更新ui
+
+    }
+};
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_service_bind2);
+}
+
+@Override
+public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+    binder = (MyService3.Binder) iBinder;
+    binder.getMyService3().setCallBack(new MyService3.CallBack() {
+
+        //此方法提供给MyService3在子线程中调用
+        @Override
+        public void onDataChange(String data) {
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString(&quot;data_string&quot;,&quot;String数据&quot;);
+            message.setData(bundle);
+            //通过Handler进行异步通信，不过耗时操作放在MyService3中
+            handler.sendMessage(message);
         }
-
-    }
-
-}
-</code></pre>
-<p>然后我们让活动实现 ServiceConnection 这个接口，并且在 onServiceConnected() 方法中获取到 Service 提供给活动的 Binder 实例对象，通过这个对象我们就可以与 Service 进行通信可以通过上述代码的 Binder 类中的 sendData() 方法进行通信。</p>
-<pre><code class="java">ublic <span class="class"><span class="keyword">class</span> <span class="title">ServiceBindActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ServiceConnection</span>,<span class="title">View</span>.<span class="title">OnClickListener</span> </span>{
-
-    <span class="keyword">private</span> Button bt0,bt1,bt2;
-
-    <span class="keyword">public</span> MyService1.Binder binder = <span class="keyword">null</span>;
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
-        <span class="keyword">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_bind);
-
-        bt0 = findViewById(R.id.bt0);
-        bt1 = findViewById(R.id.bt1);
-        bt2 = findViewById(R.id.bt2);
-
-        bt0.setOnClickListener(<span class="keyword">this</span>);
-        bt1.setOnClickListener(<span class="keyword">this</span>);
-        bt2.setOnClickListener(<span class="keyword">this</span>);
-
-
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>{
-       <span class="keyword">super</span>.onDestroy();
-       unbindService(<span class="keyword">this</span>);
-    }
-
-    <span class="comment">//这个是服务绑定的时候调用</span>
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>{
-        binder = (MyService1.Binder) iBinder;
-    }
-
-    <span class="comment">//这个是服务解绑的时候调用</span>
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>{
-
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
-
-        <span class="keyword">switch</span> (view.getId()){
-
-            <span class="keyword">case</span> R.id.bt0:
-
-                <span class="comment">//绑定服务</span>
-                Intent intent = <span class="keyword">new</span> Intent(ServiceBindActivity.<span class="keyword">this</span>,MyService1.class);
-                bindService(intent,<span class="keyword">this</span>, Context.BIND_AUTO_CREATE);
-
-               <span class="keyword">break</span>;
-
-            <span class="keyword">case</span> R.id.bt1:
-
-                <span class="comment">//通过binder对象来和Service进行通信</span>
-                <span class="keyword">if</span>(binder != <span class="keyword">null</span>)
-                binder.sendData(<span class="string">"bt1"</span>);
-
-                <span class="keyword">break</span>;
-            <span class="keyword">case</span> R.id.bt2:
-
-                <span class="comment">//通过binder对象来和Service进行通信</span>
-                <span class="keyword">if</span>(binder != <span class="keyword">null</span>)
-                binder.sendData(<span class="string">"bt2"</span>);
-
-               <span class="keyword">break</span>;
-
-        }
-
-    }
-</code></pre>
-<h3 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h3><p>这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</p>
-<pre><code class="java"><span class="comment">// Activity</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceStartActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>{
-
-    <span class="keyword">private</span> Button bt0,bt1;
-
-    <span class="keyword">private</span> Intent intent ;
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
-        <span class="keyword">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_start);
-
-        intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MyService2.class);
-
-        bt0 = findViewById(R.id.bt0);
-        bt1 = findViewById(R.id.bt1);
-
-        bt0.setOnClickListener(<span class="keyword">this</span>);
-        bt1.setOnClickListener(<span class="keyword">this</span>);
-
-
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
-
-        <span class="keyword">switch</span> (view.getId()){
-
-            <span class="keyword">case</span> R.id.bt0:
-
-                <span class="comment">//开启服务并且传递数据</span>
-                intent.putExtra(<span class="string">"data_stirng"</span>,<span class="string">"string数据"</span>);
-                startActivity(intent);
-
-                <span class="keyword">break</span>;
-
-            <span class="keyword">case</span> R.id.bt1:
-
-                <span class="comment">//结束服务</span>
-                stopService(intent);
-
-                <span class="keyword">break</span>;
-
-        }
-
-    }
-}
-
-<span class="comment">// Service</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService2</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
-
-    <span class="keyword">public</span> String data = <span class="string">""</span>;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">MyService2</span><span class="params">()</span> </span>{
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
-        <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
-        <span class="keyword">return</span> <span class="keyword">null</span>;
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>{
-        <span class="comment">//得到Activity传递过来的数据</span>
-        data = intent.getStringExtra(<span class="string">"data_string"</span>);
-        <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);
-    }
-}
-</code></pre>
-<h3 id="CallBack-Handler-监听服务的进程变化"><a href="#CallBack-Handler-监听服务的进程变化" class="headerlink" title="CallBack + Handler 监听服务的进程变化"></a>CallBack + Handler 监听服务的进程变化</h3><p>当 ServiceBind2Activity 去绑定服务 MyService3 的时候,那么在活动中的 onServiceConnected()方法被调用，此时位于 MyService3 的 CallBack 接口引用被实例化，并且 onDataChange()方法被实现，可以看到里面是一段 Handler 通信的代码，这个方法是为 MyService3 做耗时操作调用的，也印证了标题：监听服务的进程变化。</p>
-<pre><code class="java"><span class="comment">// Service</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService3</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
-
-    <span class="comment">//在Service中如果要进行耗时任务，可以通过CallBack接口提供的方法与Activity进行通信</span>
-    <span class="keyword">public</span> Callback callback;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">MyService3</span><span class="params">()</span> </span>{
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
-       <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
-       <span class="keyword">return</span> <span class="keyword">new</span> Binder();
-    }
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCallBack</span><span class="params">(CallBack callBack)</span></span>{
-        <span class="keyword">this</span>.callback = callback;
-    }
-
-    <span class="function"><span class="keyword">public</span> Callback <span class="title">getCallback</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> callback;
-    }
-
-    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CallBack</span></span>{
-        <span class="function"><span class="keyword">void</span> <span class="title">onDataChange</span><span class="params">(String data)</span></span>;
-    }
-
-    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Binder</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span></span>{
-
-        <span class="function"><span class="keyword">public</span> MyService3 <span class="title">getMyService3</span><span class="params">()</span></span>{
-            <span class="keyword">return</span> MyService3.<span class="keyword">this</span>;
-        }
-
-    }
+    });
 
 }
 
-<span class="comment">// Activity</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceBind2Activity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ServiceConnection</span></span>{
+@Override
+public void onServiceDisconnected(ComponentName componentName) {
 
-
-
-    <span class="keyword">public</span> MyService3.Binder binder = <span class="keyword">null</span>;
-
-    <span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler(){
-
-        <span class="meta">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>{
-            <span class="keyword">super</span>.handleMessage(msg);
-
-            Bundle bundle = msg.getData();
-            String data_string = bundle.getString(<span class="string">"data_string"</span>);
-
-            <span class="comment">//接下来就是更新ui</span>
-
-        }
-    };
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
-        <span class="keyword">super</span>.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_bind2);
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>{
-
-        binder = (MyService3.Binder) iBinder;
-        binder.getMyService3().setCallBack(<span class="keyword">new</span> MyService3.CallBack() {
-
-            <span class="comment">//此方法提供给MyService3在子线程中调用</span>
-            <span class="meta">@Override</span>
-            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDataChange</span><span class="params">(String data)</span> </span>{
-                Message message = <span class="keyword">new</span> Message();
-                Bundle bundle = <span class="keyword">new</span> Bundle();
-                bundle.putString(<span class="string">"data_string"</span>,<span class="string">"String数据"</span>);
-                message.setData(bundle);
-                <span class="comment">//通过Handler进行异步通信，不过耗时操作放在MyService3中</span>
-                handler.sendMessage(message);
-            }
-        });
-
-    }
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>{
-
-    }
 }
-</code></pre>
-<h2 id="Activity-gt-Fragment"><a href="#Activity-gt-Fragment" class="headerlink" title="Activity -&gt; Fragment"></a>Activity -&gt; Fragment</h2><h3 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h3><p>在创建 Fragment 实例的时候，调用方法 setArguments()将一个 Bundle 对象传递给 Fragment，然后在 Fragment 中先去判断是否和当前活动绑定上了，如果绑定上了，就可以拿出这个 Bundle 中的数据。</p>
-<pre><code class="java"><span class="comment">// Activity 中代码</span>
-<span class="comment">// 首先创建一个Bundle对象</span>
-    Bundle bundle = <span class="keyword">new</span> Bundle();
-    bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
-    bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
-    bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
-
-    Fragment fragment = <span class="keyword">new</span> MyFragment1();
-    fragment.setArguments(bundle);
-
-<span class="comment">// MyFragment1中代码</span>
-    <span class="keyword">if</span>(isAdded()){<span class="comment">//这里判断是否 Fragment 和活动进行了绑定，如果这个 Fragment 没有和活动绑定的话，那么那个 Bundle 对象是无法从活动传递给 Fragment 的，因此这种写法是必须的。</span>
-   Bundle bundle = getArguments();
-   String data_string = bundle.getString(<span class="string">"data_string"</span>);
-   String data_int = bundle.getInt(<span class="string">"data_int"</span>);
-   String data_char = bundle.getChar(<span class="string">"data_char"</span>);
-</code></pre>
-<h3 id="直接进行方法调用"><a href="#直接进行方法调用" class="headerlink" title="直接进行方法调用"></a>直接进行方法调用</h3><p>在Activity里通过Fragment的引用，可以直接调用 Fragment 中的定义的任何方法。</p>
-<pre><code class="java">MyFragment1 myFragment1 = <span class="keyword">new</span> MyFragment1();
-myFragment.toString(<span class="string">"传送的string数据"</span>);
-</code></pre>
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Activity -&gt; Fragment</span><br><span class="line">### Bundle</span><br><span class="line">在创建 Fragment 实例的时候，调用方法 setArguments()将一个 Bundle 对象传递给 Fragment，然后在 Fragment 中先去判断是否和当前活动绑定上了，如果绑定上了，就可以拿出这个 Bundle 中的数据。</span><br></pre></td></tr></table></figure></p>
+<p>// Activity 中代码<br>// 首先创建一个Bundle对象<br>    Bundle bundle = new Bundle();<br>    bundle.putString(“data_string”,”数据”);<br>    bundle.putInt(“data_int”,10);<br>    bundle.putChar(“da_char”,’a’);</p>
+<pre><code>Fragment fragment = new MyFragment1();
+fragment.setArguments(bundle);
+</code></pre><p>// MyFragment1中代码<br>    if(isAdded()){//这里判断是否 Fragment 和活动进行了绑定，如果这个 Fragment 没有和活动绑定的话，那么那个 Bundle 对象是无法从活动传递给 Fragment 的，因此这种写法是必须的。<br>   Bundle bundle = getArguments();<br>   String data_string = bundle.getString(“data_string”);<br>   String data_int = bundle.getInt(“data_int”);<br>   String data_char = bundle.getChar(“data_char”);<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 直接进行方法调用</span><br><span class="line">在Activity里通过Fragment的引用，可以直接调用 Fragment 中的定义的任何方法。</span><br></pre></td></tr></table></figure></p>
+<pre><code>MyFragment1 myFragment1 = new MyFragment1();
+myFragment.toString(&quot;传送的string数据&quot;);
+</code></pre><p><code>`</code>  </p>
 <h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过<br>自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
 <h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><p>参见博文《<a href="https://blog.csdn.net/pihailailou/article/details/78545391" target="_blank" rel="noopener">Android Activity的启动流程源码解析(8.0) | 小王君</a>》</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
@@ -818,89 +686,17 @@ myFragment.toString(<span class="string">"传送的string数据"</span>);
         <a class="is-flex" href="#特殊情况">
         <span class="has-mr-6">3.3.3</span>
         <span>特殊情况</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#进程优先级">
-        <span class="has-mr-6">3.4</span>
-        <span>进程优先级</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#Activity-启动模式">
-        <span class="has-mr-6">4</span>
-        <span>Activity 启动模式</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#standrad">
-        <span class="has-mr-6">4.1</span>
-        <span>standrad</span>
-        </a></li><li>
-        <a class="is-flex" href="#singleTop">
-        <span class="has-mr-6">4.2</span>
-        <span>singleTop</span>
-        </a></li><li>
-        <a class="is-flex" href="#singleTask">
-        <span class="has-mr-6">4.3</span>
-        <span>singleTask</span>
-        </a></li><li>
-        <a class="is-flex" href="#singleInstance">
-        <span class="has-mr-6">4.4</span>
-        <span>singleInstance</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#Activity-组件之间的通信">
-        <span class="has-mr-6">5</span>
-        <span>Activity 组件之间的通信</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Activity-gt-Activity">
-        <span class="has-mr-6">5.1</span>
-        <span>Activity -&gt; Activity</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Intent-Bundle">
-        <span class="has-mr-6">5.1.1</span>
-        <span>Intent/Bundle</span>
-        </a></li><li>
-        <a class="is-flex" href="#类静态变量">
-        <span class="has-mr-6">5.1.2</span>
-        <span>类静态变量</span>
-        </a></li><li>
-        <a class="is-flex" href="#全局变量">
-        <span class="has-mr-6">5.1.3</span>
-        <span>全局变量</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#Activity-gt-Service">
-        <span class="has-mr-6">5.2</span>
-        <span>Activity -&gt; Service</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#绑定服务的方式，利用-ServiceConnection-接口">
-        <span class="has-mr-6">5.2.1</span>
-        <span>绑定服务的方式，利用 ServiceConnection 接口</span>
-        </a></li><li>
-        <a class="is-flex" href="#Intent">
-        <span class="has-mr-6">5.2.2</span>
-        <span>Intent</span>
-        </a></li><li>
-        <a class="is-flex" href="#CallBack-Handler-监听服务的进程变化">
-        <span class="has-mr-6">5.2.3</span>
-        <span>CallBack + Handler 监听服务的进程变化</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#Activity-gt-Fragment">
-        <span class="has-mr-6">5.3</span>
-        <span>Activity -&gt; Fragment</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Bundle">
-        <span class="has-mr-6">5.3.1</span>
-        <span>Bundle</span>
-        </a></li><li>
-        <a class="is-flex" href="#直接进行方法调用">
-        <span class="has-mr-6">5.3.2</span>
-        <span>直接进行方法调用</span>
         </a></li></ul></li></ul></li><li>
         <a class="is-flex" href="#scheme-跳转协议">
-        <span class="has-mr-6">6</span>
+        <span class="has-mr-6">4</span>
         <span>scheme 跳转协议</span>
         </a></li><li>
         <a class="is-flex" href="#源码解析：startActivity">
-        <span class="has-mr-6">7</span>
+        <span class="has-mr-6">5</span>
         <span>源码解析：startActivity()</span>
         </a></li><li>
         <a class="is-flex" href="#参考">
-        <span class="has-mr-6">8</span>
+        <span class="has-mr-6">6</span>
         <span>参考</span>
         </a></li></ul>
         </div>
