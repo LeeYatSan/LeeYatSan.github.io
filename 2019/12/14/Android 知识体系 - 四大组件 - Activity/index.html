@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-16T06:57:40.968Z">
+<meta property="og:updated_time" content="2019-12-16T07:02:02.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:57:40.968Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T07:02:02.399Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -385,7 +385,7 @@ public void onClick(View view) {
            break;
     }
 }
-</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Intent</span><br><span class="line">这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</span><br></pre></td></tr></table></figure>
+</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">### Intent</span><br><span class="line">这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</span><br></pre></td></tr></table></figure>
 <p>// Activity<br>public class ServiceStartActivity extends AppCompatActivity implements View.OnClickListener {</p>
 <pre><code>private Button bt0,bt1;
 
@@ -449,7 +449,7 @@ public int onStartCommand(Intent intent, int flags, int startId) {
     data = intent.getStringExtra(&quot;data_string&quot;);
     return super.onStartCommand(intent, flags, startId);
 }
-</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### CallBack + Handler 监听服务的进程变化</span><br><span class="line">当 ServiceBind2Activity 去绑定服务 MyService3 的时候,那么在活动中的 onServiceConnected()方法被调用，此时位于 MyService3 的 CallBack 接口引用被实例化，并且 onDataChange()方法被实现，可以看到里面是一段 Handler 通信的代码，这个方法是为 MyService3 做耗时操作调用的，也印证了标题：监听服务的进程变化。</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">### CallBack + Handler 监听服务的进程变化</span><br><span class="line">当 ServiceBind2Activity 去绑定服务 MyService3 的时候,那么在活动中的 onServiceConnected()方法被调用，此时位于 MyService3 的 CallBack 接口引用被实例化，并且 onDataChange()方法被实现，可以看到里面是一段 Handler 通信的代码，这个方法是为 MyService3 做耗时操作调用的，也印证了标题：监听服务的进程变化。</span><br></pre></td></tr></table></figure></p>
 <p>// Service<br>public class MyService3 extends Service {</p>
 <pre><code>//在Service中如果要进行耗时任务，可以通过CallBack接口提供的方法与Activity进行通信
 public Callback callback;
@@ -530,11 +530,11 @@ public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 public void onServiceDisconnected(ComponentName componentName) {
 
 }
-</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Activity -&gt; Fragment</span><br><span class="line">### Bundle</span><br><span class="line">在创建 Fragment 实例的时候，调用方法 setArguments()将一个 Bundle 对象传递给 Fragment，然后在 Fragment 中先去判断是否和当前活动绑定上了，如果绑定上了，就可以拿出这个 Bundle 中的数据。</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>}<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">## Activity -&gt; Fragment</span><br><span class="line">### Bundle</span><br><span class="line">在创建 Fragment 实例的时候，调用方法 setArguments()将一个 Bundle 对象传递给 Fragment，然后在 Fragment 中先去判断是否和当前活动绑定上了，如果绑定上了，就可以拿出这个 Bundle 中的数据。</span><br></pre></td></tr></table></figure></p>
 <p>// Activity 中代码<br>// 首先创建一个Bundle对象<br>    Bundle bundle = new Bundle();<br>    bundle.putString(“data_string”,”数据”);<br>    bundle.putInt(“data_int”,10);<br>    bundle.putChar(“da_char”,’a’);</p>
 <pre><code>Fragment fragment = new MyFragment1();
 fragment.setArguments(bundle);
-</code></pre><p>// MyFragment1中代码<br>    if(isAdded()){//这里判断是否 Fragment 和活动进行了绑定，如果这个 Fragment 没有和活动绑定的话，那么那个 Bundle 对象是无法从活动传递给 Fragment 的，因此这种写法是必须的。<br>   Bundle bundle = getArguments();<br>   String data_string = bundle.getString(“data_string”);<br>   String data_int = bundle.getInt(“data_int”);<br>   String data_char = bundle.getChar(“data_char”);<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 直接进行方法调用</span><br><span class="line">在Activity里通过Fragment的引用，可以直接调用 Fragment 中的定义的任何方法。</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>// MyFragment1中代码<br>    if(isAdded()){//这里判断是否 Fragment 和活动进行了绑定，如果这个 Fragment 没有和活动绑定的话，那么那个 Bundle 对象是无法从活动传递给 Fragment 的，因此这种写法是必须的。<br>   Bundle bundle = getArguments();<br>   String data_string = bundle.getString(“data_string”);<br>   String data_int = bundle.getInt(“data_int”);<br>   String data_char = bundle.getChar(“data_char”);<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">### 直接进行方法调用</span><br><span class="line">在Activity里通过Fragment的引用，可以直接调用 Fragment 中的定义的任何方法。</span><br></pre></td></tr></table></figure></p>
 <pre><code>MyFragment1 myFragment1 = new MyFragment1();
 myFragment.toString(&quot;传送的string数据&quot;);
 </code></pre><p><code>`</code>  </p>
