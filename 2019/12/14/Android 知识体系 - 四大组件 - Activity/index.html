@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文介绍 Android 四大组件中的 Activity。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2019-12-16T06:12:12.986Z">
+<meta property="og:updated_time" content="2019-12-16T06:49:33.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 知识体系 - 四大组件 - Activity">
 <meta name="twitter:description" content="本文介绍 Android 四大组件中的 Activity。">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-14T15:49:18.865Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-14</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:12:12.986Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-16T06:49:33.901Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-16</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    36 minutes read (About 5336 words)
+                    an hour read (About 6761 words)
                 </span>
                 
                 
@@ -355,7 +355,332 @@
 <li>以 singleInstance 模式启动的活动具有独占性，即它会独自占用一个任务（返回栈），被他开启的任何活动都会运行在其他任务（返回栈）中。</li>
 <li>被 singleInstance 模式的活动开启的其他活动，能够在新的任务（返回栈）中启动，但不一定开启新的任务（返回栈），也可能在已有的一个任务（返回栈）中开启。</li>
 </ul>
-<h1 id="Activity-组件之间的通信"><a href="#Activity-组件之间的通信" class="headerlink" title="Activity 组件之间的通信"></a>Activity 组件之间的通信</h1><h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过<br>自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
+<h1 id="Activity-组件之间的通信"><a href="#Activity-组件之间的通信" class="headerlink" title="Activity 组件之间的通信"></a>Activity 组件之间的通信</h1><h2 id="Activity-gt-Activity"><a href="#Activity-gt-Activity" class="headerlink" title="Activity -&gt; Activity"></a>Activity -&gt; Activity</h2><h3 id="Intent-Bundle"><a href="#Intent-Bundle" class="headerlink" title="Intent/Bundle"></a>Intent/Bundle</h3><p>此方式多用于Activity之间传递数据。</p>
+<pre><code class="java"><span class="comment">//首先创建一个Bundle对象</span>
+   Bundle bundle = <span class="keyword">new</span> Bundle();
+   bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
+   bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
+   bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
+
+   <span class="comment">//然后创建一个Intent对象</span>
+   Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);
+   intent.putExtras(bundle);
+   startActivity(intent);
+</code></pre>
+<h3 id="类静态变量"><a href="#类静态变量" class="headerlink" title="类静态变量"></a>类静态变量</h3><p>在活动内部定义静态的变量，这种方式见于少量的数据通信，如果数据过多，还是使用上一种方式。</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>{
+
+    <span class="comment">//声明为静态</span>
+    <span class="keyword">static</span> <span class="keyword">boolean</span> isFlag = <span class="keyword">false</span>;  
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_first);
+
+        <span class="comment">//首先创建一个Bundle对象</span>
+        Bundle bundle = <span class="keyword">new</span> Bundle();
+        bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
+        bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
+        bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
+
+        <span class="comment">//然后创建一个Intent对象</span>
+        Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+
+    }
+
+}
+</code></pre>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>创建一个类，里面定义一批静态变量，活动之间通信都可以访问这个类里面的静态变量。</p>
+<h2 id="Activity-gt-Service"><a href="#Activity-gt-Service" class="headerlink" title="Activity -&gt; Service"></a>Activity -&gt; Service</h2><h3 id="绑定服务的方式，利用-ServiceConnection-接口"><a href="#绑定服务的方式，利用-ServiceConnection-接口" class="headerlink" title="绑定服务的方式，利用 ServiceConnection 接口"></a>绑定服务的方式，利用 ServiceConnection 接口</h3><p>首先我们需要在要绑定的服务中声明一个Binder类</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService1</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
+
+    <span class="keyword">public</span> String data = <span class="string">""</span>;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">MyService1</span><span class="params">()</span> </span>{
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
+        <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Binder();
+    }
+
+
+
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Binder</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span></span>{
+
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendData</span><span class="params">(String data)</span></span>{
+
+            MyService1.<span class="keyword">this</span>.data = data;
+
+        }
+
+    }
+
+}
+</code></pre>
+<p>然后我们让活动实现 ServiceConnection 这个接口，并且在 onServiceConnected() 方法中获取到 Service 提供给活动的 Binder 实例对象，通过这个对象我们就可以与 Service 进行通信可以通过上述代码的 Binder 类中的 sendData() 方法进行通信。</p>
+<pre><code class="java">ublic <span class="class"><span class="keyword">class</span> <span class="title">ServiceBindActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ServiceConnection</span>,<span class="title">View</span>.<span class="title">OnClickListener</span> </span>{
+
+    <span class="keyword">private</span> Button bt0,bt1,bt2;
+
+    <span class="keyword">public</span> MyService1.Binder binder = <span class="keyword">null</span>;
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_service_bind);
+
+        bt0 = findViewById(R.id.bt0);
+        bt1 = findViewById(R.id.bt1);
+        bt2 = findViewById(R.id.bt2);
+
+        bt0.setOnClickListener(<span class="keyword">this</span>);
+        bt1.setOnClickListener(<span class="keyword">this</span>);
+        bt2.setOnClickListener(<span class="keyword">this</span>);
+
+
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>{
+       <span class="keyword">super</span>.onDestroy();
+       unbindService(<span class="keyword">this</span>);
+    }
+
+    <span class="comment">//这个是服务绑定的时候调用</span>
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>{
+        binder = (MyService1.Binder) iBinder;
+    }
+
+    <span class="comment">//这个是服务解绑的时候调用</span>
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>{
+
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
+
+        <span class="keyword">switch</span> (view.getId()){
+
+            <span class="keyword">case</span> R.id.bt0:
+
+                <span class="comment">//绑定服务</span>
+                Intent intent = <span class="keyword">new</span> Intent(ServiceBindActivity.<span class="keyword">this</span>,MyService1.class);
+                bindService(intent,<span class="keyword">this</span>, Context.BIND_AUTO_CREATE);
+
+               <span class="keyword">break</span>;
+
+            <span class="keyword">case</span> R.id.bt1:
+
+                <span class="comment">//通过binder对象来和Service进行通信</span>
+                <span class="keyword">if</span>(binder != <span class="keyword">null</span>)
+                binder.sendData(<span class="string">"bt1"</span>);
+
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> R.id.bt2:
+
+                <span class="comment">//通过binder对象来和Service进行通信</span>
+                <span class="keyword">if</span>(binder != <span class="keyword">null</span>)
+                binder.sendData(<span class="string">"bt2"</span>);
+
+               <span class="keyword">break</span>;
+
+        }
+
+    }
+</code></pre>
+<h3 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h3><p>这种方式很简单，我们在启动和停止 Service 时所调用的方法都需要传入一个 Intent 实例对象，通过这个传入的 Intent 对象，就可以与 Service 进行通信。但这种通信方式的缺点显而易见，那就是只能传递少量的数据</p>
+<pre><code class="java"><span class="comment">// Activity</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceStartActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>{
+
+    <span class="keyword">private</span> Button bt0,bt1;
+
+    <span class="keyword">private</span> Intent intent ;
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_service_start);
+
+        intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MyService2.class);
+
+        bt0 = findViewById(R.id.bt0);
+        bt1 = findViewById(R.id.bt1);
+
+        bt0.setOnClickListener(<span class="keyword">this</span>);
+        bt1.setOnClickListener(<span class="keyword">this</span>);
+
+
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>{
+
+        <span class="keyword">switch</span> (view.getId()){
+
+            <span class="keyword">case</span> R.id.bt0:
+
+                <span class="comment">//开启服务并且传递数据</span>
+                intent.putExtra(<span class="string">"data_stirng"</span>,<span class="string">"string数据"</span>);
+                startActivity(intent);
+
+                <span class="keyword">break</span>;
+
+            <span class="keyword">case</span> R.id.bt1:
+
+                <span class="comment">//结束服务</span>
+                stopService(intent);
+
+                <span class="keyword">break</span>;
+
+        }
+
+    }
+}
+
+<span class="comment">// Service</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService2</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
+
+    <span class="keyword">public</span> String data = <span class="string">""</span>;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">MyService2</span><span class="params">()</span> </span>{
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
+        <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
+        <span class="keyword">return</span> <span class="keyword">null</span>;
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>{
+        <span class="comment">//得到Activity传递过来的数据</span>
+        data = intent.getStringExtra(<span class="string">"data_string"</span>);
+        <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);
+    }
+}
+</code></pre>
+<h3 id="CallBack-Handler-监听服务的进程变化"><a href="#CallBack-Handler-监听服务的进程变化" class="headerlink" title="CallBack + Handler 监听服务的进程变化"></a>CallBack + Handler 监听服务的进程变化</h3><p>当 ServiceBind2Activity 去绑定服务 MyService3 的时候,那么在活动中的 onServiceConnected()方法被调用，此时位于 MyService3 的 CallBack 接口引用被实例化，并且 onDataChange()方法被实现，可以看到里面是一段 Handler 通信的代码，这个方法是为 MyService3 做耗时操作调用的，也印证了标题：监听服务的进程变化。</p>
+<pre><code class="java"><span class="comment">// Service</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService3</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
+
+    <span class="comment">//在Service中如果要进行耗时任务，可以通过CallBack接口提供的方法与Activity进行通信</span>
+    <span class="keyword">public</span> Callback callback;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">MyService3</span><span class="params">()</span> </span>{
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{
+       <span class="comment">// <span class="doctag">TODO:</span> Return the communication channel to the service.</span>
+       <span class="keyword">return</span> <span class="keyword">new</span> Binder();
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCallBack</span><span class="params">(CallBack callBack)</span></span>{
+        <span class="keyword">this</span>.callback = callback;
+    }
+
+    <span class="function"><span class="keyword">public</span> Callback <span class="title">getCallback</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> callback;
+    }
+
+    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CallBack</span></span>{
+        <span class="function"><span class="keyword">void</span> <span class="title">onDataChange</span><span class="params">(String data)</span></span>;
+    }
+
+    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Binder</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span></span>{
+
+        <span class="function"><span class="keyword">public</span> MyService3 <span class="title">getMyService3</span><span class="params">()</span></span>{
+            <span class="keyword">return</span> MyService3.<span class="keyword">this</span>;
+        }
+
+    }
+
+}
+
+<span class="comment">// Activity</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceBind2Activity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ServiceConnection</span></span>{
+
+
+
+    <span class="keyword">public</span> MyService3.Binder binder = <span class="keyword">null</span>;
+
+    <span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler(){
+
+        <span class="meta">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>{
+            <span class="keyword">super</span>.handleMessage(msg);
+
+            Bundle bundle = msg.getData();
+            String data_string = bundle.getString(<span class="string">"data_string"</span>);
+
+            <span class="comment">//接下来就是更新ui</span>
+
+        }
+    };
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_service_bind2);
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>{
+
+        binder = (MyService3.Binder) iBinder;
+        binder.getMyService3().setCallBack(<span class="keyword">new</span> MyService3.CallBack() {
+
+            <span class="comment">//此方法提供给MyService3在子线程中调用</span>
+            <span class="meta">@Override</span>
+            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDataChange</span><span class="params">(String data)</span> </span>{
+                Message message = <span class="keyword">new</span> Message();
+                Bundle bundle = <span class="keyword">new</span> Bundle();
+                bundle.putString(<span class="string">"data_string"</span>,<span class="string">"String数据"</span>);
+                message.setData(bundle);
+                <span class="comment">//通过Handler进行异步通信，不过耗时操作放在MyService3中</span>
+                handler.sendMessage(message);
+            }
+        });
+
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>{
+
+    }
+}
+</code></pre>
+<h2 id="Activity-gt-Fragment"><a href="#Activity-gt-Fragment" class="headerlink" title="Activity -&gt; Fragment"></a>Activity -&gt; Fragment</h2><h3 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h3><p>在创建 Fragment 实例的时候，调用方法 setArguments()将一个 Bundle 对象传递给 Fragment，然后在 Fragment 中先去判断是否和当前活动绑定上了，如果绑定上了，就可以拿出这个 Bundle 中的数据。</p>
+<pre><code class="java"><span class="comment">// Activity 中代码</span>
+<span class="comment">// 首先创建一个Bundle对象</span>
+    Bundle bundle = <span class="keyword">new</span> Bundle();
+    bundle.putString(<span class="string">"data_string"</span>,<span class="string">"数据"</span>);
+    bundle.putInt(<span class="string">"data_int"</span>,<span class="number">10</span>);
+    bundle.putChar(<span class="string">"da_char"</span>,<span class="string">'a'</span>);
+
+    Fragment fragment = <span class="keyword">new</span> MyFragment1();
+    fragment.setArguments(bundle);
+
+<span class="comment">// MyFragment1中代码</span>
+    <span class="keyword">if</span>(isAdded()){<span class="comment">//这里判断是否 Fragment 和活动进行了绑定，如果这个 Fragment 没有和活动绑定的话，那么那个 Bundle 对象是无法从活动传递给 Fragment 的，因此这种写法是必须的。</span>
+   Bundle bundle = getArguments();
+   String data_string = bundle.getString(<span class="string">"data_string"</span>);
+   String data_int = bundle.getInt(<span class="string">"data_int"</span>);
+   String data_char = bundle.getChar(<span class="string">"data_char"</span>);
+</code></pre>
+<h3 id="直接进行方法调用"><a href="#直接进行方法调用" class="headerlink" title="直接进行方法调用"></a>直接进行方法调用</h3><p>在Activity里通过Fragment的引用，可以直接调用 Fragment 中的定义的任何方法。</p>
+<pre><code class="java">MyFragment1 myFragment1 = <span class="keyword">new</span> MyFragment1();
+myFragment.toString(<span class="string">"传送的string数据"</span>);
+</code></pre>
+<h1 id="scheme-跳转协议"><a href="#scheme-跳转协议" class="headerlink" title="scheme 跳转协议"></a>scheme 跳转协议</h1><p>Android 中的 scheme 是一种页面内跳转协议，通过<br>自定义 scheme 协议，可以非常方便的跳转到 APP 中的各个页面，通过 scheme 协议，服务器可以定制化告诉 APP 跳转到哪个页面，可以通过通知栏消息定制化跳转页面，可以通过 H5 页面跳转到相应页面等等。详细请看博文《<a href="https://blog.csdn.net/qq_23547831/article/details/51685310" target="_blank" rel="noopener">Android产品研发（十一）–&gt;应用内跳转Scheme协议</a>》</p>
 <h1 id="源码解析：startActivity"><a href="#源码解析：startActivity" class="headerlink" title="源码解析：startActivity()"></a>源码解析：startActivity()</h1><p>参见博文《<a href="https://blog.csdn.net/pihailailou/article/details/78545391" target="_blank" rel="noopener">Android Activity的启动流程源码解析(8.0) | 小王君</a>》</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://blog.csdn.net/ClAndEllen/article/details/89886833" target="_blank" rel="noopener">Android面试系列文章2018之Android部分Activity篇 ｜ ClAndEllen </a> （遵循 CC 4.0 BY-SA 版权协议）</li>
@@ -416,7 +741,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -451,7 +776,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#Activity-是什么？">
@@ -521,7 +846,51 @@
         <a class="is-flex" href="#Activity-组件之间的通信">
         <span class="has-mr-6">5</span>
         <span>Activity 组件之间的通信</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Activity-gt-Activity">
+        <span class="has-mr-6">5.1</span>
+        <span>Activity -&gt; Activity</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Intent-Bundle">
+        <span class="has-mr-6">5.1.1</span>
+        <span>Intent/Bundle</span>
         </a></li><li>
+        <a class="is-flex" href="#类静态变量">
+        <span class="has-mr-6">5.1.2</span>
+        <span>类静态变量</span>
+        </a></li><li>
+        <a class="is-flex" href="#全局变量">
+        <span class="has-mr-6">5.1.3</span>
+        <span>全局变量</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Activity-gt-Service">
+        <span class="has-mr-6">5.2</span>
+        <span>Activity -&gt; Service</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#绑定服务的方式，利用-ServiceConnection-接口">
+        <span class="has-mr-6">5.2.1</span>
+        <span>绑定服务的方式，利用 ServiceConnection 接口</span>
+        </a></li><li>
+        <a class="is-flex" href="#Intent">
+        <span class="has-mr-6">5.2.2</span>
+        <span>Intent</span>
+        </a></li><li>
+        <a class="is-flex" href="#CallBack-Handler-监听服务的进程变化">
+        <span class="has-mr-6">5.2.3</span>
+        <span>CallBack + Handler 监听服务的进程变化</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Activity-gt-Fragment">
+        <span class="has-mr-6">5.3</span>
+        <span>Activity -&gt; Fragment</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Bundle">
+        <span class="has-mr-6">5.3.1</span>
+        <span>Bundle</span>
+        </a></li><li>
+        <a class="is-flex" href="#直接进行方法调用">
+        <span class="has-mr-6">5.3.2</span>
+        <span>直接进行方法调用</span>
+        </a></li></ul></li></ul></li><li>
         <a class="is-flex" href="#scheme-跳转协议">
         <span class="has-mr-6">6</span>
         <span>scheme 跳转协议</span>
@@ -648,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
     
     
-<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -684,10 +1053,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
