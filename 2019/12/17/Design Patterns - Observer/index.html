@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Design Patterns - Observer - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="本文将介绍设计模式中的观察者模式（Observer）。 定义定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。 观察者模式 = 出版者/主题（Publisher） + 订阅者/观察者（Subscriber）。当出版者/主题的数据更新时，新的数据可以以出版者主动推送至观察者或者观察者主动请求新数据等方式进行数据更新。">
+<meta name="keywords" content="Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Patterns - Observer">
+<meta property="og:url" content="https://leeyatsan.cn/2019/12/17/Design Patterns - Observer/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="本文将介绍设计模式中的观察者模式（Observer）。 定义定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。 观察者模式 = 出版者/主题（Publisher） + 订阅者/观察者（Subscriber）。当出版者/主题的数据更新时，新的数据可以以出版者主动推送至观察者或者观察者主动请求新数据等方式进行数据更新。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2019-12-17T15:20:57.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Patterns - Observer">
+<meta name="twitter:description" content="本文将介绍设计模式中的观察者模式（Observer）。 定义定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。 观察者模式 = 出版者/主题（Publisher） + 订阅者/观察者（Subscriber）。当出版者/主题的数据更新时，新的数据可以以出版者主动推送至观察者或者观察者主动请求新数据等方式进行数据更新。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Design Patterns - Observer" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Observer
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2019-12-17T11:44:51.940Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-17</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-17T15:20:57.052Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-17</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 minutes read (About 2119 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>本文将介绍设计模式中的观察者模式（Observer）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</strong></p>
+<p>观察者模式 = 出版者/主题（Publisher） + 订阅者/观察者（Subscriber）。当出版者/主题的数据更新时，新的数据可以以出版者主动推送至观察者或者观察者主动请求新数据等方式进行数据更新。</p>
+<a id="more"></a>
+<p>我们看看一个形象的例子：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer1.png" alt="观察者模式例子"></p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer2.png" alt="观察者的一天 - 1"></p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer3.png" alt="观察者的一天 - 2"></p>
+<p>我们再看看观察者模式的 UML 类图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer4.png" alt="观察者模式 UML 类图"></p>
+<p>观察者模式实现了两个对象之间的松耦合的同时依然可以交互，只是两个对象都不知道彼此的细节。那么观察者模式是如何实现主体和观察者之间的松耦合呢？</p>
+<p>由上面 UML 图可知，主题 ConcreteSubject 只知道观察者 ConcreteObserver 实现了某个借口（比如说 Observer 接口），但主题无需知道观察者具体是谁，又实现了什么。因此，我们可以随时新增或者减少观察者（甚至观察者类型也不重要，只要它实现了Observer 接口），因为<strong>主题唯一依赖的东西是一个实现了 Observer 接口的对象列表</strong>。因此，只要主题和观察者遵循此前达成的接口，改变主题或观察者其中任意一方，都不会影响另一方。</p>
+<h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><ul>
+<li>交互对象之间尽可能采用松耦合设计</li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>观察者模式一般有两种类型：</p>
+<ol>
+<li>主题主动推送数据</li>
+<li>观察者主动拉取数据</li>
+</ol>
+<p>通常来说，有两种实现观察者模式的方式：</p>
+<ol>
+<li>遵循观察者模式原则自定义 Subject 接口和 Observer 接口</li>
+<li>使用 Java 内置观察者模式（支持主题主动推送数据和观察者主动请求数据）</li>
+</ol>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><ul>
+<li>观察者模式的代表人物——MVC</li>
+<li>Java 中的 GUI 中按钮的 Listener 以及其他地方中的各种 Listener 监听器</li>
+</ul>
+<h2 id="自定义观察者模式框架——主题主动推送数据"><a href="#自定义观察者模式框架——主题主动推送数据" class="headerlink" title="自定义观察者模式框架——主题主动推送数据"></a>自定义观察者模式框架——主题主动推送数据</h2><p>下面我们以一个实际例子应用观察者模式：</p>
+<p>假设我们要给气象站的三个布告板（当前天气 CurrentConditionDisplay、气象统计 StatisticsDisplay、天气预报 ForecastDisplay）利用数据 API：WeatherData 实时更新数据。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class WeatherData &#123;</span><br><span class="line">    public getTemperature();</span><br><span class="line">    public getHumidity();</span><br><span class="line">    public getPressure();</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 一旦气象测量更新，此方法会被调用</span><br><span class="line">     */</span><br><span class="line">    public measurementChanged();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WeatherData 中的三个 getter 方法无需我们操心，我们需要设法实现 measurementChanged()，先来看看一个错误示范，即直接在该方法中获取最新天气数据并更新三个布告板：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class WeatherData &#123;</span><br><span class="line">    public getTemperature();</span><br><span class="line">    public getHumidity();</span><br><span class="line">    public getPressure();</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 一旦气象测量更新，此方法会被调用</span><br><span class="line">     */</span><br><span class="line">    public measurementChanged()&#123;</span><br><span class="line">        float temp = getTemperature();</span><br><span class="line">        float humidity = getHumidity();</span><br><span class="line">        float pressure = getPressure();</span><br><span class="line">        </span><br><span class="line">        // 更新三个布告板数据</span><br><span class="line">        currentConditionDisplay.update(temp, humidity, pressure);</span><br><span class="line">        statisticsDisplay.update(temp, humidity, pressure);</span><br><span class="line">        forecastDisplay.update(temp, humidity, pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样设计有什么不对呢？measurementChanged()中最后三行针对了具体的布告板进行数据更新，增加了交互的耦合度，万一未来又新增或者减少布告板的时候，就需要对该方法进行修改了。</p>
+<p>接下来，我们使用观察者模式实现气象站的三个布告板。</p>
+<p>首先使用观察者模式设计的气象站布告板 UML 类图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer5.png" alt="观察者模式设计气象站布告板 UML 类图"></p>
+<p>我们先实现主体接口类 Subject 和 观察者接口类 Observer 以及布告板显示接口 DisplayElement：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public interface Subject&#123;</span><br><span class="line">    public void registerObserver(Observer o);</span><br><span class="line">    public void removeObserver(Observer o);</span><br><span class="line">    public void notifyObservers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface Observer&#123;</span><br><span class="line">    public void update(float temp, float humidity, float pressure);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 当布告板需要显示时，调用此方法</span><br><span class="line">public interface DisplayElement&#123;</span><br><span class="line">    public void display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们再来让 WeatherData 实现主题接口：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public class WeatherData implements Subject &#123;</span><br><span class="line">    </span><br><span class="line">    // 订阅该主题的观察者列表</span><br><span class="line">    private ArrayList observers;</span><br><span class="line"></span><br><span class="line">    private float temperature;</span><br><span class="line">    private float humidity;</span><br><span class="line">    private float pressure;</span><br><span class="line">    </span><br><span class="line">    public WeatherData()&#123;</span><br><span class="line">        observers = new ArrayList();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //实现 Subject 接口</span><br><span class="line">    public void registerObserver(Observer o)&#123;</span><br><span class="line">        observers.add(o);</span><br><span class="line">    &#125;</span><br><span class="line">    public void removeObserver(Observer o)&#123;</span><br><span class="line">        int i = observers.indexOf(o);</span><br><span class="line">        if(i &gt;= 0)&#123;</span><br><span class="line">            observers.remove(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public void notifyObservers()&#123;</span><br><span class="line">        for(int i = 0; i &lt; observers.size(); i++)&#123;</span><br><span class="line">            Observer observer = (Observer)observers.get(i);</span><br><span class="line">            observer.update(temperature, humidity, pressure);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 一旦气象测量更新，此方法会被调用</span><br><span class="line">     */</span><br><span class="line">    public measurementChanged()&#123;</span><br><span class="line">        notifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 气象站通过此方法设置对应数据</span><br><span class="line">     */</span><br><span class="line">    public void setMeasurements(float temperature, </span><br><span class="line">                                        float humidity, float pressure)&#123;</span><br><span class="line">        this.temperature = temperature;</span><br><span class="line">        this.humidity = humidity;</span><br><span class="line">        this.pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们再来建立布告板代码，这里仅以当前天气布告板 CurrentConditionDisplay 为例：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class CurrentConditionDisplay implements Observer, DisplayElement &#123;</span><br><span class="line">    </span><br><span class="line">    private float temperature;</span><br><span class="line">    private float humidity;</span><br><span class="line"></span><br><span class="line">    private Subject weatherData;</span><br><span class="line">    </span><br><span class="line">    public CurrentConditionDisplay(Subject weatherData)&#123;</span><br><span class="line">        this.weatherData = weatherData;</span><br><span class="line">        // 在主题中注册当前观察者</span><br><span class="line">        weatherData.registerObserver(this);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void update (float temperature, float humidity, float pressure)&#123;</span><br><span class="line">        this.temperature = temperature;</span><br><span class="line">        this.humidity = humidity;</span><br><span class="line">        display();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void display()&#123;</span><br><span class="line">        System.out.println(&quot;Current conditions: &quot; + temperature + &quot;F degrees and&quot;</span><br><span class="line">                                            + humidity + &quot;% humidity&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就使用观察者模式以主题主动推送的方式实现了一个气象站布告板，实现了数据源（气象站数据源）和客户（布告板）之间的松耦合。</p>
+<h2 id="Java-内置观察者模式"><a href="#Java-内置观察者模式" class="headerlink" title="Java 内置观察者模式"></a>Java 内置观察者模式</h2><p>现在，我们尝试使用 Java 内置的观察者模式—— Observer 接口（观察者）与 Observable 类（主题）——来实现气象站布告板。</p>
+<p>我们首先来看看利用 java.util.Observer 和 java.util.Observable 改造后的气象站 UML 类图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/observer6.png" alt="改造后的气象站 UML 类图"></p>
+<p>主题继承 Observable 类，而观察者实现 Observer 接口即可。但由于 Java 的单继承机制，这将导致主题无法继承其他类，这限制了程序的拓展性。</p>
+<p>那么，主题如何送出通知呢？我们只需先使用观察者的 setChanged()方法，标记状态已改变的事实，然后调用两种 notifyObservers() 中的一个即可。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">notifyObservers(Object arg)</td>
+<td style="text-align:center">主题主动推送数据</td>
+</tr>
+<tr>
+<td style="text-align:center">notifyObservers()</td>
+<td style="text-align:center">观察者主动拉取数据</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">setChanged()&#123;</span><br><span class="line">    changed = true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">notifyObservers(Object arg)&#123;</span><br><span class="line">    if(changed)&#123;</span><br><span class="line">        for (Observer o : Observers)&#123;</span><br><span class="line">            o.update(this, arg);</span><br><span class="line">        &#125;</span><br><span class="line">        changed = false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">notifyObservers()&#123;</span><br><span class="line">    notifyObservers(null);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而观察者又如何接受通知呢？同以往一样，观察者实现了更新的方法：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update(Observer o, Object arg) // arg：当传递通知时，可传递任何数据对象给每一个观察者</span><br></pre></td></tr></table></figure>
+<p>如果要主题主动推送数据给观察者，则可把数据当作数据对象传送给 notifyObservers(Object arg)；如果希望观察者主动拉取数据，则主题在数据更新时调用 notifyObservers()，再由观察者自行实现的 update() 方法主动拉取主题数据即可。</p>
+<p>下面是利用 Java 内置观察者模式编写的气象站（主题）代码：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Observable;</span><br><span class="line">import java.util.Observer;</span><br><span class="line"></span><br><span class="line">public class WeatherData extends Observable &#123;</span><br><span class="line">    </span><br><span class="line">    private float temperature;</span><br><span class="line">    private float humidity;</span><br><span class="line">    private float pressure;</span><br><span class="line">    </span><br><span class="line">    public WeatherData()&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 一旦气象测量更新，此方法会被调用</span><br><span class="line">     */</span><br><span class="line">    public measurementChanged()&#123;</span><br><span class="line">        // 首先标记状态已经改变的事实</span><br><span class="line">        setChanged();</span><br><span class="line">        // 无参形式通知观察者，即观察者主动拉取数据模式</span><br><span class="line">        notifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 气象站通过此方法设置对应数据</span><br><span class="line">     */</span><br><span class="line">    public void setMeasurements(float temperature, </span><br><span class="line">                                        float humidity, float pressure)&#123;</span><br><span class="line">        this.temperature = temperature;</span><br><span class="line">        this.humidity = humidity;</span><br><span class="line">        this.pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public float getTemperature()&#123; return temperature;&#125;</span><br><span class="line">    public float getHumidity()&#123; return humidity;&#125;</span><br><span class="line">    public float getPressure()&#123; return pressure;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是布告板代码，仅以 CurrentConditionDisplay 为例：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Observable;</span><br><span class="line">import java.util.Observer;</span><br><span class="line"></span><br><span class="line">public class CurrentConditionDisplay implements Observer, DisplayElement &#123;</span><br><span class="line">    </span><br><span class="line">    Observable observable;</span><br><span class="line">    </span><br><span class="line">    private float temperature;</span><br><span class="line">    private float humidity;</span><br><span class="line">    </span><br><span class="line">    public CurrentConditionDisplay(Observable observable)&#123;</span><br><span class="line">        this.observable = observable;</span><br><span class="line">        // 在主题中注册当前观察者</span><br><span class="line">        observable.addObserver(this);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void update (Observable obs, Object arg)&#123;</span><br><span class="line">    </span><br><span class="line">        if(obs instanceof WeatherData)&#123;</span><br><span class="line">            WeatherData weatherData = (WeatherData)obs;</span><br><span class="line">            </span><br><span class="line">            // 观察者主动拉取数据</span><br><span class="line">            this.temperature = weatherData.getTemperature();</span><br><span class="line">            this.humidity = weatherData.getHumidity();</span><br><span class="line">            </span><br><span class="line">            display();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void display()&#123;</span><br><span class="line">        System.out.println(&quot;Current conditions: &quot; + temperature + &quot;F degrees and&quot;</span><br><span class="line">                                            + humidity + &quot;% humidity&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就利用 Java 内置的观察者模式并以观察者主动拉取的方式再次实现了气象站布告板代码。</p>
+
+        </div>
+        
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Observer">
+                </span>
+            </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/16/Design Patterns - Strategy/">
+                <span class="level-item">Design Patterns - Strategy</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: '61bbb54db49d470874df775a8ef7209f',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#定义">
+        <span class="has-mr-6">1</span>
+        <span>定义</span>
+        </a></li><li>
+        <a class="is-flex" href="#原则">
+        <span class="has-mr-6">2</span>
+        <span>原则</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现">
+        <span class="has-mr-6">3</span>
+        <span>实现</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用实例">
+        <span class="has-mr-6">4</span>
+        <span>应用实例</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#自定义观察者模式框架——主题主动推送数据">
+        <span class="has-mr-6">4.1</span>
+        <span>自定义观察者模式框架——主题主动推送数据</span>
+        </a></li><li>
+        <a class="is-flex" href="#Java-内置观察者模式">
+        <span class="has-mr-6">4.2</span>
+        <span>Java 内置观察者模式</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Design Patterns - Observer" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>

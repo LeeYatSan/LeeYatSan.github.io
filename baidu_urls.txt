@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2019/12/17/Design Patterns - Observer/
 https://leeyatsan.cn/2019/12/16/Design Patterns - Strategy/
 https://leeyatsan.cn/2019/12/16/Design Patterns/
 https://leeyatsan.cn/2019/12/14/Android 知识体系 - 四大组件 - Activity/
