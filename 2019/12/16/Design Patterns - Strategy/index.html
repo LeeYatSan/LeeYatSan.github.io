@@ -7,23 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>MySQL的几种删除表的方法 - LEE YAT-SAN&#39;s ZONE</title>
+<title>Design Patterns - Strategy - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="在此记录部分MySQL的几种删除表的方法及其区别。">
-<meta name="keywords" content="MySQL">
+    <meta name="description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
+<meta name="keywords" content="Design Patterns">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL的几种删除表的方法">
-<meta property="og:url" content="https://leeyatsan.cn/2019/06/05/MySQL的几种删除表的方法/index.html">
+<meta property="og:title" content="Design Patterns - Strategy">
+<meta property="og:url" content="https://leeyatsan.cn/2019/12/16/Design Patterns - Strategy/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="在此记录部分MySQL的几种删除表的方法及其区别。">
+<meta property="og:description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://leeyatsan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-06-14T01:21:25.522Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2019-12-17T11:31:06.039Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL的几种删除表的方法">
-<meta name="twitter:description" content="在此记录部分MySQL的几种删除表的方法及其区别。">
-<meta name="twitter:image" content="https://leeyatsan.cn/images/og_image.png">
+<meta name="twitter:title" content="Design Patterns - Strategy">
+<meta name="twitter:description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
 
 
 
@@ -81,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="MySQL的几种删除表的方法" height="28">
+                <img src="/images/logo.svg" alt="Design Patterns - Strategy" height="28">
             
             </a>
         </div>
@@ -139,26 +139,26 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>MySQL的几种删除表的方法
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Strategy
     
     </h1>
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2019-06-05T14:34:55.509Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-06-05</time>
+            <time class="level-item has-text-grey" datetime="2019-12-16T14:30:03.902Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-16</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-06-14T01:21:25.522Z"><i class="far fa-calendar-check">&nbsp;</i>2019-06-14</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-17T11:31:06.039Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-17</time>
             
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/MySQL基础/">MySQL基础</a>
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 613 words)
+                    4 minutes read (About 595 words)
                 </span>
                 
                 
@@ -166,44 +166,34 @@
         </div>
         
         <div class="content">
-            <p>在此记录部分MySQL的几种删除表的方法及其区别。</p>
-<p><img src="http://img4.imgtn.bdimg.com/it/u=1421471404,1366921536&amp;fm=26&amp;gp=0.jpg" alt="MySQL删除表操作"><br><a id="more"></a></p>
-<h1 id="MySQL删除表方法"><a href="#MySQL删除表方法" class="headerlink" title="MySQL删除表方法"></a>MySQL删除表方法</h1><h2 id="DROP"><a href="#DROP" class="headerlink" title="DROP"></a>DROP</h2><p>DROP 方法适用于完全放弃当前表，删除表全部数据和表结构，立刻释放磁盘空间，不管是 Innodb 和 MyISAM   </p>
-<pre><code>
-DROP TABLE student;  
-
-</code></pre><h2 id="TRUNCATE"><a href="#TRUNCATE" class="headerlink" title="TRUNCATE"></a>TRUNCATE</h2><p>TURNCATE 适用于仅删除当前表中所有的数据，但保留表结构，删除后立刻释放磁盘空间，不管是 Innodb 和 MyISAM   </p>
-<pre><code>
-TRUNCATE TABLE student;  
-
-</code></pre><h2 id="DELETE-DELETE-FROM"><a href="#DELETE-DELETE-FROM" class="headerlink" title="DELETE / DELETE FROM"></a>DELETE / DELETE FROM</h2><p>DELETE 删除表中数据，但保留表结构，删除操作会被记录到binlog日志中，可以回滚；而且它可以与 WHERE 连用，进行条件查询删除特定行    </p>
-<p><strong>如果只针对一张表进行删除，则 DELETE 和 DELETE FROM 效果一样；如果需要联合其他表，则需要使用DELETE FROM</strong></p>
-<ul>
-<li>对于DELETE操作，它会删除表全部数据，表结构不变，对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间  </li>
+            <p>本文将介绍设计模式中的策略模式（Strategy）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<a id="more"></a>
+<h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><ul>
+<li>封装变化</li>
+<li>多用组合，少用继承</li>
+<li>针对接口编程，不针对实现编程</li>
 </ul>
-<pre><code>
-DELETE FROM student;  
-
-</code></pre><blockquote>
-<p>DELETE 操作以后，使用 <strong>OPTIMIZE TABLE table_name</strong> 会立刻释放磁盘空间，不管是 InnoDB 还是 MyISAM  </p>
-</blockquote>
-<ul>
-<li>对于与 WHERE 连用的 DELETE FROM 的带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间  </li>
-</ul>
-<pre><code>
-DELETE FROM student WHERE T_name = &quot;张三&quot;;  
-
-</code></pre><blockquote>
-<p>DELETE FROM 表以后虽然未释放磁盘空间，但是下次插入数据的时候，仍然可以使用这部分空间  </p>
-</blockquote>
-<h1 id="TRUNCATE-VS-DELETE"><a href="#TRUNCATE-VS-DELETE" class="headerlink" title="TRUNCATE VS DELETE"></a>TRUNCATE VS DELETE</h1><ol>
-<li><strong>事务：</strong>TRUNCATE 删除后不记录 binlog 日志，因此不可以回滚，更不可以恢复数据；而 DELETE 则记录 binlog，所以是可以回滚。因此 TRUNCATE 相当于保留原 MySQL 表的结果，重新创建了这个表，所有的状态都相当于新的，而 DELETE 的效果相当于一行行删除，即可以回滚</li>
-<li><strong>效果：</strong>效率上 TRUNCATE 比 DELETE 快，而且 TRUNCATE 删除后将重建索引（新插入数据后id从0开始记起），而 DELETE 不会删除索引 （新插入的数据将在删除数据的索引后继续增加）</li>
-<li><strong>TRUNCATE 不会触发任何 DELETE触发器</strong></li>
-<li><strong>返回值：</strong>DELETE 操作后返回删除的记录数，而 TRUNCATE 返回的是0或者-1（成功则返回0，失败返回-1）  </li>
-</ol>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>假设我们有 Duck 基类，要求针对不同类型的鸭子的飞行和叫声两种行为进行实现。请注意，有的鸭子不会飞，有的鸭子不会叫。如果我们直接通过在基类中定义抽象方法：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">abstract public Duck &#123;</span><br><span class="line">    public Duck();</span><br><span class="line">    abstract public fly();</span><br><span class="line">    abstract public quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再由具体类型鸭子继承基类 Duck，则会导致默认每种鸭子都会飞，每种鸭子都会叫，显然不符合要求。但我们再看看需求，其实只是需要对不同鸭子类型的飞行和叫两种行为进行不同实现即可。我们不妨把这两种行为封装成两个独立的类型，因此我们把鸭子的飞行和叫分别定义为两个接口类型：FlyBehavior 和 QuackBehavior（定义为接口而非普通 class 类是可以避免 Java 中的单继承限制，提高程序拓展性）：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface FlyBehavior &#123;</span><br><span class="line">    public fly();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface QuackBehavior &#123;</span><br><span class="line">    public quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们修改基类，注意我们<strong>要面向接口编程，而不是面向具体实现编程</strong>：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">abstract public Duck &#123;</span><br><span class="line">    public Duck();</span><br><span class="line">    FlyBehavior flyBehavior;</span><br><span class="line">    QuackBehavior QuackBehavior;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后定义两种不同的飞行方式：用翅膀飞 FlyWithWings 和 不会飞 FlyNoWay；定义两种不同的叫声方式：叫 Quack 和 不会叫 MuteQuack；</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public FlyWithWings implements FlyBehavior &#123;</span><br><span class="line">    public fly()&#123;</span><br><span class="line">        System.out.println(&quot;I can fly!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public FlyNoWay implements FlyBehavior &#123;</span><br><span class="line">    public fly()&#123;</span><br><span class="line">        System.out.println(&quot;I can&apos;t fly!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Quack implements QuackBehavior &#123;</span><br><span class="line">    public quack()&#123;</span><br><span class="line">        System.out.println(&quot;Quack！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public MuteQuack implements QuackBehavior &#123;</span><br><span class="line">    public quack()&#123;</span><br><span class="line">        System.out.println(&quot;Silent！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们造一种会飞不会叫的鸭子 MiniDuck：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public MiniDuck extends Duck &#123;</span><br><span class="line">    public Duck()&#123;</span><br><span class="line">        flyBehavior = new FlyWithWings;</span><br><span class="line">        QuackBehavior = new MuteQuack()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就成功地应用策略模式造出一种会飞不会叫的鸭子 MiniDuck 了！下面是应用策略模式设计后的 UML 类图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Strategy1.png" alt="Duck 应用策略模式"></p>
 
         </div>
+        
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Strategy">
+                </span>
+            </div>
         
         
         <hr style="height:1px;margin:1rem 0"/>
@@ -212,7 +202,7 @@ DELETE FROM student WHERE T_name = &quot;张三&quot;;
                 <div class="level-item">
                     <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
                     <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                    <a class="has-link-grey -link" href="/tags/MySQL/">MySQL</a>
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
                 </div>
             </div>
         </div>
@@ -233,17 +223,10 @@ DELETE FROM student WHERE T_name = &quot;张三&quot;;
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/05/面经/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">面试总结</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/05/28/Interview Record/">
-                <span class="level-item">面经</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/16/Design Patterns/">
+                <span class="level-item">Design Patterns</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -264,7 +247,7 @@ DELETE FROM student WHERE T_name = &quot;张三&quot;;
     var gitalk = new Gitalk({
         clientID: '80ed07e081b981160e61',
         clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
-        id: 'dccff28a0d59427390e37f0f95df7923',
+        id: 'd9e1bdd8da8a15918d3ba74f8e68b874',
         repo: 'leeyatsan.github.io',
         owner: 'LeeYatSan',
         admin: "LeeYatSan",
@@ -293,25 +276,17 @@ DELETE FROM student WHERE T_name = &quot;张三&quot;;
                 Catalogue
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#MySQL删除表方法">
+        <a class="is-flex" href="#定义">
         <span class="has-mr-6">1</span>
-        <span>MySQL删除表方法</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#DROP">
-        <span class="has-mr-6">1.1</span>
-        <span>DROP</span>
+        <span>定义</span>
         </a></li><li>
-        <a class="is-flex" href="#TRUNCATE">
-        <span class="has-mr-6">1.2</span>
-        <span>TRUNCATE</span>
-        </a></li><li>
-        <a class="is-flex" href="#DELETE-DELETE-FROM">
-        <span class="has-mr-6">1.3</span>
-        <span>DELETE / DELETE FROM</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#TRUNCATE-VS-DELETE">
+        <a class="is-flex" href="#原则">
         <span class="has-mr-6">2</span>
-        <span>TRUNCATE VS DELETE</span>
+        <span>原则</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用实例">
+        <span class="has-mr-6">3</span>
+        <span>应用实例</span>
         </a></li></ul>
         </div>
     </div>
@@ -337,7 +312,7 @@ DELETE FROM student WHERE T_name = &quot;张三&quot;;
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="MySQL的几种删除表的方法" height="28">
+                    <img src="/images/logo.svg" alt="Design Patterns - Strategy" height="28">
                 
                 </a>
                 <p class="is-size-7">
