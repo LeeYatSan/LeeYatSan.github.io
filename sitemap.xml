@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Singleton/</loc>
+    <loc>https://leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Decorator/</loc>
     
-    <lastmod>2019-12-18T03:51:24.976Z</lastmod>
+    <lastmod>2019-12-18T07:19:50.520Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://leeyatsan.cn/2019/12/16/Design%20Patterns/</loc>
     
-    <lastmod>2019-12-18T03:12:19.424Z</lastmod>
+    <lastmod>2019-12-18T06:22:30.570Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Singleton/</loc>
+    
+    <lastmod>2019-12-18T03:51:24.976Z</lastmod>
     
   </url>
   

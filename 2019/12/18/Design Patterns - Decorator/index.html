@@ -7,22 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Design Patterns - Strategy - LEE YAT-SAN&#39;s ZONE</title>
+<title>Design Patterns - Decorator - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
+    <meta name="description" content="本文将介绍设计模式中的装饰器模式（Decorator）。 定义该模式动态地将责任附加到对象上，若要扩展功能，装饰者提供了比继承更有弹性的替代方案。该模式适用于需要经常动态地为对象添加或删除责任（属性）的情况。">
 <meta name="keywords" content="Design Patterns">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Design Patterns - Strategy">
-<meta property="og:url" content="https://leeyatsan.cn/2019/12/16/Design Patterns - Strategy/index.html">
+<meta property="og:title" content="Design Patterns - Decorator">
+<meta property="og:url" content="https://leeyatsan.cn/2019/12/18/Design Patterns - Decorator/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
+<meta property="og:description" content="本文将介绍设计模式中的装饰器模式（Decorator）。 定义该模式动态地将责任附加到对象上，若要扩展功能，装饰者提供了比继承更有弹性的替代方案。该模式适用于需要经常动态地为对象添加或删除责任（属性）的情况。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2019-12-17T12:57:34.994Z">
+<meta property="og:updated_time" content="2019-12-18T07:19:50.520Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Design Patterns - Strategy">
-<meta name="twitter:description" content="本文将介绍设计模式中的策略模式（Strategy）。 定义该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。">
+<meta name="twitter:title" content="Design Patterns - Decorator">
+<meta name="twitter:description" content="本文将介绍设计模式中的装饰器模式（Decorator）。 定义该模式动态地将责任附加到对象上，若要扩展功能，装饰者提供了比继承更有弹性的替代方案。该模式适用于需要经常动态地为对象添加或删除责任（属性）的情况。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
 
 
@@ -81,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Design Patterns - Strategy" height="28">
+                <img src="/images/logo.svg" alt="Design Patterns - Decorator" height="28">
             
             </a>
         </div>
@@ -139,26 +139,26 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>Design Patterns - Strategy
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Decorator
     
     </h1>
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2019-12-16T14:30:03.902Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-16</time>
+            <time class="level-item has-text-grey" datetime="2019-12-18T06:17:03.800Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-18</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-17T12:57:34.994Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-17</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-18T07:19:50.520Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-18</time>
             
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Creative/">Creative</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 670 words)
+                    6 minutes read (About 936 words)
                 </span>
                 
                 
@@ -166,33 +166,42 @@
         </div>
         
         <div class="content">
-            <p>本文将介绍设计模式中的策略模式（Strategy）。</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</strong></p>
+            <p>本文将介绍设计模式中的装饰器模式（Decorator）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式动态地将责任附加到对象上，若要扩展功能，装饰者提供了比继承更有弹性的替代方案。</strong>该模式适用于需要经常动态地为对象添加或删除责任（属性）的情况。</p>
 <a id="more"></a>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/decorator2.png" alt="装饰器模式示意 UML 类图"></p>
+<p>从图中可知，<strong>被装饰对象和装饰者有相同的类型</strong>。</p>
 <h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><ul>
-<li>封装变化</li>
-<li>多用组合，少用继承</li>
-<li>针对接口编程，不针对实现编程</li>
+<li>对扩展开放，对修改关闭</li>
+<li>被装饰对象和装饰者有相同的类型</li>
 </ul>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>将变化的部分（算法）抽象出来封装成接口类型，并在基类中以借口类型进行声明，再以具体类型实现对应接口类型，并用组合等方式实现具体子类。</p>
-<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>假设我们有 Duck 基类，要求针对不同类型的鸭子的飞行和叫声两种行为进行实现。请注意，有的鸭子不会飞，有的鸭子不会叫。如果我们直接通过在基类中定义抽象方法：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">abstract public class Duck &#123;</span><br><span class="line">    public Duck();</span><br><span class="line">    abstract public fly();</span><br><span class="line">    abstract public quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后再由具体类型鸭子继承基类 Duck，则会导致默认每种鸭子都会飞，每种鸭子都会叫，显然不符合要求。但我们再看看需求，其实只是需要对不同鸭子类型的飞行和叫两种行为进行不同实现即可。我们不妨把这两种行为封装成两个独立的类型，因此我们把鸭子的飞行和叫分别定义为两个接口类型：FlyBehavior 和 QuackBehavior（定义为接口而非普通 class 类是可以避免 Java 中的单继承限制，提高程序拓展性）：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface FlyBehavior &#123;</span><br><span class="line">    public fly();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface QuackBehavior &#123;</span><br><span class="line">    public quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后我们修改基类，注意我们<strong>要面向接口编程，而不是面向具体实现编程</strong>：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">abstract public class Duck &#123;</span><br><span class="line">    public Duck();</span><br><span class="line">    FlyBehavior flyBehavior;</span><br><span class="line">    QuackBehavior QuackBehavior;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后定义两种不同的飞行方式：用翅膀飞 FlyWithWings 和 不会飞 FlyNoWay；定义两种不同的叫声方式：叫 Quack 和 不会叫 MuteQuack；</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class FlyWithWings implements FlyBehavior &#123;</span><br><span class="line">    public fly()&#123;</span><br><span class="line">        System.out.println(&quot;I can fly!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class FlyNoWay implements FlyBehavior &#123;</span><br><span class="line">    public fly()&#123;</span><br><span class="line">        System.out.println(&quot;I can&apos;t fly!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Quack implements QuackBehavior &#123;</span><br><span class="line">    public quack()&#123;</span><br><span class="line">        System.out.println(&quot;Quack！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class MuteQuack implements QuackBehavior &#123;</span><br><span class="line">    public quack()&#123;</span><br><span class="line">        System.out.println(&quot;Silent！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后我们造一种会飞不会叫的鸭子 MiniDuck：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MiniDuck extends Duck &#123;</span><br><span class="line">    public Duck()&#123;</span><br><span class="line">        flyBehavior = new FlyWithWings;</span><br><span class="line">        QuackBehavior = new MuteQuack()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，我们就成功地应用策略模式造出一种会飞不会叫的鸭子 MiniDuck 了！下面是应用策略模式设计后的 UML 类图：</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Strategy1.png" alt="Duck 应用策略模式"></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>装饰者和被装饰者继承同一个基类，同时装饰者中增加一个变量记录被装饰者的引用，每次需要装饰的时候给被装饰者“套一层”装饰者再返回即可。</p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>我们以一个咖啡馆的例子来看一下如何应用装饰器模式。<br>假设我们有一个 Beverage 的饮料基类：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Beverage &#123;</span><br><span class="line">    private String description;</span><br><span class="line">    </span><br><span class="line">    public getDescription()&#123; return description; &#125;</span><br><span class="line">    public abstract double cost()&#123; /* ... */ &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在要调制各种饮料，有的饮料要加奶，有的要加糖，有的要加可可……假如我们直接进行继承，则会爆炸性的产生大量子类，大大增加后期维护成本。而且通过继承来确定类只能在编译时静态决定，不能在运行时动态地为对象添加或删除责任（属性）。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/decorator1.png" alt="直接继承或导致“类爆炸”"></p>
+<p>一个健壮的系统设计应该是<strong>对扩展开放，对修改关闭</strong>，而装饰器模式则实现了这一点。</p>
+<p>首先我们看一下如何用装饰器模式来构建饮料：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/decorator3.png" alt="以装饰者构造饮料 - 1"></p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/decorator4.png" alt="以装饰者构造饮料 - 2"></p>
+<p>我们看一下装饰器模式实现饮料的 UML 类图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/decorator5.png" alt="装饰器模式实现饮料的 UML 类图"></p>
+<p>下面我们来看看装饰器模式实现饮料的代码：</p>
+<p>首先是饮料基类(被装饰者)和调料基类（装饰者）：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 饮料基类(被装饰者)</span><br><span class="line">public abstract class Beverage &#123;</span><br><span class="line">    private String description = &quot;Unknown Beverage&quot;;</span><br><span class="line">    </span><br><span class="line">    public getDescription()&#123; return description; &#125;</span><br><span class="line">    </span><br><span class="line">    // 此方法在子类中实现</span><br><span class="line">    public abstract double cost()&#123; /* ... */ &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 调料基类（装饰者）</span><br><span class="line">// 装饰者必须和被装饰者同类，因此 CondimentDecorator 继承自 Beverage</span><br><span class="line">public abstract class CondimentDecorator extends Beverage &#123;</span><br><span class="line">    // 所有调料装饰者必须重新实现此方法</span><br><span class="line">    public abstract String getDescription();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们再实现一些具体饮料（被装饰者），就以浓缩咖啡 Espresso 为例：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Espresso extends Beverage &#123;</span><br><span class="line"></span><br><span class="line">    public Espresso() &#123;</span><br><span class="line">        description = &quot;Espresso&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double cost()&#123; return 1.99; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后就是一些具体的调料（装饰者）的代码，以摩卡 Mocha 为例：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Mocha extends CondimentDecorator &#123;</span><br><span class="line"></span><br><span class="line">    // 用于记录被装饰者的引用</span><br><span class="line">    Beverage beverage；</span><br><span class="line">    </span><br><span class="line">    public Mocha(Beverage beverage)&#123;</span><br><span class="line">        this.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return beverage.getDescription() + &quot;, Mocha&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public double cost()&#123;</span><br><span class="line">        return .20 + beverage.cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，我们来一杯原味和一杯加摩卡的浓缩咖啡：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class StarbuzzCoffee &#123;</span><br><span class="line">    </span><br><span class="line">    public static main(String args[])&#123;</span><br><span class="line">    </span><br><span class="line">        // 原味</span><br><span class="line">        Beverage beverage1 = new Espresso();</span><br><span class="line">        System.out.println(beverage1.getDescription() + &quot; $&quot; + beverage1.cost());</span><br><span class="line">        </span><br><span class="line">        // 加摩卡</span><br><span class="line">        // 被装饰者（浓缩咖啡 Espresso）</span><br><span class="line">        Beverage beverage2 = new Espresso();</span><br><span class="line">        // 装饰者（Mocha）装饰被装饰者</span><br><span class="line">        beverage2 = new Mocha(beverage2);</span><br><span class="line">        System.out.println(beverage2.getDescription() + &quot; $&quot; + beverage1.cost());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就成功地使用观察者模式制造出了一杯原味和一杯加摩卡的浓缩咖啡，舒服了～</p>
 
         </div>
         
             <div class="card-image">
                 <span  class="image is-7by1">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Strategy">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Decorator">
                 </span>
             </div>
         
@@ -224,17 +233,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/12/17/Design Patterns - Observer/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Design Patterns - Observer</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/16/Design Patterns/">
-                <span class="level-item">Design Patterns</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/18/Design Patterns - Singleton/">
+                <span class="level-item">Design Patterns - Singleton</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -255,7 +257,7 @@
     var gitalk = new Gitalk({
         clientID: '80ed07e081b981160e61',
         clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
-        id: 'd9e1bdd8da8a15918d3ba74f8e68b874',
+        id: 'c152cb7ce00c610679181452395a9596',
         repo: 'leeyatsan.github.io',
         owner: 'LeeYatSan',
         admin: "LeeYatSan",
@@ -324,7 +326,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Design Patterns - Strategy" height="28">
+                    <img src="/images/logo.svg" alt="Design Patterns - Decorator" height="28">
                 
                 </a>
                 <p class="is-size-7">

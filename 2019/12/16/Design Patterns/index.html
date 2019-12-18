@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文将介绍软件开发中使用的主要设计模式，参考了 Freeman &amp;amp; Freeman 所著的 Head First Design Patterns 。 OO 基础：抽象、封装、多态、继承。良好的 OO 设计必须具备可复用、可扩充、可维护三个特性，但仅仅知道指导 OO 基础并不足以让你设计出良好的 OO 系统，而设计模式则可以帮助你解决这个问题。 设计模式是大量开发者在长期的开发中总结出来的经">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2019-12-18T03:12:19.424Z">
+<meta property="og:updated_time" content="2019-12-18T06:22:30.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Design Patterns">
 <meta name="twitter:description" content="本文将介绍软件开发中使用的主要设计模式，参考了 Freeman &amp;amp; Freeman 所著的 Head First Design Patterns 。 OO 基础：抽象、封装、多态、继承。良好的 OO 设计必须具备可复用、可扩充、可维护三个特性，但仅仅知道指导 OO 基础并不足以让你设计出良好的 OO 系统，而设计模式则可以帮助你解决这个问题。 设计模式是大量开发者在长期的开发中总结出来的经">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-16T13:43:39.023Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-16</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-18T03:12:19.424Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-18</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-18T06:22:30.570Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-18</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 637 words)
+                    5 minutes read (About 697 words)
                 </span>
                 
                 
@@ -175,9 +175,11 @@
 <li>多用组合，少用继承</li>
 <li>针对接口编程，不针对实现编程</li>
 <li>交互对象之间尽可能采用松耦合设计，使得对象之间的相互依赖降到最低，使得 OO 系统更有弹性</li>
+<li>对扩展开放，对修改关闭</li>
 </ul>
-<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h2 id="创建型（Creative）"><a href="#创建型（Creative）" class="headerlink" title="创建型（Creative）"></a>创建型（Creative）</h2><h3 id="工厂模式（Factory）"><a href="#工厂模式（Factory）" class="headerlink" title="工厂模式（Factory）"></a>工厂模式（Factory）</h3><h4 id="简单工厂模式（Simple-Factory）"><a href="#简单工厂模式（Simple-Factory）" class="headerlink" title="简单工厂模式（Simple Factory）"></a>简单工厂模式（Simple Factory）</h4><h4 id="工厂方法模式（Factory-Method）"><a href="#工厂方法模式（Factory-Method）" class="headerlink" title="工厂方法模式（Factory Method）"></a>工厂方法模式（Factory Method）</h4><h4 id="抽象工厂模式（Abstract-Factory）"><a href="#抽象工厂模式（Abstract-Factory）" class="headerlink" title="抽象工厂模式（Abstract Factory）"></a>抽象工厂模式（Abstract Factory）</h4><h3 id="建造者模式（Builder）"><a href="#建造者模式（Builder）" class="headerlink" title="建造者模式（Builder）"></a>建造者模式（Builder）</h3><h3 id="原型模式（Prototype）"><a href="#原型模式（Prototype）" class="headerlink" title="原型模式（Prototype）"></a>原型模式（Prototype）</h3><h3 id="单例模式（Singleton）"><a href="#单例模式（Singleton）" class="headerlink" title="单例模式（Singleton）"></a>单例模式（Singleton）</h3><p>该模式确保一个类只有一个实例，并且提供一个全局访问点。</p>
-<h2 id="结构型（Constructive）"><a href="#结构型（Constructive）" class="headerlink" title="结构型（Constructive）"></a>结构型（Constructive）</h2><h3 id="适配器模式（Adapter）"><a href="#适配器模式（Adapter）" class="headerlink" title="适配器模式（Adapter）"></a>适配器模式（Adapter）</h3><h3 id="桥接模式（Bridge）"><a href="#桥接模式（Bridge）" class="headerlink" title="桥接模式（Bridge）"></a>桥接模式（Bridge）</h3><h3 id="组合模式（Composite）"><a href="#组合模式（Composite）" class="headerlink" title="组合模式（Composite）"></a>组合模式（Composite）</h3><h3 id="装饰器模式（Decorator）"><a href="#装饰器模式（Decorator）" class="headerlink" title="装饰器模式（Decorator）"></a>装饰器模式（Decorator）</h3><h3 id="外观模式（Facade）"><a href="#外观模式（Facade）" class="headerlink" title="外观模式（Facade）"></a>外观模式（Facade）</h3><h3 id="享元模式（Flyweight）"><a href="#享元模式（Flyweight）" class="headerlink" title="享元模式（Flyweight）"></a>享元模式（Flyweight）</h3><h3 id="代理模式（Proxy）"><a href="#代理模式（Proxy）" class="headerlink" title="代理模式（Proxy）"></a>代理模式（Proxy）</h3><h2 id="行为型（Behavioral）"><a href="#行为型（Behavioral）" class="headerlink" title="行为型（Behavioral）"></a>行为型（Behavioral）</h2><h3 id="责任链模式（Chain-of-Responsibility）"><a href="#责任链模式（Chain-of-Responsibility）" class="headerlink" title="责任链模式（Chain of Responsibility）"></a>责任链模式（Chain of Responsibility）</h3><h3 id="命令模式（Command）"><a href="#命令模式（Command）" class="headerlink" title="命令模式（Command）"></a>命令模式（Command）</h3><h3 id="迭代器模式（Iterator）"><a href="#迭代器模式（Iterator）" class="headerlink" title="迭代器模式（Iterator）"></a>迭代器模式（Iterator）</h3><h3 id="中介者模式（Mediator）"><a href="#中介者模式（Mediator）" class="headerlink" title="中介者模式（Mediator）"></a>中介者模式（Mediator）</h3><h3 id="备忘录模式（Memento）"><a href="#备忘录模式（Memento）" class="headerlink" title="备忘录模式（Memento）"></a>备忘录模式（Memento）</h3><h3 id="观察者模式（Observer）"><a href="#观察者模式（Observer）" class="headerlink" title="观察者模式（Observer）"></a><a href="http://www.leeyatsan.cn/2019/12/17/Design%20Patterns%20-%20Observer/" target="_blank" rel="noopener">观察者模式（Observer）</a></h3><p>该模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</p>
+<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h2 id="创建型（Creative）"><a href="#创建型（Creative）" class="headerlink" title="创建型（Creative）"></a>创建型（Creative）</h2><h3 id="工厂模式（Factory）"><a href="#工厂模式（Factory）" class="headerlink" title="工厂模式（Factory）"></a>工厂模式（Factory）</h3><h4 id="简单工厂模式（Simple-Factory）"><a href="#简单工厂模式（Simple-Factory）" class="headerlink" title="简单工厂模式（Simple Factory）"></a>简单工厂模式（Simple Factory）</h4><h4 id="工厂方法模式（Factory-Method）"><a href="#工厂方法模式（Factory-Method）" class="headerlink" title="工厂方法模式（Factory Method）"></a>工厂方法模式（Factory Method）</h4><h4 id="抽象工厂模式（Abstract-Factory）"><a href="#抽象工厂模式（Abstract-Factory）" class="headerlink" title="抽象工厂模式（Abstract Factory）"></a>抽象工厂模式（Abstract Factory）</h4><h3 id="建造者模式（Builder）"><a href="#建造者模式（Builder）" class="headerlink" title="建造者模式（Builder）"></a>建造者模式（Builder）</h3><h3 id="原型模式（Prototype）"><a href="#原型模式（Prototype）" class="headerlink" title="原型模式（Prototype）"></a>原型模式（Prototype）</h3><h3 id="单例模式（Singleton）"><a href="#单例模式（Singleton）" class="headerlink" title="单例模式（Singleton）"></a><a href="http://www.leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Singleton/" target="_blank" rel="noopener">单例模式（Singleton）</a></h3><p>该模式确保一个类只有一个实例，并且提供一个全局访问点。</p>
+<h2 id="结构型（Constructive）"><a href="#结构型（Constructive）" class="headerlink" title="结构型（Constructive）"></a>结构型（Constructive）</h2><h3 id="适配器模式（Adapter）"><a href="#适配器模式（Adapter）" class="headerlink" title="适配器模式（Adapter）"></a>适配器模式（Adapter）</h3><h3 id="桥接模式（Bridge）"><a href="#桥接模式（Bridge）" class="headerlink" title="桥接模式（Bridge）"></a>桥接模式（Bridge）</h3><h3 id="组合模式（Composite）"><a href="#组合模式（Composite）" class="headerlink" title="组合模式（Composite）"></a>组合模式（Composite）</h3><h3 id="装饰器模式（Decorator）"><a href="#装饰器模式（Decorator）" class="headerlink" title="装饰器模式（Decorator）"></a>装饰器模式（Decorator）</h3><p>该模式动态地将责任附加到对象上，若要扩展功能，装饰者提供了比继承更有弹性的替代方案。</p>
+<h3 id="外观模式（Facade）"><a href="#外观模式（Facade）" class="headerlink" title="外观模式（Facade）"></a>外观模式（Facade）</h3><h3 id="享元模式（Flyweight）"><a href="#享元模式（Flyweight）" class="headerlink" title="享元模式（Flyweight）"></a>享元模式（Flyweight）</h3><h3 id="代理模式（Proxy）"><a href="#代理模式（Proxy）" class="headerlink" title="代理模式（Proxy）"></a>代理模式（Proxy）</h3><h2 id="行为型（Behavioral）"><a href="#行为型（Behavioral）" class="headerlink" title="行为型（Behavioral）"></a>行为型（Behavioral）</h2><h3 id="责任链模式（Chain-of-Responsibility）"><a href="#责任链模式（Chain-of-Responsibility）" class="headerlink" title="责任链模式（Chain of Responsibility）"></a>责任链模式（Chain of Responsibility）</h3><h3 id="命令模式（Command）"><a href="#命令模式（Command）" class="headerlink" title="命令模式（Command）"></a>命令模式（Command）</h3><h3 id="迭代器模式（Iterator）"><a href="#迭代器模式（Iterator）" class="headerlink" title="迭代器模式（Iterator）"></a>迭代器模式（Iterator）</h3><h3 id="中介者模式（Mediator）"><a href="#中介者模式（Mediator）" class="headerlink" title="中介者模式（Mediator）"></a>中介者模式（Mediator）</h3><h3 id="备忘录模式（Memento）"><a href="#备忘录模式（Memento）" class="headerlink" title="备忘录模式（Memento）"></a>备忘录模式（Memento）</h3><h3 id="观察者模式（Observer）"><a href="#观察者模式（Observer）" class="headerlink" title="观察者模式（Observer）"></a><a href="http://www.leeyatsan.cn/2019/12/17/Design%20Patterns%20-%20Observer/" target="_blank" rel="noopener">观察者模式（Observer）</a></h3><p>该模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</p>
 <h3 id="访问者模式（Visitor）"><a href="#访问者模式（Visitor）" class="headerlink" title="访问者模式（Visitor）"></a>访问者模式（Visitor）</h3><h3 id="策略模式（Strategy）"><a href="#策略模式（Strategy）" class="headerlink" title="策略模式（Strategy）"></a><a href="http://www.leeyatsan.cn/2019/12/16/Design%20Patterns%20-%20Strategy/" target="_blank" rel="noopener">策略模式（Strategy）</a></h3><p>该模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
 <h3 id="状态模式（State）"><a href="#状态模式（State）" class="headerlink" title="状态模式（State）"></a>状态模式（State）</h3><h3 id="模板方法模式（Template-Method）"><a href="#模板方法模式（Template-Method）" class="headerlink" title="模板方法模式（Template Method）"></a>模板方法模式（Template Method）</h3><h3 id="解释器模式（Interpreter）"><a href="#解释器模式（Interpreter）" class="headerlink" title="解释器模式（Interpreter）"></a>解释器模式（Interpreter）</h3>
         </div>
@@ -238,7 +240,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -273,7 +275,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catalogue
+                Catálogo
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#OO-原则">
@@ -534,10 +536,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
