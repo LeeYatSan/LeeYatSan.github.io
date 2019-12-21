@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2019/12/20/Design Patterns - Factory/
 https://leeyatsan.cn/2019/12/18/Design Patterns - Decorator/
 https://leeyatsan.cn/2019/12/18/Design Patterns - Singleton/
 https://leeyatsan.cn/2019/12/17/Design Patterns - Observer/
