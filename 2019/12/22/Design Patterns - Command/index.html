@@ -7,22 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>LEE YAT-SAN&#39;s ZONE</title>
+<title>Design Patterns - Command - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="title: Design Patterns - Commandthumbnail: https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.pngtags:  Design Patternscategories:  Design Patterns Beh">
+    <meta name="description" content="本文将介绍设计模式中的命令模式（Command）。 定义该模式将“请求”封装成对象，以便使用不同的请求、队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。该模式使得“发出请求的对象”和“接受与执行这些请求的对象”分隔开来，实现解藕。">
+<meta name="keywords" content="Design Patterns">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:title" content="Design Patterns - Command">
 <meta property="og:url" content="https://leeyatsan.cn/2019/12/22/Design Patterns - Command/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="title: Design Patterns - Commandthumbnail: https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.pngtags:  Design Patternscategories:  Design Patterns Beh">
+<meta property="og:description" content="本文将介绍设计模式中的命令模式（Command）。 定义该模式将“请求”封装成对象，以便使用不同的请求、队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。该模式使得“发出请求的对象”和“接受与执行这些请求的对象”分隔开来，实现解藕。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://leeyatsan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-22T03:48:27.993Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2019-12-22T03:51:28.842Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LEE YAT-SAN&#39;s ZONE">
-<meta name="twitter:description" content="title: Design Patterns - Commandthumbnail: https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.pngtags:  Design Patternscategories:  Design Patterns Beh">
-<meta name="twitter:image" content="https://leeyatsan.cn/images/og_image.png">
+<meta name="twitter:title" content="Design Patterns - Command">
+<meta name="twitter:description" content="本文将介绍设计模式中的命令模式（Command）。 定义该模式将“请求”封装成对象，以便使用不同的请求、队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。该模式使得“发出请求的对象”和“接受与执行这些请求的对象”分隔开来，实现解藕。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
 
 
 
@@ -80,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="" height="28">
+                <img src="/images/logo.svg" alt="Design Patterns - Command" height="28">
             
             </a>
         </div>
@@ -138,7 +139,7 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Command
     
     </h1>
         
@@ -146,14 +147,18 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-22T02:52:06.038Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-22</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-22T03:48:27.993Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-22</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-12-22T03:51:28.842Z"><i class="far fa-calendar-check">&nbsp;</i>2019-12-22</time>
             
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    6 minutes read (About 956 words)
+                    6 minutes read (About 924 words)
                 </span>
                 
                 
@@ -161,15 +166,7 @@
         </div>
         
         <div class="content">
-            <hr>
-<p>title: Design Patterns - Command<br>thumbnail: <a href="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" target="_blank" rel="noopener">https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png</a><br>tags:</p>
-<ul>
-<li>Design Patterns<br>categories: </li>
-<li>Design Patterns</li>
-<li>Behavioral<br>copyright: true<br>comments: true<br>lang: zh-Hans<br>updated: </li>
-</ul>
-<hr>
-<p>本文将介绍设计模式中的命令模式（Command）。</p>
+            <p>本文将介绍设计模式中的命令模式（Command）。</p>
 <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式将“请求”封装成对象，以便使用不同的请求、队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。</strong>该模式使得“发出请求的对象”和“接受与执行这些请求的对象”分隔开来，实现解藕。</p>
 <a id="more"></a>
 <h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><ul>
@@ -198,6 +195,23 @@
 
         </div>
         
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Command">
+                </span>
+            </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
+                </div>
+            </div>
+        </div>
         
         
         
@@ -308,7 +322,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="" height="28">
+                    <img src="/images/logo.svg" alt="Design Patterns - Command" height="28">
                 
                 </a>
                 <p class="is-size-7">
