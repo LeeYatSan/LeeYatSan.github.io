@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Decorator/</loc>
+    <loc>https://leeyatsan.cn/2019/12/26/Design%20Patterns%20-%20Template%20Method/</loc>
     
-    <lastmod>2019-12-22T12:57:09.341Z</lastmod>
+    <lastmod>2019-12-26T13:56:31.433Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://leeyatsan.cn/2019/12/16/Design%20Patterns/</loc>
     
-    <lastmod>2019-12-22T12:56:25.968Z</lastmod>
+    <lastmod>2019-12-26T01:07:08.142Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://leeyatsan.cn/2019/12/18/Design%20Patterns%20-%20Decorator/</loc>
+    
+    <lastmod>2019-12-22T12:57:09.341Z</lastmod>
     
   </url>
   

@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2019/12/26/Design Patterns - Template Method/
 https://leeyatsan.cn/2019/12/22/Design Patterns - Facade/
 https://leeyatsan.cn/2019/12/22/Design Patterns - Adapter/
 https://leeyatsan.cn/2019/12/22/Design Patterns - Command/
