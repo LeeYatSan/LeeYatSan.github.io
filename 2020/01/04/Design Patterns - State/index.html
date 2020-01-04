@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Design Patterns - State - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="本文将介绍设计模式中的状态模式（State）。 定义该模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了他的类。即将状态封装为独立的类，并将动作委托到当前对象。">
+<meta name="keywords" content="Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Patterns - State">
+<meta property="og:url" content="https://leeyatsan.cn/2020/01/04/Design Patterns - State/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="本文将介绍设计模式中的状态模式（State）。 定义该模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了他的类。即将状态封装为独立的类，并将动作委托到当前对象。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2020-01-04T15:22:51.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Patterns - State">
+<meta name="twitter:description" content="本文将介绍设计模式中的状态模式（State）。 定义该模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了他的类。即将状态封装为独立的类，并将动作委托到当前对象。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Design Patterns - State" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>Design Patterns - State
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2020-01-04T14:26:22.589Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-04</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-04T15:22:51.408Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-04</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1291 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>本文将介绍设计模式中的状态模式（State）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了他的类。</strong>即将状态封装为独立的类，并将动作委托到当前对象。</p>
+<a id="more"></a>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>通过抽象类定义状态接口，以及共有方法。然后由具体子类定义具体状态及在该状态下的动作方式。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/State1.png" alt="状态模式 UML 类图"></p>
+<h2 id="状态模式-VS-策略模式"><a href="#状态模式-VS-策略模式" class="headerlink" title="状态模式 VS 策略模式"></a>状态模式 VS 策略模式</h2><p>从 UML 类图结构来看，状态模式和<a href="http://www.leeyatsan.cn/2019/12/16/Design%20Patterns%20-%20Strategy/" target="_blank" rel="noopener">策略模式</a>简直完全一样，它们之间的差别在于它们的“意图”。</p>
+<ul>
+<li><strong>状态模式：</strong>我们将一群行为封装在状态对象中，context 的行为岁时可以委托到那些状态对象中的一个。随着时间流逝，当前状态在状态对象集合中游走改变，以反映出 context 内部的状态。因此， context 的行为也会跟着改变。但是 context 的客户对于状态对象了解不多，甚至浑然不觉。我们将状态模式想成是不用在 context 中放置许多条件判断的替代方案。</li>
+<li><strong>策略模式：</strong>客户通常主动指定 context 所要组合的策略对象是哪一个。现在，固然策略模式让我们巨头弹性，能够在运行时改变策略，但对于某个 context 对象来说，通常会有一个最适合的策略对象。一般来说，策略模式是除了继承之外的一种弹性替代方案。如果你使用继承定义了一个类的行为，你被这个行为困住，甚至要修改它都很难，有了策略模式，就可以通过组合不同对象来改变行为。</li>
+</ul>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>我们通过一个为糖果厂生产糖果机器程序的例子来理解一下状态模式。</p>
+<p>现有一个糖果机器，目前厂家规定了4种状态：有25分钱 HAS_QUARTER、无25分钱 NO_QUARTER、糖果售出 SOLD、糖果售罄 SOLD_OUT 。其状态转移图如下：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/State2.png" alt="糖果机器状态转移图"></p>
+<p>我们初识方案，是通过严格的硬编码形式，定义状态码，并通过严格的判定条件来确定该状态下糖果机器执行某些动作的方式：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class GumballMachine&#123;</span><br><span class="line">    </span><br><span class="line">    // 根据需求定义机器状态</span><br><span class="line">    final static int SOLD_OUT = 0;</span><br><span class="line">    final static int NO_QUARTER = 1;</span><br><span class="line">    final static int HAS_QUAETER = 2;</span><br><span class="line">    final static int SOLD = 3;</span><br><span class="line">    </span><br><span class="line">    // 记录当前机器状态</span><br><span class="line">    int state = SOLD_OUT;</span><br><span class="line">    // 记录当前机器中存有的糖果的数量</span><br><span class="line">    int count = 0;</span><br><span class="line">    </span><br><span class="line">    public GumballMachine(int count)&#123;</span><br><span class="line">        this.count = count;</span><br><span class="line">        if(count &gt; 0)&#123;</span><br><span class="line">            state = NO_QUARTER;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 投入25分钱的动作</span><br><span class="line">    public void insertQuarter()&#123;</span><br><span class="line">        if(state == HAS_QUARTER)&#123;</span><br><span class="line">            System.out.println(&quot;You have already paid for it!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else if(state == NO_QUARTER)&#123;</span><br><span class="line">            state = HAS_QUARTER;</span><br><span class="line">            System.out.println(&quot;You paid for it!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else if(state == SOLD_OUT)&#123;</span><br><span class="line">            System.out.println(&quot;No more sweet is available!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else if(state == SOLD)&#123;</span><br><span class="line">            System.out.println(&quot;Please take you candy!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /* 其他动作如上所示，在此忽略 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个实现看起来完全符合需求，但是烦人的糖果厂突然改需求了，想再增加一个状态。这个时候，开发团队要炸了——这岂不是要将所有的操作都进行修改？当前5个状态改起来还好，但是一旦系统负责，其维护成本将会难以想象。因此，这个时候，我们就需要使用状态模式来重构糖果机的实现了。</p>
+<p>首先，我们定义状态接口：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface State&#123;</span><br><span class="line">    public void insertQuarter();</span><br><span class="line">    public void ejectQuarter();</span><br><span class="line">    public void turnCrank();</span><br><span class="line">    public void dispense();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们根据需求实现每种状态的动作，这里仅以 NoQuarterState 状态为例：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class NoQuarterState implements State&#123;</span><br><span class="line">    </span><br><span class="line">    GumballMachine gumballMachine;</span><br><span class="line">    </span><br><span class="line">    public NoQuarterState(GumballMachine gumballMachine)&#123;</span><br><span class="line">        this.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void insertQuarter()&#123;</span><br><span class="line">        System.out.println(&quot;You paid for it!&quot;);</span><br><span class="line">        </span><br><span class="line">        // 根据需求设置状态转移动作</span><br><span class="line">        gumballMachine.setState(gumballMachine.getHasQuarterState());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void ejectQuarter()&#123;</span><br><span class="line">        System.out.println(&quot;You have already paid for it!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void turnCrank()&#123;</span><br><span class="line">        System.out.println(&quot;You turned, but there&apos;s no quarter!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void dispense()&#123;</span><br><span class="line">        System.out.println(&quot;You need to pay first!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HasQuarterState、SoldOutState、SoldState 的实现与上述类似，在此不再赘述。</p>
+<p>最后，我们来实现一下糖果机：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public class GumballMachine&#123;</span><br><span class="line">    </span><br><span class="line">    State soldOutState;</span><br><span class="line">    State noQuarterState;</span><br><span class="line">    State hasQuarterState;</span><br><span class="line">    State soldState;</span><br><span class="line">    </span><br><span class="line">    State state = soldOutState;</span><br><span class="line">    int count = 0;</span><br><span class="line">    </span><br><span class="line">    public GumballMachine(int numberGumballs)&#123;</span><br><span class="line">        soldOutState = new SoldOutState(this);</span><br><span class="line">        noQuarterState = new NoQuarterState(this);</span><br><span class="line">        hasQuarterState = new HasQuarterState(this);</span><br><span class="line">        soldState = new SoldState(this);</span><br><span class="line">        </span><br><span class="line">        this.count = numberGumballs;</span><br><span class="line">        </span><br><span class="line">        if(numberGumballs &gt; 0)&#123;</span><br><span class="line">            state = noQuarterState;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void insertQuarter()&#123;</span><br><span class="line">        state.insertQuarter();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void ejectQuarter()&#123;</span><br><span class="line">        state.ejectQuarter();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void turnCrank()&#123;</span><br><span class="line">        state.turnCrank();</span><br><span class="line">        state.dispense();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void setState(State state)&#123;</span><br><span class="line">        this.state = state;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void releaseBall()&#123;</span><br><span class="line">        System.out.println(&quot;A gumball comes rolling out the slot...&quot;);</span><br><span class="line">        if(count != 0)&#123;</span><br><span class="line">            --count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就通过状态模式实现了这个糖果机器。当有新的状态进来的时候，只需要让新状态实现 State 接口，并对原有部分受影响的状态的 setState() 的跳转目标状态的对象进行修改即可。</p>
+
+        </div>
+        
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - State">
+                </span>
+            </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/04/Design Patterns - Composite/">
+                <span class="level-item">Design Patterns - Composite</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: '04231787c70c52b18084eb4fcc0e303e',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#定义">
+        <span class="has-mr-6">1</span>
+        <span>定义</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现">
+        <span class="has-mr-6">2</span>
+        <span>实现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#状态模式-VS-策略模式">
+        <span class="has-mr-6">2.1</span>
+        <span>状态模式 VS 策略模式</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#应用实例">
+        <span class="has-mr-6">3</span>
+        <span>应用实例</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Design Patterns - State" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>
