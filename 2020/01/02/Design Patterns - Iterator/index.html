@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文将介绍设计模式中的迭代器模式（Iterator）。 定义该模式提供一种方法顺序访问一个聚合对象种的各个元素，而不是暴露其内部的表示。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2020-01-03T08:12:30.715Z">
+<meta property="og:updated_time" content="2020-01-03T11:25:47.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Design Patterns - Iterator">
 <meta name="twitter:description" content="本文将介绍设计模式中的迭代器模式（Iterator）。 定义该模式提供一种方法顺序访问一个聚合对象种的各个元素，而不是暴露其内部的表示。">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2020-01-02T06:55:02.601Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-02</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-03T08:12:30.715Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-03</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-03T11:25:47.480Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-03</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 minutes read (About 1024 words)
+                    7 minutes read (About 1061 words)
                 </span>
                 
                 
@@ -176,7 +176,8 @@
 <p>迭代器接口 Iterator 内含 hasNext()、next()、remove()三个基本方法，一般来说前两个必须实现，remove()方法可以通过返回一个 java.lang.UnsupportedOperationExeception 的运行时异常。注意，在多线程环境下使用 remove() 方法使用异常！</p>
 <p>之所以要将迭代器的方法单独创建一个 ConcreteIterator 的具体迭代器类来处理而不是由本省的聚合对象类来处理是为了遵循单一职责原则，即使得原本类负责的任务尽可能少。</p>
 <p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/iterator1.png" alt="迭代器模式 UML 类图"></p>
-<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>我们通过一个将两个不同菜单合并的例子来理解一下迭代器模式。现有两个菜单，Lou 的菜单和 Mel 的菜单。前者是通过 ArrayList 来实现的，后者则是直接通过数组来实现的。现在需要侍者 Waiter 打印两个不同的菜单。</p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>迭代器应用实例最典型的就是 Java 的 Collection 集合类，其内置的大部分集合类都已经实现 Iterator。</p>
+<p>我们通过一个将两个不同菜单合并的例子来理解一下迭代器模式。现有两个菜单，Lou 的菜单和 Mel 的菜单。前者是通过 ArrayList 来实现的，后者则是直接通过数组来实现的。现在需要侍者 Waiter 打印两个不同的菜单。</p>
 <p>最粗暴的方式是对两种不同的菜单进行不同方式的遍历：</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Waiter &#123;</span><br><span class="line">    </span><br><span class="line">    Lou lou;</span><br><span class="line">    MealItem[] mealItems;</span><br><span class="line">    </span><br><span class="line">    Waiter(Lou lou, Mel mel)&#123;</span><br><span class="line">        this.lou = lou;</span><br><span class="line">        this.mealItems = mel.getMenu();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu()&#123;</span><br><span class="line">        for(int i = 0; i &lt; lou.size(); i++)&#123;</span><br><span class="line">            System.out.println(lou.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        for(MealItem curr : mealItems)&#123;</span><br><span class="line">            System.out.println(curr.getDescription());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但仔细看看上面的代码，可以发现侍者的实现与 Lou 和 Mel 菜单的内部具体实现紧密的耦合在了一起（即侍者必须知道 Lou 和 Mel 菜单内部如何实现的才能实现自身相应功能），显然不是一个很好的设计。那么，如果我们改用迭代器模式来实现会怎样呢？</p>
@@ -187,7 +188,7 @@
 <p>然后为 Mel 菜单类创建对应的迭代器类 ConcreteIterator，并实现迭代器接口 Iterator：</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class MelIterator implements Iterator&#123;</span><br><span class="line">    </span><br><span class="line">    MealItem[] items;</span><br><span class="line">    int position = 0;</span><br><span class="line">    </span><br><span class="line">    public MelIterator(Mel mel)&#123;</span><br><span class="line">        this.items = mel.getMenu();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object next()&#123;</span><br><span class="line">        MealItem mealItem = items[position];</span><br><span class="line">        position += 1;</span><br><span class="line">        return mealItem;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean hasNext()&#123;</span><br><span class="line">        if(position &gt;= items.length || items[position] == null)&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void remove()&#123;</span><br><span class="line">        /* 实现忽略 */</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后，我们重新实现一下侍者打印菜单的功能：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Waiter &#123;</span><br><span class="line">    </span><br><span class="line">    Lou lou;</span><br><span class="line">    Mel mel;</span><br><span class="line">    </span><br><span class="line">    Waiter(Lou lou, Mel mel)&#123;</span><br><span class="line">        this.lou = lou;</span><br><span class="line">        this.mel = mel;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu()&#123;</span><br><span class="line">        Iterator louIterator = Lou.createIterator();</span><br><span class="line">        Iterator melIterator = mel.createIterator();</span><br><span class="line">        </span><br><span class="line">        /**</span><br><span class="line">         * Waiter 无需知道 Lou 和 Mel 内部具体如何实现菜单，</span><br><span class="line">         * 因为它知道它们都实现了迭代器接口 Iterator。</span><br><span class="line">         */</span><br><span class="line">        while(louIterator.hasNext())&#123;</span><br><span class="line">            System.out.println(louIterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        while(melIterator.hasNext())&#123;</span><br><span class="line">            System.out.println(melIterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu(Iterator iterator)&#123;     </span><br><span class="line">    </span><br><span class="line">        // 迭代器模式使得 Waiter 还可以接收其他实现了 Iterator 接口的迭代器，增加了代码的灵活性   </span><br><span class="line">        while(iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Waiter &#123;</span><br><span class="line">    </span><br><span class="line">    Lou lou;</span><br><span class="line">    Mel mel;</span><br><span class="line">    </span><br><span class="line">    Waiter(Lou lou, Mel mel)&#123;</span><br><span class="line">        this.lou = lou;</span><br><span class="line">        this.mel = mel;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu()&#123;</span><br><span class="line">        Iterator louIterator = Lou.iterator();</span><br><span class="line">        Iterator melIterator = mel.createIterator();</span><br><span class="line">        </span><br><span class="line">        /**</span><br><span class="line">         * Waiter 无需知道 Lou 和 Mel 内部具体如何实现菜单，</span><br><span class="line">         * 因为它知道它们都实现了迭代器接口 Iterator。</span><br><span class="line">         */</span><br><span class="line">        while(louIterator.hasNext())&#123;</span><br><span class="line">            System.out.println(louIterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        while(melIterator.hasNext())&#123;</span><br><span class="line">            System.out.println(melIterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu(Iterator iterator)&#123;     </span><br><span class="line">    </span><br><span class="line">        // 迭代器模式使得 Waiter 还可以接收其他实现了 Iterator 接口的迭代器，增加了代码的灵活性   </span><br><span class="line">        while(iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，采用迭代器模式实现的侍者的代码，与 Lou 和 Mel 菜单内部具体如何实现无关，即实现解耦。</p>
 
         </div>
@@ -226,6 +227,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/04/Design Patterns - Composite/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Design Patterns - Composite</span>
+            </a>
+        </div>
+        
         
         <div class="level-end">
             <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/26/Design Patterns - Template Method/">
@@ -241,7 +249,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -276,7 +284,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catalogue
+                Catálogo
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#定义">
@@ -445,10 +453,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

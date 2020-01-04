@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2020/01/04/Design Patterns - Composite/
 https://leeyatsan.cn/2020/01/02/Design Patterns - Iterator/
 https://leeyatsan.cn/2019/12/26/Design Patterns - Template Method/
 https://leeyatsan.cn/2019/12/22/Design Patterns - Facade/

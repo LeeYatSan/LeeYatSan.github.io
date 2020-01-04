@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Design Patterns - Composite - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="本文将介绍设计模式中的组合模式（Composite）。 定义该模式允许将对象组合成树形结构来表现“整体/部分”的层次结构。组合能让客户以一致的方式处理个别对象以及对象组合。组合包含组件，组件有两种：组合与叶子节点元素。这是一种递归结构。使用组合结构，我们能把相同的操作应用在组合和个别对象上。换句话说，在大多数情况下，可以忽略对象组合和个别对象之间的差别。">
+<meta name="keywords" content="Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Patterns - Composite">
+<meta property="og:url" content="https://leeyatsan.cn/2020/01/04/Design Patterns - Composite/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="本文将介绍设计模式中的组合模式（Composite）。 定义该模式允许将对象组合成树形结构来表现“整体/部分”的层次结构。组合能让客户以一致的方式处理个别对象以及对象组合。组合包含组件，组件有两种：组合与叶子节点元素。这是一种递归结构。使用组合结构，我们能把相同的操作应用在组合和个别对象上。换句话说，在大多数情况下，可以忽略对象组合和个别对象之间的差别。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2020-01-04T05:22:36.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Patterns - Composite">
+<meta name="twitter:description" content="本文将介绍设计模式中的组合模式（Composite）。 定义该模式允许将对象组合成树形结构来表现“整体/部分”的层次结构。组合能让客户以一致的方式处理个别对象以及对象组合。组合包含组件，组件有两种：组合与叶子节点元素。这是一种递归结构。使用组合结构，我们能把相同的操作应用在组合和个别对象上。换句话说，在大多数情况下，可以忽略对象组合和个别对象之间的差别。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Design Patterns - Composite" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Composite
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2020-01-04T02:54:32.548Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-04</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-04T05:22:36.952Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-04</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Constructive/">Constructive</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes read (About 1477 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>本文将介绍设计模式中的组合模式（Composite）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式允许将对象组合成树形结构来表现“整体/部分”的层次结构。组合能让客户以一致的方式处理个别对象以及对象组合。</strong>组合包含组件，组件有两种：组合与叶子节点元素。这是一种递归结构。使用组合结构，我们能把相同的操作应用在组合和个别对象上。换句话说，在大多数情况下，可以忽略对象组合和个别对象之间的差别。</p>
+<a id="more"></a>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Composite2.png" alt="组合模式的树形结构"></p>
+<h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><p>组合模式不但要管理层次结构，还要执行菜单的操作，可以说是通过牺牲“单一职责原则”来换取<strong>透明性（transparency）</strong>。</p>
+<p>透明性指的是通过让组件的接口同时包含一些管理子节点和叶子节点的操作，客户就可以将组合和叶子节点一视同仁。也就是说，一个元素究竟是组合还是叶子节点，对于客户来说都是透明的。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>通过让组合与叶子节点元素继承自统一抽象类并实现对应方法，采用递归的形式实现。<br><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Composite1.png" alt="组合模式 UML 类图"></p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>现在，我们通过一个菜单的例子来理解一下组合模式。</p>
+<p>现在有一个菜单，服务员 Waiter 需要能打印菜单所有菜品。但是菜单又分为 A、B、C 三个模块，其中 B 模块中又包含一个 Vegetarian 素食子模块，要求服务员还可以单独打印该模块，并且为未来可能增加其他新模块或者子模块预留实现可能。</p>
+<p>那么，根据组合模式的思想，我们需要先实现一个组件抽象类 MenuComponent：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public abstract class MenuComponent&#123;</span><br><span class="line"></span><br><span class="line">    public void add(MenuComponent menuComponent)&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void remove(MenuComponent menuComponent)&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public MenuComponent getChild(int i)&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getName()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getDescription()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getPrice()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean isVegetarian()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void print()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们实现一下菜单项，即组合模式中的叶子节点元素：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public class MenuItem extends MenuComponent &#123;</span><br><span class="line">    String name;</span><br><span class="line">    String description;</span><br><span class="line">    boolean vegetarian;</span><br><span class="line">    double price;</span><br><span class="line">    </span><br><span class="line">    public MenuItem(String name, String description, </span><br><span class="line">                boolean vegetarian, double price;)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.description = description;</span><br><span class="line">        this.vegetarian = vegetarian;</span><br><span class="line">        this.price = price;     </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 我们只需要覆盖叶子节点元素需要的方法即可</span><br><span class="line">    </span><br><span class="line">    public String getName()&#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getDescription()&#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public String getPrice()&#123;</span><br><span class="line">        return price;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean isVegetarian()&#123;</span><br><span class="line">        return vegetarian;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void print()&#123;</span><br><span class="line">        System.out.print(&quot; &quot; + getName());</span><br><span class="line">        if(isVegetarian())&#123;</span><br><span class="line">            System.out.print(&quot; (v)&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(&quot;, &quot; + getPrice());</span><br><span class="line">        System.out.print(&quot;  --&quot; + getDescription());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们实现一下菜单模块项，即组合模式中的组合：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public class Menu extends MenuComponent&#123;</span><br><span class="line"></span><br><span class="line">    // 组合节点可以有任意数量的孩子</span><br><span class="line">    ArrayList menuComponents = new ArrayList&lt;MenuComponent&gt;();</span><br><span class="line">    String name;</span><br><span class="line">    String description;</span><br><span class="line">    </span><br><span class="line">    public Menu(String name, String description)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.description = description;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 我们只需要覆盖组合需要的方法即可</span><br><span class="line">    </span><br><span class="line">    public void add(MenuComponent menuComponent)&#123;</span><br><span class="line">        menuComponents.add(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void remove(MenuComponent menuComponent)&#123;</span><br><span class="line">        menuComponents.remove(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public getChild(int i)&#123;</span><br><span class="line">        return (MenuComponent)menuComponents.get(i);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public getName()&#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public getDescription()&#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 通过使用迭代器+递归的方式，将该模块中所有的子菜单及菜品打印出来</span><br><span class="line">     */</span><br><span class="line">    public void print()&#123;</span><br><span class="line">        System.out.println(&quot;\n&quot; + getName() + &quot;, &quot; + getDescription());</span><br><span class="line">        System.out.println(&quot;--------------------------&quot;)</span><br><span class="line">        </span><br><span class="line">        Iterator iterator = menuComponents.iterator();</span><br><span class="line">        while(iterator.hasNext())&#123;</span><br><span class="line">            MenuComponent menuComponent = (MenuComponent)iterator.next();</span><br><span class="line">            menuComponent.print();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，我们编写服务员 Waiter：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Waiter&#123;</span><br><span class="line">    MenuComponent allMenus;</span><br><span class="line">    </span><br><span class="line">    public Waiter(MenuComponent allMenus)&#123;</span><br><span class="line">        this.allMenus = allMenus;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu()&#123;</span><br><span class="line">        allMenus.print();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么，对于单独打印素食菜菜单这个需求该如何实现呢？这个时候就需要<strong>迭代器模式+组合模式</strong>来实现。</p>
+<p>那么，为了实现组合迭代器，我们需要对上面的代码进行一定的调整。首先是在组件类 MenuComponent 中添加 createIterator 方法，并在菜单模块 Menu 和菜单项 MenuItem 分别对其实现。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public abstract class MenuComponent&#123;</span><br><span class="line"></span><br><span class="line">    /* 其他代码保持不变，添加下面代码*/    </span><br><span class="line">    </span><br><span class="line">    public Iterator createIterator()&#123;</span><br><span class="line">        throw new UnsupportedOperationExeception();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class MenuItem extends MenuComponent &#123;</span><br><span class="line"></span><br><span class="line">    /* 其他代码保持不变，添加下面代码*/   </span><br><span class="line">    </span><br><span class="line">    public Iterator createIterator()&#123;</span><br><span class="line">        return new CompositeIterator();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Menu extends MenuComponent&#123;</span><br><span class="line"></span><br><span class="line">    /* 其他代码保持不变，添加下面代码*/ </span><br><span class="line">    </span><br><span class="line">    public Iterator createIterator()&#123;</span><br><span class="line">        return new NullIterator();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，由于菜单项是叶子节点元素，因此它没有迭代器，但为了保持透明性，我们还是让它返回一个 NullIterator ，它的作用就是没有迭代器，有两种实现方式。一种是让 createIterator() 返回 null，但这样有可能因为忘记检查 null 导致 NonPointerExeception；另一种是让 hasNext() 永远返回 false，这里推荐第二种实现方式。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Iterator;</span><br><span class="line"></span><br><span class="line">public class NullIterator implements Iterator &#123;</span><br><span class="line">    public Object next()&#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean hasNext()&#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void remove()&#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们还要实现一下 CompositeIterator，它的作用是遍历组件内的菜单项，而且确保所有子菜单都被包括进来。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class CompositeIterator implements Iterator&#123;</span><br><span class="line">    Stack stack = new Stack&lt;Iterator&gt;();</span><br><span class="line">    </span><br><span class="line">    public CompositeIterator(Iterator iterator)&#123;</span><br><span class="line">        stack.push(iterator);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object next()&#123;</span><br><span class="line">        if(hasNext())&#123;</span><br><span class="line">            Iterator iterator = (Iterator)stack.peek();</span><br><span class="line">            MenuComponent component = (MenuComponent)iterator.next();</span><br><span class="line">            if(component instanceof Menu)&#123;</span><br><span class="line">                stack.push(component.createIterator());</span><br><span class="line">            &#125;</span><br><span class="line">            return component;</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean hasNext()&#123;</span><br><span class="line">        if(stack.isEmpty())&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            Iterator iterator = (Iterator)stack.peek();</span><br><span class="line">            if(!iterator.hasNext())&#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">                return hasNext();</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void remove()&#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，我们编写服务员 Waiter，为他添加素食菜单：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Waiter&#123;</span><br><span class="line">    MenuComponent allMenus;</span><br><span class="line">    </span><br><span class="line">    public Waiter(MenuComponent allMenus)&#123;</span><br><span class="line">        this.allMenus = allMenus;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printMenu()&#123;</span><br><span class="line">        allMenus.print();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printVegetarianMenu()&#123;</span><br><span class="line">        Iterator iterator = allMenus.createIterator();</span><br><span class="line">        System.out.println(&quot;/nVEGERTARIAN MENU ---&quot;);</span><br><span class="line">        while(iterator.hasNext())&#123;</span><br><span class="line">            MenuComponent menuComponent = (MenuComponent)iterator.next();</span><br><span class="line">            try &#123;</span><br><span class="line">                if(menuComponent.isVegetarian())&#123;</span><br><span class="line">                    menuComponent.print();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">            catch(UnsupportedOperationException e)&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就通过组合模式，外加迭代器模式，实现了一个拥有子菜单的菜单程序。</p>
+
+        </div>
+        
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Composite">
+                </span>
+            </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/02/Design Patterns - Iterator/">
+                <span class="level-item">Design Patterns - Iterator</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: 'f859a0a79e1861cf870180104084eaa1',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catálogo
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#定义">
+        <span class="has-mr-6">1</span>
+        <span>定义</span>
+        </a></li><li>
+        <a class="is-flex" href="#原则">
+        <span class="has-mr-6">2</span>
+        <span>原则</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现">
+        <span class="has-mr-6">3</span>
+        <span>实现</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用实例">
+        <span class="has-mr-6">4</span>
+        <span>应用实例</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Design Patterns - Composite" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Entradas',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>
