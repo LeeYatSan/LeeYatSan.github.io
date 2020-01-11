@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文将介绍软件开发中使用的主要设计模式，参考了 Freeman &amp;amp; Freeman 所著的 Head First Design Patterns 。 OO 基础：抽象、封装、多态、继承。良好的 OO 设计必须具备可复用、可扩充、可维护三个特性，但仅仅知道指导 OO 基础并不足以让你设计出良好的 OO 系统，而设计模式则可以帮助你解决这个问题。 设计模式是大量开发者在长期的开发中总结出来的经">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2020-01-11T04:57:04.838Z">
+<meta property="og:updated_time" content="2020-01-11T05:05:44.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Design Patterns">
 <meta name="twitter:description" content="本文将介绍软件开发中使用的主要设计模式，参考了 Freeman &amp;amp; Freeman 所著的 Head First Design Patterns 。 OO 基础：抽象、封装、多态、继承。良好的 OO 设计必须具备可复用、可扩充、可维护三个特性，但仅仅知道指导 OO 基础并不足以让你设计出良好的 OO 系统，而设计模式则可以帮助你解决这个问题。 设计模式是大量开发者在长期的开发中总结出来的经">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-12-16T13:43:39.023Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-16</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T04:57:04.838Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T05:05:44.102Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    12 minutes read (About 1734 words)
+                    12 minutes read (About 1824 words)
                 </span>
                 
                 
@@ -173,15 +173,7 @@
 <h1 id="OO-原则"><a href="#OO-原则" class="headerlink" title="OO 原则"></a>OO 原则</h1><ul>
 <li>封装变化</li>
 <li>多用组合，少用继承</li>
-<li>针对接口编程，不针对实现编程</li>
 <li>交互对象之间尽可能采用松合设计，使得对象之间的相互依赖降到最低，使得 OO 系统更有弹性</li>
-<li>对扩展开放，对修改关闭</li>
-<li>依赖抽象，不要依赖具体类（依赖倒置原则）。即不能让高层组件依赖于低层组件，而且不管是高层还是低层组件，两者都应该依赖于抽象。<ul>
-<li><strong>变量不可以持有具体类的引用</strong>：如果使用 new 关键字，就会持有具体类的引用。这时可以改用工厂模式来避开这种做法。</li>
-<li><strong>不要让类派生自具体类</strong>：如果派生自具体类，就会依赖于具体类。因此请派生自抽象类/接口。</li>
-<li><strong>不要覆盖基类中已经实现的方法</strong>：如果覆盖基类已经实现的方法，那么该基类就不是一个真正适合被继承的抽象。基类中已经实现的方法应该在子类中被共享。</li>
-</ul>
-</li>
 <li>当需要将发出请求的对象和执行请求的对象解时，使用<strong>命令模式</strong></li>
 <li><strong>最小知道原则</strong>：设计一个系统，不管是任何对象，都要注意它所交互的类有哪些，并注意它们是如何交互的。如何才能避免违反该原则呢？我们应该尽可能做到只调用属于以下范围的方法：<ul>
 <li>该对象本身的方法</li>
@@ -190,7 +182,18 @@
 <li>对象的任何组件的方法</li>
 </ul>
 </li>
-<li><strong>单一职责原则</strong>：一个类应该只有一个引起变化的原因。类的每个责任都有改变的潜在区域。超过一个责任，意味着超过一个改变的区域。</li>
+</ul>
+<h2 id="OO-5大设计原则："><a href="#OO-5大设计原则：" class="headerlink" title="OO 5大设计原则："></a>OO 5大设计原则：</h2><ul>
+<li><strong>接口分离原则 ISP(the Interface Segregation Principle ISP)</strong>：针对接口编程，不针对实现编程</li>
+<li><strong>开放封闭原则 OCP(Open－Close Principle)</strong>：对扩展开放，对修改关闭</li>
+<li><strong>依赖倒置原则 DIP(the Dependency Inversion Principle DIP)</strong>：依赖抽象，不要依赖具体类。即不能让高层组件依赖于低层组件，而且不管是高层还是低层组件，两者都应该依赖于抽象。<ul>
+<li><strong>变量不可以持有具体类的引用</strong>：如果使用 new 关键字，就会持有具体类的引用。这时可以改用工厂模式来避开这种做法。</li>
+<li><strong>不要让类派生自具体类</strong>：如果派生自具体类，就会依赖于具体类。因此请派生自抽象类/接口。</li>
+<li><strong>不要覆盖基类中已经实现的方法</strong>：如果覆盖基类已经实现的方法，那么该基类就不是一个真正适合被继承的抽象。基类中已经实现的方法应该在子类中被共享。</li>
+</ul>
+</li>
+<li><strong>单一职责原则 SRP(Single Responsibility Principle)</strong>：一个类应该只有一个引起变化的原因。类的每个责任都有改变的潜在区域。超过一个责任，意味着超过一个改变的区域。</li>
+<li><strong>里式替换原则 LSP(the Liskov Substitution Principle LSP)</strong>：指子类对象应该可以替换父类对象，并可以出现在任何父类对象可以出现的地方。</li>
 </ul>
 <h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h2 id="创建型（Creative）"><a href="#创建型（Creative）" class="headerlink" title="创建型（Creative）"></a>创建型（Creative）</h2><h3 id="工厂模式（Factory）"><a href="#工厂模式（Factory）" class="headerlink" title="工厂模式（Factory）"></a><a href="http://www.leeyatsan.cn/2019/12/20/Design%20Patterns%20-%20Factory/" target="_blank" rel="noopener">工厂模式（Factory）</a></h3><h4 id="简单工厂模式（Simple-Factory）"><a href="#简单工厂模式（Simple-Factory）" class="headerlink" title="简单工厂模式（Simple Factory）"></a>简单工厂模式（Simple Factory）</h4><p>事实上，简单工厂并不属于设计模式，简单工厂只是将创建对象的方法移到一个单独的类中，并依赖于创建对象所必需实现的一个接口上。</p>
 <h4 id="工厂方法模式（Factory-Method）"><a href="#工厂方法模式（Factory-Method）" class="headerlink" title="工厂方法模式（Factory Method）"></a>工厂方法模式（Factory Method）</h4><p>该模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个，工厂方法让把类实例化推迟到子类。</p>
@@ -266,7 +269,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <div id="comment-container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
@@ -301,13 +304,17 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#OO-原则">
         <span class="has-mr-6">1</span>
         <span>OO 原则</span>
-        </a></li><li>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#OO-5大设计原则：">
+        <span class="has-mr-6">1.1</span>
+        <span>OO 5大设计原则：</span>
+        </a></li></ul></li><li>
         <a class="is-flex" href="#设计模式">
         <span class="has-mr-6">2</span>
         <span>设计模式</span>
@@ -562,10 +569,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
