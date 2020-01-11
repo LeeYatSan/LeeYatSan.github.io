@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2020/01/11/Design Patterns - Chain of Responsibility/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Builder/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Bridge/
 https://leeyatsan.cn/2020/01/05/Design Patterns - Proxy/
