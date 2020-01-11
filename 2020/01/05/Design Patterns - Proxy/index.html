@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.8.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Design Patterns - Proxy - LEE YAT-SAN&#39;s ZONE</title>
+
+
+    <meta name="description" content="本文将介绍设计模式中的代理模式（Proxy）。 定义该模式为另一个对象提供一个替身或占位符以控制这个对象的访问。">
+<meta name="keywords" content="Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Patterns - Proxy">
+<meta property="og:url" content="https://leeyatsan.cn/2020/01/05/Design Patterns - Proxy/index.html">
+<meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
+<meta property="og:description" content="本文将介绍设计模式中的代理模式（Proxy）。 定义该模式为另一个对象提供一个替身或占位符以控制这个对象的访问。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+<meta property="og:updated_time" content="2020-01-11T04:53:47.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Patterns - Proxy">
+<meta name="twitter:description" content="本文将介绍设计模式中的代理模式（Proxy）。 定义该模式为另一个对象提供一个替身或占位符以控制这个对象的访问。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Design Patterns - Proxy" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">首页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">目录</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/LeeYatSan">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Proxy
+    
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2020-01-05T13:43:35.520Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-05</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T04:53:47.709Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Constructive/">Constructive</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 minutes read (About 2856 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>本文将介绍设计模式中的代理模式（Proxy）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式为另一个对象提供一个替身或占位符以控制这个对象的访问。</strong></p>
+<a id="more"></a>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>在显示中，该模式有多种变体，其中主要有<strong>远程代理</strong>、<strong>虚拟代理</strong>和<strong>保护代理</strong>。</p>
+<h2 id="远程代理"><a href="#远程代理" class="headerlink" title="远程代理"></a>远程代理</h2><p>远程代理一般用于跨 JVM 的系统设计中，需要借助网络等通讯方式，在 Java 中，需要用到 RMI。</p>
+<blockquote>
+<p>RMI 提供了客户辅助对象和服务辅助对象，为客户辅助对象创建和服务对象相同的方法。RMI 可以免去开发者自行编写任何网络或 I/O 相关的代码。客户程序调用远程方法就和运行在客户自己本地 JVM 上对对象进行正常方法调用一样。</p>
+<ul>
+<li>客户辅助对象：stub</li>
+<li>服务辅助对象：skeleton  </li>
+</ul>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Proxy1.png" alt="RMI 实现远程代理图示1"></p>
+<p>如何实现远程代理呢？</p>
+<ol>
+<li><strong>制作远程接口：</strong>远程接口定义出让客户远程调用的方法。客户将用它作为服务的类类型。 Stub 和实际的服务都实现此接口。其中，<strong>该接口中的所有方法的返回类型都是可序列化的。</strong></li>
+<li><strong>制作远程接口实现：</strong>这是实际工作的类，为远程接口中定义的远程方法提供了真正的实现。这就是客户真正想要调用的方法对象。</li>
+<li><strong>利用 rmic 产生的 stub 和 skeleton：</strong>这就是客户和服务的辅助类。这些不需要自行创建，通过运行 JDK 自带的 rmic 工具就能自动处理。</li>
+<li><strong>启动 RMI registry（rmiregistry）：</strong>rmiregistry 就像一个电话簿，客户可以重中查到代理的位置。</li>
+<li><strong>开始远程服务：</strong>让服务对象开始运行。服务实现类会去实例化一个服务的实例，并将这个服务注册到 RMI registry。注册之后，这个服务就可以供客户调用了。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Proxy2.png" alt="RMI 实现远程代理图示2"></p>
+<h2 id="虚拟代理"><a href="#虚拟代理" class="headerlink" title="虚拟代理"></a>虚拟代理</h2><p>虚拟代理一般用于代表创建开销较大的对象，在该大对象创建前或者创建时，由虚拟代理来扮演对象的替身，先行提供引用服务，以防止线程被阻塞。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Proxy3.png" alt="虚拟代理 UML 类图"></p>
+<p>Subject 为 RealSubject 和 Proxy 提供接口。通过统一的接口，Proxy 在 RealSubject 出现的地方代替它。Proxy 持有 RealSubject 的引用，在有些情况下，它还负责对 RealSubject 的创建和销毁。同时，Proxy 也控制了对 RealSubject 的访问。</p>
+<h2 id="保护代理"><a href="#保护代理" class="headerlink" title="保护代理"></a>保护代理</h2><p>保护代理基于权限控制对资源的访问。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Proxy5.png" alt="保护代理 UML 类图"></p>
+<p>通常，保护代理是通过实现接口 InvocationHandler 的 invoke() 方法来实现访问控制的。不管被代理的是何种方法，处理器被调用的一定是 invoke() 方法。</p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><h2 id="远程代理-1"><a href="#远程代理-1" class="headerlink" title="远程代理"></a>远程代理</h2><p>我们通过一个糖果机 GumballMachine 的例子来理解一下远程代理。现有若干糖果机，分布在不同地方。现在糖果厂的 CEO 希望可以在总部监控这些糖果机的状态。由于糖果机分布在不同位置上，意味着它们一定是跨 JVM 进行调用的。为了实现跨 JVM 调用，我们就需要使用远程代理。</p>
+<p>首先，制作远程接口：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import java.rmi.*;</span><br><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">// 继承 Remote 表示此接口支持远程调用；每次远程调用都必须认为是有风险的，因此可能抛出 RemoteException</span><br><span class="line">public interface GumballMachineRemote extends Remote&#123;</span><br><span class="line">    public int getCount() throws RemoteException;</span><br><span class="line">    public String getLocation() throws RemoteException;</span><br><span class="line">    public State getState() throws RemoteException;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// State 需要继承 Serializable 以确保可序列化</span><br><span class="line">public interface State extends Serializable&#123;</span><br><span class="line">    public void insertQuarter();</span><br><span class="line">    public void ejectQuarter();</span><br><span class="line">    public void turnCrank();</span><br><span class="line">    public void dispense();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，State 上面还没有处理好序列化，因为它的每个子类都有一个对 GumballMachine 的引用，但我们并不希望糖果机被序列化随着 State 对象一起传递。因此，我们需要在具体子类中对 GumballMachine 的引用用 transient 关键字进行修饰。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class NoQuarterState implements State&#123;</span><br><span class="line">    transient GumballMachine gumballMachine;</span><br><span class="line">    </span><br><span class="line">    /* 其他代码省略 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后制作远程服务，即糖果机本身：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.rmi.*;</span><br><span class="line">import jaba.rmi.server.*;</span><br><span class="line"></span><br><span class="line">public class GumballMachine extends UnicastRemoteObject </span><br><span class="line">                    implements GumballMachineRemote throws RemoteException&#123;</span><br><span class="line">    /* 省略相关实例变量 */</span><br><span class="line">    </span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    public int getState()&#123;</span><br><span class="line">        return state;</span><br><span class="line">    &#125;     </span><br><span class="line">    </span><br><span class="line">    public String getLocation()&#123;</span><br><span class="line">        return location;</span><br><span class="line">    &#125;   </span><br><span class="line">    </span><br><span class="line">    /* 其他方法省略 */   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们需要通过 JDK 自带的 rmic 工具，生成代理 stub 和 skeleton：</p>
+<p>首先打开一个终端，执行：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmic GumballMachine</span><br></pre></td></tr></table></figure>
+<p>在默认条件下，会在当前终端 cd 到的目录下生成两个类：GumballMachine_Stub.class 和 GumballMachine_Skel.class。</p>
+<p>现在，远程的糖果机服务已经完成了，我们需要将它们进行安装以接收请求。因此，先要将它们注册到 RMI registry 中，好让客户找到它们。</p>
+<p>先写一个测试程序：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class GumballMachineTestDrive &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">    </span><br><span class="line">        GumballMachineRemote gumballMachine = null;</span><br><span class="line">        int count;</span><br><span class="line">        </span><br><span class="line">        // 命令行输入参数</span><br><span class="line">        if(args.length &lt; 2)&#123;</span><br><span class="line">            System.out.println(&quot;GumballMachine &lt;name&gt; &lt;inventory&gt;&quot;);</span><br><span class="line">            System.exit(1);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        try &#123;</span><br><span class="line">            count = Integer.parseInt(args[1]);</span><br><span class="line">            </span><br><span class="line">            gumballMachine = new GumballMachine(args[0], count);</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            /**</span><br><span class="line">             * 为服务命名，好让客户在注册表中寻找它，并在 RMI 中注册此名字和服务；</span><br><span class="line">             * 当绑定服务对象时，RMI 会自动把服务转换成 stub,</span><br><span class="line">             * 然后把 stub 放入 registry 中</span><br><span class="line">             */</span><br><span class="line">            Naming.rebind(&quot;//&quot; + args[0] + &quot;/gumballmachine&quot;, gunballMachine);</span><br><span class="line">        &#125;</span><br><span class="line">        catch(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后开一个终端，我们需要先确定启动目录必须可以访问你的类，最简单的办法是在 classes 目录下穷的，在该目录下执行：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmiregistry</span><br></pre></td></tr></table></figure>
+<p>然后，再执行：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java GumballMachineTestDrive seattle.mightygumball.com 100</span><br></pre></td></tr></table></figure>
+<p>现在，远程的糖果机服务成功启动。</p>
+<p>我们还需要实现一下本地客户端，以远程监控糖果机状态。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.rmi.*;</span><br><span class="line"></span><br><span class="line">public class GumballMonitor &#123;</span><br><span class="line">    GumballMachineRemote machine;</span><br><span class="line">    </span><br><span class="line">    // 依赖远程接口，而非具体实现类</span><br><span class="line">    public GumballMonitor(GumballMachineRemote machie)&#123;</span><br><span class="line">        this.machine = machine;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void report()&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            System.out.println(&quot;Gumball Machine:&quot; + machine.getLocation());</span><br><span class="line">            System.out.println(&quot;Current Inventory:&quot; + machine.getCount());</span><br><span class="line">            System.out.println(&quot;Current State:&quot; + machine.getState());</span><br><span class="line">        &#125;</span><br><span class="line">        catch(RemoteException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，我们写一个测试程序：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import java.rmi.*;</span><br><span class="line"></span><br><span class="line">public class GumballMonitorTestDrive&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        String[] location = &#123;</span><br><span class="line">            &quot;rmi://santafe.mightygumball.com/gumballmachine&quot;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        GumballMonitor monitor = new GumballMonitor[location.length];</span><br><span class="line">        </span><br><span class="line">        for(int i = 0; i &lt; location.length; i++)&#123;</span><br><span class="line">            try&#123;</span><br><span class="line">                // 在 RMI registry 中寻找注册的远程服务</span><br><span class="line">                GumballMachineRemote machine = </span><br><span class="line">                    (GumballMachineRemote)Naming.lookup(location[i]);</span><br><span class="line">                    </span><br><span class="line">                monitor[i] = new GumballMonitor(machine);</span><br><span class="line">                System.out.println(monitor[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            catch(Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i = 0; i &lt; monitor.length; i++)&#123;</span><br><span class="line">            monitor[i].report();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们就通过远程代理的方式实现了远程监控糖果机的需求了。</p>
+<h2 id="虚拟代理-1"><a href="#虚拟代理-1" class="headerlink" title="虚拟代理"></a>虚拟代理</h2><p>我们通过一个加载 CD 封面的例子来理解一下虚拟代理。</p>
+<p>CD 封面是一个较大的对象，在加载图片时需要消耗较多时间，我们希望在图片加载出来前，能继续后续工作，先只显示一个 “LOADING…”的占位标记即可，</p>
+<p>因此，我们使用虚拟代理的方式进行实现。</p>
+<p>首先，我们编写代理 ImageProxy：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">class ImageProxy implements Icon &#123;</span><br><span class="line">    ImageIcon imageIcon;</span><br><span class="line">    URL imageURL;</span><br><span class="line">    Thread retrievalThread;</span><br><span class="line">    boolean retrieving = false;</span><br><span class="line">    </span><br><span class="line">    public ImageProxy(URL url)&#123;</span><br><span class="line">        imageURL = url;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int getIconWidth()&#123;</span><br><span class="line">        if(imageIcon != null)&#123;</span><br><span class="line">            return imageIcon.getIconWidth();</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            return 800;</span><br><span class="line">       </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int getIconHeight()&#123;</span><br><span class="line">        if(imageIcon != null)&#123;</span><br><span class="line">            return imageIcon.getIconHeight();</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            return 600;</span><br><span class="line">       </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 在屏幕上画一个 icon 图像。如果没有完整创建 ImageIcon，就先自行创建一个</span><br><span class="line">     */</span><br><span class="line">    public void paintIcon(final Component c, Graphics g, int x, int y)&#123;</span><br><span class="line">        // 检查是否有 icon，如果有，就画出该 icon</span><br><span class="line">        if(imageIcon != null)&#123;</span><br><span class="line">            imageIcon.paintIcon(c, g, x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        // 否则，就显示“Loading...”的占位符消息，并开始加载真正的 icon</span><br><span class="line">        else&#123;</span><br><span class="line">            g.drawString(&quot;Loading...&quot;, x+300, y+190);</span><br><span class="line">            /*</span><br><span class="line">                由于加载图像和 ImageIcon 是同步的，只有在加载完成后，ImageIcon 才会</span><br><span class="line">                被返回，这样会导致程序阻塞。因此，通过开一个新线程来加载图像和 ImageIcon，</span><br><span class="line">                可以将这一过程变成异步的，防止程序阻塞。</span><br><span class="line">            */</span><br><span class="line">            // 如果还没有试着取出图像，则开始开一个新线程取出图像</span><br><span class="line">            if(!retrieving)&#123;</span><br><span class="line">                retrieving = true;</span><br><span class="line">                retrievalThread = new Thread(new Runnable()&#123;</span><br><span class="line">                    public void run()&#123;</span><br><span class="line">                        try&#123;</span><br><span class="line">                            // 在线程中，实例化 Icon 对象，其构造器会在图像加载完成后返回</span><br><span class="line">                            imageIcon = new ImageIcon(imageURL, &quot;CD Cover&quot;);</span><br><span class="line">                            // 当图像准备好时，告知 Swing 重绘封面</span><br><span class="line">                            c.repaint();</span><br><span class="line">                        &#125;</span><br><span class="line">                        catch(Exception e)&#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                retrievalThread.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Proxy4.png" alt="虚拟代理实现 CD 封面加载过程"></p>
+<h2 id="保护代理-1"><a href="#保护代理-1" class="headerlink" title="保护代理"></a>保护代理</h2><p>我们通过一个个人信息管理系统来理解一下保护代理：本人可以读取并设置个人信息，他人只能读取自己的信息。</p>
+<p>首先，这个系统涉及一个 Person Bean 的接口，用于设置或获取个人信息：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interface PersonBean&#123;</span><br><span class="line">    String getName();</span><br><span class="line">    String getGender();</span><br><span class="line">    String getInterests();</span><br><span class="line">    int getLikes();</span><br><span class="line">    </span><br><span class="line">    void setName(String name);</span><br><span class="line">    void setGender(String gender);</span><br><span class="line">    void setInterests(String interests);</span><br><span class="line">    void setLikes();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里忽略 PersonBean 的实现，因为都是一些基础的 Getter 和 Setter 方法。</p>
+<p>然后，我们需要创建两个 InvocationHandler，一个给本人使用，另一个给其他人使用。</p>
+<p>首先是本人使用的 InvocationHandler：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.*;</span><br><span class="line"></span><br><span class="line">public class OwnerInvocationHandler implements InvocationHandler&#123;</span><br><span class="line">    PersonBean person;</span><br><span class="line">    </span><br><span class="line">    public OwnerInvocationHandler(Person person)&#123;</span><br><span class="line">        this.person = person;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args)</span><br><span class="line">                                    throws IllegalAccessException&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(method.getName().startsWith(&quot;get&quot;))&#123;</span><br><span class="line">                return method.invoke(person, agrs);</span><br><span class="line">            &#125;</span><br><span class="line">            // 本人不能给自己点赞</span><br><span class="line">            else if(method.getName().equals(&quot;setLikes&quot;))&#123;</span><br><span class="line">                throw new IllegalAccessException();</span><br><span class="line">            &#125;</span><br><span class="line">            else if(method.getName().startsWith(&quot;set&quot;))&#123;</span><br><span class="line">                return method.invoke(person, agrs);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        catch(InvocationTargetException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是本人使用的 InvocationHandler：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.*;</span><br><span class="line"></span><br><span class="line">public class NonOwnerInvocationHandler implements InvocationHandler&#123;</span><br><span class="line">    PersonBean person;</span><br><span class="line">    </span><br><span class="line">    public NonOwnerInvocationHandler(Person person)&#123;</span><br><span class="line">        this.person = person;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args)</span><br><span class="line">                                    throws IllegalAccessException&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(method.getName().startsWith(&quot;get&quot;))&#123;</span><br><span class="line">                return method.invoke(person, agrs);</span><br><span class="line">            &#125;</span><br><span class="line">            // 非本人给他人点赞</span><br><span class="line">            else if(method.getName().equals(&quot;setLikes&quot;))&#123;</span><br><span class="line">                return method.invoke(person, agrs);</span><br><span class="line">            &#125;</span><br><span class="line">            // 非本人不可以修改信息</span><br><span class="line">            else if(method.getName().startsWith(&quot;set&quot;))&#123;</span><br><span class="line">                throw new IllegalAccessException();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        catch(InvocationTargetException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建完 InvocationHandler 后，我们还需要创建动态 Proxy 类。我们分别编写一个以 PersonBean 为参数，并知道如何为 PersonBean 的拥有者和非拥有者的代理的方法：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// PersonBean 拥有者创建代理的方法</span><br><span class="line">PersonBean getOwnerProxy(PersonBean person)&#123;</span><br><span class="line">    return (PersonBean)Proxy.newProxyInstance(</span><br><span class="line">        person.getClass().getClassLoader(),</span><br><span class="line">        person.getClass().getInterfaces(),</span><br><span class="line">        new OwnerInvocationHandler(person)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// PersonBean 非拥有者创建代理的方法</span><br><span class="line">PersonBean getNonOwnerProxy(PersonBean person)&#123;</span><br><span class="line">    return (PersonBean)Proxy.newProxyInstance(</span><br><span class="line">        person.getClass().getClassLoader(),</span><br><span class="line">        person.getClass().getInterfaces(),</span><br><span class="line">        new NonOwnerInvocationHandler(person)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的方法实现中，我们使用到了 Proxy.newProxyInstance()方法，该方法总是接收一个接口数组，此数组内只能有接口，不能有类。<strong>如果接口不是 public 的，就必须属于同一个 package，不同接口内，不可以有名称和参数完全一样的方法。</strong></p>
+<p>这样，我们就通过保护代理创建了一个个人信息系统。在调用时，只需通过 getOwnerProxy 或者 getNonOwnerProxy 即可获得代理对象，然后像使用普通方法一样调用对应方法即可。而在内部，则会通过 invoke() 方法调用真正的方法。</p>
+
+        </div>
+        
+            <div class="card-image">
+                <span  class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Proxy">
+                </span>
+            </div>
+        
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <!--<span class="is-size-6 has-text-grey has-mr-7">#</span>-->
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/04/Design Patterns - State/">
+                <span class="level-item">Design Patterns - State</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '80ed07e081b981160e61',
+        clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
+        id: '838b9b55e1dc9ccb716dce1344b863ee',
+        repo: 'leeyatsan.github.io',
+        owner: 'LeeYatSan',
+        admin: "LeeYatSan",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#定义">
+        <span class="has-mr-6">1</span>
+        <span>定义</span>
+        </a></li><li>
+        <a class="is-flex" href="#实现">
+        <span class="has-mr-6">2</span>
+        <span>实现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#远程代理">
+        <span class="has-mr-6">2.1</span>
+        <span>远程代理</span>
+        </a></li><li>
+        <a class="is-flex" href="#虚拟代理">
+        <span class="has-mr-6">2.2</span>
+        <span>虚拟代理</span>
+        </a></li><li>
+        <a class="is-flex" href="#保护代理">
+        <span class="has-mr-6">2.3</span>
+        <span>保护代理</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#应用实例">
+        <span class="has-mr-6">3</span>
+        <span>应用实例</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#远程代理-1">
+        <span class="has-mr-6">3.1</span>
+        <span>远程代理</span>
+        </a></li><li>
+        <a class="is-flex" href="#虚拟代理-1">
+        <span class="has-mr-6">3.2</span>
+        <span>虚拟代理</span>
+        </a></li><li>
+        <a class="is-flex" href="#保护代理-1">
+        <span class="has-mr-6">3.3</span>
+        <span>保护代理</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+
+                
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Design Patterns - Proxy" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 LEE YAT-SAN&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+    
+</body>
+</html>
