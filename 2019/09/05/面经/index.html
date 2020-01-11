@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文档收录了在面试期间对Java及其他计算机知识的总结，希望秋招能斩获一个好OFFER！">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://leeyatsan.cn/images/og_image.png">
-<meta property="og:updated_time" content="2020-01-11T05:00:50.650Z">
+<meta property="og:updated_time" content="2020-01-11T09:26:58.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试总结">
 <meta name="twitter:description" content="本文档收录了在面试期间对Java及其他计算机知识的总结，希望秋招能斩获一个好OFFER！">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2019-09-05T09:40:51.776Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-09-05</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T05:00:50.650Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T09:26:58.840Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 hours read (About 56271 words)
+                    6 hours read (About 56411 words)
                 </span>
                 
                 
@@ -197,7 +197,7 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="面向对象的五大基本原则？"><a href="#面向对象的五大基本原则？" class="headerlink" title="面向对象的五大基本原则？"></a>面向对象的五大基本原则？</h3><blockquote>
+<h3 id="面向对象的六大基本原则？"><a href="#面向对象的六大基本原则？" class="headerlink" title="面向对象的六大基本原则？"></a>面向对象的六大基本原则？</h3><blockquote>
 <ol>
 <li><p><strong>单一职责原则SRP(Single Responsibility Principle)</strong>：<br>指一个类的功能尽可能单一，不要保罗万象，否则效率不高。</p>
 </li>
@@ -205,12 +205,18 @@
 </li>
 <li><p><strong>里式替换原则LSP(the Liskov Substitution Principle LSP)</strong>：<br>指子类对象应该可以替换父类对象，并可以出现在任何父类对象可以出现的地方。  </p>
 </li>
-</ol>
-</blockquote>
-<h1 id="gt-4-依赖倒置原则DIP-the-Dependency-Inversion-Principle-DIP-："><a href="#gt-4-依赖倒置原则DIP-the-Dependency-Inversion-Principle-DIP-：" class="headerlink" title="&gt; 4. 依赖倒置原则DIP(the Dependency Inversion Principle DIP)："></a>&gt; 4. <strong>依赖倒置原则DIP(the Dependency Inversion Principle DIP)</strong>：</h1><blockquote>
-<p>指具体依赖抽象，<strong>上层依赖下层</strong>。假设B模块（下层）依赖于A模块（上层），但B需要使用到A的功能，这个时候，B不应当直接使用A中的具体类： 而应当由B定义一抽象接口，并由A来实现这个抽象接口，B只使用这个抽象接口：这样就达到了依赖倒置的目的，B也解除了对A的依赖，反过来是A依赖于B定义的抽象接口。通过上层模块难以避免依赖下层模块，假如B也直接依赖A的实现，那么就可能 造成循环依赖。一个常见的问题就是编译A模块时需要直接包含到B模块的cpp文件，而编译B时同样要直接包含到A的cpp文件。</p>
-<ol start="5">
-<li><strong>接口分离原则ISP(the Interface Segregation Principle ISP)</strong>：<br>模块间要通过抽象接口隔离开，而不是通过具体的类强耦合起来。  </li>
+<li><p><strong>依赖倒置原则DIP(the Dependency Inversion Principle DIP)</strong>：<br>指具体依赖抽象，<strong>上层依赖下层</strong>。假设B模块（下层）依赖于A模块（上层），但B需要使用到A的功能，这个时候，B不应当直接使用A中的具体类： 而应当由B定义一抽象接口，并由A来实现这个抽象接口，B只使用这个抽象接口：这样就达到了依赖倒置的目的，B也解除了对A的依赖，反过来是A依赖于B定义的抽象接口。通过上层模块难以避免依赖下层模块，假如B也直接依赖A的实现，那么就可能 造成循环依赖。一个常见的问题就是编译A模块时需要直接包含到B模块的cpp文件，而编译B时同样要直接包含到A的cpp文件。</p>
+</li>
+<li><p><strong>接口分离原则ISP(the Interface Segregation Principle ISP)</strong>：<br>模块间要通过抽象接口隔离开，而不是通过具体的类强耦合起来。 </p>
+</li>
+<li><p><strong>最小知道原则 DP (Demeter Principle)</strong>：设计一个系统，不管是任何对象，都要注意它所交互的类有哪些，并注意它们是如何交互的。如何才能避免违反该原则呢？我们应该尽可能做到只调用属于以下范围的方法：</p>
+<ul>
+<li>该对象本身的方法</li>
+<li>被当成方法的参数而传递进来的对象的方法</li>
+<li>此方法创建或实例化的任何对象的方法</li>
+<li>对象的任何组件的方法</li>
+</ul>
+</li>
 </ol>
 </blockquote>
 <h3 id="说说你对面向对象编程的理解？"><a href="#说说你对面向对象编程的理解？" class="headerlink" title="说说你对面向对象编程的理解？"></a>说说你对面向对象编程的理解？</h3><blockquote>
@@ -774,308 +780,304 @@
         <span class="has-mr-6">1.3</span>
         <span>解释一下面向对象的三个特性？</span>
         </a></li><li>
-        <a class="is-flex" href="#面向对象的五大基本原则？">
+        <a class="is-flex" href="#面向对象的六大基本原则？">
         <span class="has-mr-6">1.4</span>
-        <span>面向对象的五大基本原则？</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#gt-4-依赖倒置原则DIP-the-Dependency-Inversion-Principle-DIP-：">
-        <span class="has-mr-6">2</span>
-        <span>&gt; 4. 依赖倒置原则DIP(the Dependency Inversion Principle DIP)：</span>
-        </a><ul class="menu-list"><li>
+        <span>面向对象的六大基本原则？</span>
+        </a></li><li>
         <a class="is-flex" href="#说说你对面向对象编程的理解？">
-        <span class="has-mr-6">2.1</span>
+        <span class="has-mr-6">1.5</span>
         <span>说说你对面向对象编程的理解？</span>
         </a></li><li>
         <a class="is-flex" href="#介绍一下Java多态？">
-        <span class="has-mr-6">2.2</span>
+        <span class="has-mr-6">1.6</span>
         <span>介绍一下Java多态？</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#多态的优点？">
-        <span class="has-mr-6">2.2.1</span>
+        <span class="has-mr-6">1.6.1</span>
         <span>多态的优点？</span>
         </a></li><li>
         <a class="is-flex" href="#多态的必要条件？">
-        <span class="has-mr-6">2.2.2</span>
+        <span class="has-mr-6">1.6.2</span>
         <span>多态的必要条件？</span>
         </a></li><li>
         <a class="is-flex" href="#">
-        <span class="has-mr-6">2.2.3</span>
+        <span class="has-mr-6">1.6.3</span>
         <span>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798&gt; 它的作用也是**判断两个对象是否相等**。但它一般有两种使用情况:&gt; &gt; 1. 类没有重写 ```equals()``` 方法。则通过 ```equals()``` 比较该类的两个对象时，等价于通过 ```==``` 比较这两个对象。 &gt; 2. 类重写了 ```equals()``` 方法。一般，我们都重写 ```equals()``` 方法来两个对象的内容相等，若它们的内容相 等，则返回 true (即，认为这两个对象相等)。    ### 为什么 ```equals()``` 和 ```hashCode()``` 要一起重写？&gt; 1. 如果两个对象相等，则 hashcode 一定也是相同的&gt; 2. 两个对象相等,对两个对象分别调用 ```equals()``` 方法都返回 true&gt; 3. 两个对象有相同的 hashcode 值，它们也不一定是相等的&gt; 4. 如果 ```equals()``` 方法不重写，则它与 ```==``` 的效果相同，即判断两个对象是不是同一个对象，因此需要重写该方法。因此```equals()``` 方法被重写过，则 ```hashCode()``` 方法也必须被重写&gt; 5. **```hashCode()``` 的默认行为是对堆上的对象产生独特值。**如果没有重写 ```hashCode()``` ，则该 class 的两个对象无论如何都不会相等(即使这两个对象指向相同的数据)  ### 为什么两个对象有相同的 hashcode 值,它们也不一定是相等的?&gt; 因为 ```hashCode()``` 所使用的杂凑算法可能刚好会让多个对象传回相同的杂凑值。越糟糕的杂凑算法越容易碰撞，但这也与数据值域分布的特性有关（所谓碰撞也就是指的是不同的对象得到相同的 hashCode ）。&gt; &gt; 如同 HashMap ,如果 HashMap 在对比的时候，同样的 hashcode 有多个对象，它会使用 ```equals()``` 来判断是否真的相同。也就是说 **hashcode 只是用来缩小查找成本，而不是唯一标记一个对象**。  ### 什么是 Java 浅拷贝与深拷贝？  &gt;#### 浅拷贝&gt; 1. 对于数据类型是基本数据类型的成员变量，浅拷贝会直接进行值传递，也就是将该属性值复制一份给新的对象。因为是两份不同的数据，所以对其中一个对象的该成员变量值进行修改，不会影响另一个对象拷贝得到的数据。&gt; &gt; 2. 对于数据类型是引用数据类型的成员变量，比如说成员变量是某个数组、某个类的对象等，那么浅拷贝会进行引用传递，也就是只是将该成员变量的引用值（内存地址）复制一份给新的对象。因为实际上两个对象的该成员变量都指向同一个实例。在这种情况下，在一个对象中修改该成员变量会影响到另一个对象的该成员变量值。&gt; &gt; 具体模型如图所示：可以看到基本数据类型的成员变量，对其值创建了新的拷贝。而引用数据类型的成员变量的实例仍然是只有一份，两个对象的该成员变量都指向同一个实例。&gt; &gt; ![浅拷贝](面经/19.png)&gt; &gt; 浅拷贝的主要实现方式：&gt; &gt; 1. **通过拷贝构造方法实现浅拷贝**：拷贝构造方法指的是该类的构造方法参数为该类的对象。使用拷贝构造方法可以很好地完成浅拷贝，直接通过一个现有的对象创建出与该对象属性相同的新的对象。&gt; &gt; 2. **通过重写 clone() 方法进行浅拷贝**：Object 类是类结构的根类，其中有一个方法为 ```protected Object clone() throws CloneNotSupportedException``` ，这个方法就是进行的浅拷贝。有了这个浅拷贝模板，我们可以通过调用 clone() 方法来实现对象的浅拷贝。但是需要注意：1、Object 类虽然有这个方法，但是这个方法是受保护的（被 protected 修饰），所以我们无法直接使用。2、使用 clone() 方法的类必须实现 Cloneable 接口，否则会抛出异常 CloneNotSupportedException。对于这两点，我们的解决方法是，在要使用 clone() 方法的类中重写 clone() 方法，通过 super.clone() 调用 Object 类中的原 clone() 方法。&gt; #### 深拷贝&gt; 对于深拷贝来说，不仅要复制对象的所有基本数据类型的成员变量值，还要为所有引用数据类型的成员变量申请存储空间，并复制每个引用数据类型成员变量所引用的对象，直到该对象可达的所有对象。也就是说，对象进行深拷贝要对整个对象图进行拷贝！&gt; 简单地说，深拷贝对引用数据类型的成员变量的对象图中所有的对象都开辟了内存空间；而浅拷贝只是传递地址指向，新的对象并没有对引用数据类型创建内存空间。&gt; 深拷贝模型如图所示：可以看到所有的成员变量都进行了复制。  &gt; &gt; ![深拷贝](面经/20.png)  &gt; &gt; 深拷贝的主要实现方式：&gt; &gt; 1. **通过重写clone方法来实现深拷贝**：与通过重写 clone() 方法实现浅拷贝的基本思路一样，只需要为对象图的每一层的每一个对象都实现 Cloneable 接口并重写 clone() 方法，最后在最顶层的类的重写的clone() 方法中调用所有的 clone() 方法即可实现深拷贝。简单的说就是：**每一层的每个对象都进行浅拷贝=深拷贝**。&gt; &gt; 2. **通过对象序列化实现深拷贝**：虽然层次调用 clone() 方法可以实现深拷贝，但是显然代码量实在太大。特别对于属性数量比较多、层次比较深的类而言，每个类都要重写 clone() 方法太过繁琐。将对象序列化为字节序列后，默认会将该对象的整个对象图进行序列化，再通过反序列即可完美地实现深拷贝。  ### 介绍一下内存泄露？&gt; 如果忘记“释放”先前分配的内存，就可能造成内存泄漏。如果程序保留对永远不再使用的对象的引用，这些对象将会占用并耗尽内存，这是因为自动化的垃圾收集器无法证明这些对象将不再使用。如果存在一个对对象的引用，对象就被定义为活动的，因此不能删除。概括地说，内存泄漏产生的主要原因：**保留下来却永远不再使用的对象引用。**&gt; &gt; 为了确保能回收对象占用的内存，编程人员必须确保该对象不能到达。这通常是通过将对象字段设置为 null 或者从集合(collection)中移除对象而完成的。但是，注意，当局部变量不再使用时，没有必要将其显式地设置为 null。对这些变量的引用将随着方法的退出而自动清除。&gt; #### 内存泄露例子？&gt; 1. **全局集合**：在大的应用程序中有某种全局的数据储存库是很常见的，例如一个JNDI树或一个会话表。在这些情况下，必须注意管理储存库的大小。必须有某种机制从储存库中移除不再需要的数据。这可能有多种方法，但是最常见的一种是周期性运行的某种清除任务。该任务将验证储存库中的数据，并移除任何不再需要的数据。另一种管理储存库的方法是使用反向链接(referrer)计数。然后集合负责统计集合中每个入口的反向链接的数目。这要求反向链接告诉集合何时会退出入口。当反向链接数目为零时，该元素就可以从集合中移除了。&gt; 2. **缓存**：没有正确地选用合适的缓存过期淘汰算法。最好的办法是对缓存的大小进行限制。&gt; 3. **HashMap 元素没有重写 equals() 或者 hashCode() 方法导致插入大量重复元素**。&gt; 4. **ThreadLocal 在线程池中没有及时清除**：在不使用 ThreadLocal 后，要手动设为 null 并在 ```finally&#123;...&#125;``` 语句中调用 remove() 方法清除。&gt; 5. **数据库连接没有及时关闭**。&gt;   #### 内存泄露检测工具？&gt; 1. **详细输出**：有许多监控垃圾收集器活动的方法。而其中使用最广泛的可能是使用 ```-Xverbose:gc``` 选项启动 JVM，并观察输出，观察垃圾收集所使用的堆的容量。&gt; 2. **JRockit Management Console 控制台**：JRockit Management Console 可以显示堆使用量的图示。借助于该图，可以很容易地**看出堆使用量是否随时间增加**。&gt; 3. **JRockit Memory Leak Detector**：JRockit Memory Leak Detector 可以用来查看内存泄漏，并可以更深入地查出泄漏的根源。这个强大的工具是紧密集成到 JRockit JVM 中的，其开销非常小，对虚拟机的堆的访问也很容易。JRockit Memory Leak Detector 是通过在每次垃圾收集时计算每个类的现有对象的数目来实现这一步的。**如果特定类的对象数目随时间而增长（“增长率”），就可能发生了内存泄漏。**  ### 列举 Object 类方法？```.public final native Class&lt;?&gt; getClass()//native方法，用于返回当前运行时对象的Class对象，使用了 final 关键字修饰，故不允许子类重写。 public native int hashCode() //native方法，用于返回对象的哈希码，主要使用在哈希表中，比如 JDK 中的 HashMap。public boolean equals(Object obj)//用于比较2个对象的内存地址是否相等，String 类对该方法进行了重写用户 比较字符串的值是否相等。protected native Object clone() throws CloneNotSupportedException// naitive 方法，用于创建并返回 当前对象的一份拷贝。一般情况下，对于任何对象 x，表达式 x.clone() != x 为true，x.clone().getClass() == x.getClass() 为 true 。 Object 本身没有实现 Cloneable 接口，所以不重写 clone 方法并且进行调用的话会发生 CloneNotSupportedException 异常。public String toString()//返回类的名字@实例的哈希码的16进制的字符串。建议 Object 所有的子类都重写这个方法。public final native void notify()// native方法，并且不能重写。唤醒一个在此对象监视器上等待的线程(监视 器相当于就是锁的概念)。如果有多个线程在等待只会任意唤醒一个。public final native void notifyAll()// native方法，并且不能重写。跟notify一样，唯一的区别就是会唤醒 在此对象监视器上等待的所有线程，而不是一个线程。public final native void wait(long timeout) throws InterruptedException// native 方法，并且不能重写。暂停线程的执行。注意：sleep 方法没有释放锁，而 wait() 方法释放了锁。timeout 是等待时间。public final void wait(long timeout, int nanos) throws InterruptedException//多了 nanos 参数， 这个参数表示额外时间(以毫微秒为单位，范围是 0-999999)。 所以超时的时间还需要加上 nanos 毫秒。public final void wait() throws InterruptedException//跟之前的2个 wait 方法一样，只不过该方法一直等待，没有超时时间这个概念。protected void finalize() throws Throwable &#123; &#125;//实例被垃圾回收器回收的时候触发的操作</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#接口和抽象类的区别是什么？">
-        <span class="has-mr-6">2.3</span>
+        <span class="has-mr-6">1.7</span>
         <span>接口和抽象类的区别是什么？</span>
         </a></li><li>
         <a class="is-flex" href="#JNI底层实现">
-        <span class="has-mr-6">2.4</span>
+        <span class="has-mr-6">1.8</span>
         <span>JNI底层实现</span>
         </a></li><li>
         <a class="is-flex" href="#如何保证线程执行顺序？">
-        <span class="has-mr-6">2.5</span>
+        <span class="has-mr-6">1.9</span>
         <span>如何保证线程执行顺序？</span>
         </a></li><li>
         <a class="is-flex" href="#Java-实现了线程的调度吗？">
-        <span class="has-mr-6">2.6</span>
+        <span class="has-mr-6">1.10</span>
         <span>Java 实现了线程的调度吗？</span>
         </a></li><li>
         <a class="is-flex" href="#Java-里为什么有线程安全问题？如何解决？">
-        <span class="has-mr-6">2.7</span>
+        <span class="has-mr-6">1.11</span>
         <span>Java 里为什么有线程安全问题？如何解决？</span>
         </a></li><li>
         <a class="is-flex" href="#多线程的实现方式？">
-        <span class="has-mr-6">2.8</span>
+        <span class="has-mr-6">1.12</span>
         <span>多线程的实现方式？</span>
         </a></li><li>
         <a class="is-flex" href="#Thread、Runnable-和-Callable-区别？哪一种比较好，哪一种比较安全？">
-        <span class="has-mr-6">2.9</span>
+        <span class="has-mr-6">1.13</span>
         <span>Thread、Runnable 和 Callable 区别？哪一种比较好，哪一种比较安全？</span>
         </a></li><li>
         <a class="is-flex" href="#线程在-JVM-中-start-一定会启动吗？">
-        <span class="has-mr-6">2.10</span>
+        <span class="has-mr-6">1.14</span>
         <span>线程在 JVM 中 start() 一定会启动吗？</span>
         </a></li><li>
         <a class="is-flex" href="#为什么我们调用-start-方法时会执行-run-方法，为什么我们不能直接调用-run-方法？">
-        <span class="has-mr-6">2.11</span>
+        <span class="has-mr-6">1.15</span>
         <span>为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？</span>
         </a></li><li>
         <a class="is-flex" href="#wait-与-sleep-与-yield-的区别？">
-        <span class="has-mr-6">2.12</span>
+        <span class="has-mr-6">1.16</span>
         <span>wait() 与 sleep() 与 yield() 的区别？</span>
         </a></li><li>
         <a class="is-flex" href="#notifyAll-怎么个全部法，全部唤醒都开始执行不就不安全了吗？">
-        <span class="has-mr-6">2.13</span>
+        <span class="has-mr-6">1.17</span>
         <span>notifyAll()怎么个全部法，全部唤醒都开始执行不就不安全了吗？</span>
         </a></li><li>
         <a class="is-flex" href="#如何安全地停止线程">
-        <span class="has-mr-6">2.14</span>
+        <span class="has-mr-6">1.18</span>
         <span>如何安全地停止线程</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#interrupt-和-isInterrupted-的区别？">
-        <span class="has-mr-6">2.14.1</span>
+        <span class="has-mr-6">1.18.1</span>
         <span>interrupt() 和 isInterrupted() 的区别？</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#为什么stop-不安全？">
-        <span class="has-mr-6">2.15</span>
+        <span class="has-mr-6">1.19</span>
         <span>为什么stop()不安全？</span>
         </a></li><li>
         <a class="is-flex" href="#怎么让一个线程等另一个线程执行结束？">
-        <span class="has-mr-6">2.16</span>
+        <span class="has-mr-6">1.20</span>
         <span>怎么让一个线程等另一个线程执行结束？</span>
         </a></li><li>
         <a class="is-flex" href="#不用锁如何实现线程同步">
-        <span class="has-mr-6">2.17</span>
+        <span class="has-mr-6">1.21</span>
         <span>不用锁如何实现线程同步</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#scheduled-与scheduledAtFixedRate-与-scheduledWithFixedDelay-区别？">
-        <span class="has-mr-6">2.17.1</span>
+        <span class="has-mr-6">1.21.1</span>
         <span>scheduled() 与scheduledAtFixedRate() 与 scheduledWithFixedDelay 区别？</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#多线程-Future-接口，里面有什么方法">
-        <span class="has-mr-6">2.18</span>
+        <span class="has-mr-6">1.22</span>
         <span>多线程 Future 接口，里面有什么方法</span>
         </a></li><li>
         <a class="is-flex" href="#锁的四种状态？">
-        <span class="has-mr-6">2.19</span>
+        <span class="has-mr-6">1.23</span>
         <span>锁的四种状态？</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#无锁">
-        <span class="has-mr-6">2.19.1</span>
+        <span class="has-mr-6">1.23.1</span>
         <span>无锁</span>
         </a></li><li>
         <a class="is-flex" href="#偏向锁">
-        <span class="has-mr-6">2.19.2</span>
+        <span class="has-mr-6">1.23.2</span>
         <span>偏向锁</span>
         </a></li><li>
         <a class="is-flex" href="#轻量级锁">
-        <span class="has-mr-6">2.19.3</span>
+        <span class="has-mr-6">1.23.3</span>
         <span>轻量级锁</span>
         </a></li><li>
         <a class="is-flex" href="#重量级锁">
-        <span class="has-mr-6">2.19.4</span>
+        <span class="has-mr-6">1.23.4</span>
         <span>重量级锁</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#自旋锁的底层实现？">
-        <span class="has-mr-6">2.20</span>
+        <span class="has-mr-6">1.24</span>
         <span>自旋锁的底层实现？</span>
         </a></li><li>
         <a class="is-flex" href="#synchronized-和锁与-volatile区别？">
-        <span class="has-mr-6">2.21</span>
+        <span class="has-mr-6">1.25</span>
         <span>synchronized 和锁与 volatile区别？</span>
         </a></li><li>
         <a class="is-flex" href="#介绍一下各种锁">
-        <span class="has-mr-6">2.22</span>
+        <span class="has-mr-6">1.26</span>
         <span>介绍一下各种锁</span>
         </a></li><li>
         <a class="is-flex" href="#Lock-和-synchronized-区别，哪种性能更好以及原因？">
-        <span class="has-mr-6">2.23</span>
+        <span class="has-mr-6">1.27</span>
         <span>Lock 和 synchronized 区别，哪种性能更好以及原因？</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#AtomicInteger-常用方法">
-        <span class="has-mr-6">2.23.1</span>
+        <span class="has-mr-6">1.27.1</span>
         <span>AtomicInteger 常用方法</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#Threadlocal？">
-        <span class="has-mr-6">2.24</span>
+        <span class="has-mr-6">1.28</span>
         <span>Threadlocal？</span>
         </a></li><li>
         <a class="is-flex" href="#AQS？">
-        <span class="has-mr-6">2.25</span>
+        <span class="has-mr-6">1.29</span>
         <span>AQS？</span>
         </a></li><li>
         <a class="is-flex" href="#RPC调用？">
-        <span class="has-mr-6">2.26</span>
+        <span class="has-mr-6">1.30</span>
         <span>RPC调用？</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#I-O">
-        <span class="has-mr-6">3</span>
+        <span class="has-mr-6">2</span>
         <span>I/O</span>
         </a></li><li>
         <a class="is-flex" href="#JVM">
-        <span class="has-mr-6">4</span>
+        <span class="has-mr-6">3</span>
         <span>JVM</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#静态变量可以序列化吗？">
-        <span class="has-mr-6">4.1</span>
+        <span class="has-mr-6">3.1</span>
         <span>静态变量可以序列化吗？</span>
         </a></li><li>
         <a class="is-flex" href="#什么是-Java-虚拟机？">
-        <span class="has-mr-6">4.2</span>
+        <span class="has-mr-6">3.2</span>
         <span>什么是 Java 虚拟机？</span>
         </a></li><li>
         <a class="is-flex" href="#为什么-Java-被称作是“平台无关的编程语言”？">
-        <span class="has-mr-6">4.3</span>
+        <span class="has-mr-6">3.3</span>
         <span>为什么 Java 被称作是“平台无关的编程语言”？</span>
         </a></li><li>
         <a class="is-flex" href="#方法区和永久代的关系">
-        <span class="has-mr-6">4.4</span>
+        <span class="has-mr-6">3.4</span>
         <span>方法区和永久代的关系</span>
         </a></li><li>
         <a class="is-flex" href="#为什么要将永久代-PermGen-替换为元空间-MetaSpace-呢">
-        <span class="has-mr-6">4.5</span>
+        <span class="has-mr-6">3.5</span>
         <span>为什么要将永久代 (PermGen) 替换为元空间 (MetaSpace) 呢?</span>
         </a></li><li>
         <a class="is-flex" href="#线程什么时候创建在-JVM-？">
-        <span class="has-mr-6">4.6</span>
+        <span class="has-mr-6">3.6</span>
         <span>线程什么时候创建在 JVM ？</span>
         </a></li><li>
         <a class="is-flex" href="#JVM-是否一定会创建线程？">
-        <span class="has-mr-6">4.7</span>
+        <span class="has-mr-6">3.7</span>
         <span>JVM 是否一定会创建线程？</span>
         </a></li><li>
         <a class="is-flex" href="#类的唯一性决定条件">
-        <span class="has-mr-6">4.8</span>
+        <span class="has-mr-6">3.8</span>
         <span>类的唯一性决定条件</span>
         </a></li><li>
         <a class="is-flex" href="#Java-类加载过程？">
-        <span class="has-mr-6">4.9</span>
+        <span class="has-mr-6">3.9</span>
         <span>Java 类加载过程？</span>
         </a></li><li>
         <a class="is-flex" href="#请说明一下-Eden-区和-Survivor区-的含义以及工作原理？">
-        <span class="has-mr-6">4.10</span>
+        <span class="has-mr-6">3.10</span>
         <span>请说明一下 Eden 区和 Survivor区 的含义以及工作原理？</span>
         </a></li><li>
         <a class="is-flex" href="#为什么要分代？">
-        <span class="has-mr-6">4.11</span>
+        <span class="has-mr-6">3.11</span>
         <span>为什么要分代？</span>
         </a></li><li>
         <a class="is-flex" href="#分配担保机制">
-        <span class="has-mr-6">4.12</span>
+        <span class="has-mr-6">3.12</span>
         <span>分配担保机制?</span>
         </a></li><li>
         <a class="is-flex" href="#大对象直接进入老年代？">
-        <span class="has-mr-6">4.13</span>
+        <span class="has-mr-6">3.13</span>
         <span>大对象直接进入老年代？</span>
         </a></li><li>
         <a class="is-flex" href="#动态对象年龄判定">
-        <span class="has-mr-6">4.14</span>
+        <span class="has-mr-6">3.14</span>
         <span>动态对象年龄判定</span>
         </a></li><li>
         <a class="is-flex" href="#什么原因会导致Minor-GC运行频繁？同样的，什么原因又会导致Minor-GC运行很慢？请简要说明一下">
-        <span class="has-mr-6">4.15</span>
+        <span class="has-mr-6">3.15</span>
         <span>什么原因会导致Minor GC运行频繁？同样的，什么原因又会导致Minor GC运行很慢？请简要说明一下</span>
         </a></li><li>
         <a class="is-flex" href="#简要介绍一下CMS的回收流程？">
-        <span class="has-mr-6">4.16</span>
+        <span class="has-mr-6">3.16</span>
         <span>简要介绍一下CMS的回收流程？</span>
         </a></li><li>
         <a class="is-flex" href="#CMS采用哪种回收算法？">
-        <span class="has-mr-6">4.17</span>
+        <span class="has-mr-6">3.17</span>
         <span>CMS采用哪种回收算法？</span>
         </a></li><li>
         <a class="is-flex" href="#CMS-的浮动垃圾问题以及解决方法">
-        <span class="has-mr-6">4.18</span>
+        <span class="has-mr-6">3.18</span>
         <span>CMS 的浮动垃圾问题以及解决方法</span>
         </a></li><li>
         <a class="is-flex" href="#一条MySQL语句的执行流程？">
-        <span class="has-mr-6">4.19</span>
+        <span class="has-mr-6">3.19</span>
         <span>一条MySQL语句的执行流程？</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#查询语句执行流程">
-        <span class="has-mr-6">4.19.1</span>
+        <span class="has-mr-6">3.19.1</span>
         <span>查询语句执行流程</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#如何设置事务隔离级别？">
-        <span class="has-mr-6">4.20</span>
+        <span class="has-mr-6">3.20</span>
         <span>如何设置事务隔离级别？</span>
         </a></li><li>
         <a class="is-flex" href="#并发控制语句？">
-        <span class="has-mr-6">4.21</span>
+        <span class="has-mr-6">3.21</span>
         <span>并发控制语句？</span>
         </a></li><li>
         <a class="is-flex" href="#Cookie-amp-Session">
-        <span class="has-mr-6">4.22</span>
+        <span class="has-mr-6">3.22</span>
         <span>Cookie &amp; Session</span>
         </a></li><li>
         <a class="is-flex" href="#WebSocket">
-        <span class="has-mr-6">4.23</span>
+        <span class="has-mr-6">3.23</span>
         <span>WebSocket</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#WebSocket特点">
-        <span class="has-mr-6">4.23.1</span>
+        <span class="has-mr-6">3.23.1</span>
         <span>WebSocket特点</span>
         </a></li><li>
         <a class="is-flex" href="#WebSoket过程">
-        <span class="has-mr-6">4.23.2</span>
+        <span class="has-mr-6">3.23.2</span>
         <span>WebSoket过程</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#RPC">
-        <span class="has-mr-6">4.24</span>
+        <span class="has-mr-6">3.24</span>
         <span>RPC</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#Linux操作">
-        <span class="has-mr-6">5</span>
+        <span class="has-mr-6">4</span>
         <span>Linux操作</span>
         </a><ul class="menu-list"><li>
         <a class="is-flex" href="#如何查看网络节点状态？">
-        <span class="has-mr-6">5.1</span>
+        <span class="has-mr-6">4.1</span>
         <span>如何查看网络节点状态？</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#操作系统">
-        <span class="has-mr-6">6</span>
+        <span class="has-mr-6">5</span>
         <span>操作系统</span>
         </a></li><li>
         <a class="is-flex" href="#设计模式">
-        <span class="has-mr-6">7</span>
+        <span class="has-mr-6">6</span>
         <span>设计模式</span>
         </a></li><li>
         <a class="is-flex" href="#软件工程">
-        <span class="has-mr-6">8</span>
+        <span class="has-mr-6">7</span>
         <span>软件工程</span>
         </a></li><li>
         <a class="is-flex" href="#数据结构">
-        <span class="has-mr-6">9</span>
+        <span class="has-mr-6">8</span>
         <span>数据结构</span>
         </a></li><li>
         <a class="is-flex" href="#算法">
-        <span class="has-mr-6">10</span>
+        <span class="has-mr-6">9</span>
         <span>算法</span>
         </a></li><li>
         <a class="is-flex" href="#大规模数据处理">
-        <span class="has-mr-6">11</span>
+        <span class="has-mr-6">10</span>
         <span>大规模数据处理</span>
         </a></li><li>
         <a class="is-flex" href="#智力题">
-        <span class="has-mr-6">12</span>
+        <span class="has-mr-6">11</span>
         <span>智力题</span>
         </a></li></ul>
         </div>
