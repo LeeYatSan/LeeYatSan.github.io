@@ -7,22 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Design Patterns - Builder - LEE YAT-SAN&#39;s ZONE</title>
+<title>Design Patterns - Flyweight - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+    <meta name="description" content="本文将介绍设计模式中的享元（蝇量）模式（Flyweight）。 定义该模式可以让某个类的一个实例提供许多“虚拟实例”。该模式可以减少运行时对象的数量，节省内存。可以实现将许多“虚拟对象”的状态集中管理。当一个类有许多实例时，二这些实例能被同一方法控制的时候，我们就可以使用享元（蝇量）模式。 但该模式会导致创建的某个类的所有实例无法拥有独立而不同的行为。">
 <meta name="keywords" content="Design Patterns">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Design Patterns - Builder">
-<meta property="og:url" content="https://leeyatsan.cn/2020/01/11/Design Patterns - Builder/index.html">
+<meta property="og:title" content="Design Patterns - Flyweight">
+<meta property="og:url" content="https://leeyatsan.cn/2020/01/11/Design Patterns - Flyweight/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+<meta property="og:description" content="本文将介绍设计模式中的享元（蝇量）模式（Flyweight）。 定义该模式可以让某个类的一个实例提供许多“虚拟实例”。该模式可以减少运行时对象的数量，节省内存。可以实现将许多“虚拟对象”的状态集中管理。当一个类有许多实例时，二这些实例能被同一方法控制的时候，我们就可以使用享元（蝇量）模式。 但该模式会导致创建的某个类的所有实例无法拥有独立而不同的行为。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2020-01-11T10:24:43.615Z">
+<meta property="og:updated_time" content="2020-01-11T11:03:08.808Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Design Patterns - Builder">
-<meta name="twitter:description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+<meta name="twitter:title" content="Design Patterns - Flyweight">
+<meta name="twitter:description" content="本文将介绍设计模式中的享元（蝇量）模式（Flyweight）。 定义该模式可以让某个类的一个实例提供许多“虚拟实例”。该模式可以减少运行时对象的数量，节省内存。可以实现将许多“虚拟对象”的状态集中管理。当一个类有许多实例时，二这些实例能被同一方法控制的时候，我们就可以使用享元（蝇量）模式。 但该模式会导致创建的某个类的所有实例无法拥有独立而不同的行为。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
 
 
@@ -81,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Design Patterns - Builder" height="28">
+                <img src="/images/logo.svg" alt="Design Patterns - Flyweight" height="28">
             
             </a>
         </div>
@@ -139,26 +139,26 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>Design Patterns - Builder
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Flyweight
     
     </h1>
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2020-01-11T10:13:20.107Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey" datetime="2020-01-11T10:49:27.350Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-11</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T10:24:43.615Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T11:03:08.808Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
             
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Creative/">Creative</a>
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Constructive/">Constructive</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 minutes read (About 323 words)
+                    3 minutes read (About 433 words)
                 </span>
                 
                 
@@ -166,19 +166,21 @@
         </div>
         
         <div class="content">
-            <p>本文将介绍设计模式中的生成器模式（Builder）。</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式封装一个产品的构造过程，并允许按步骤构造。</strong>该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的<a href="http://www.leeyatsan.cn/2019/12/20/Design%20Patterns%20-%20Factory/" target="_blank" rel="noopener">工厂模式</a>不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。</p>
+            <p>本文将介绍设计模式中的享元（蝇量）模式（Flyweight）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式可以让某个类的一个实例提供许多“虚拟实例”。</strong>该模式可以减少运行时对象的数量，节省内存。可以实现将许多“虚拟对象”的状态集中管理。当一个类有许多实例时，二这些实例能被同一方法控制的时候，我们就可以使用享元（蝇量）模式。</p>
+<p>但该模式会导致创建的某个类的所有实例无法拥有独立而不同的行为。</p>
 <a id="more"></a>
-<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>该模式经常被用来创建组合结构。</p>
-<p>我们通过一个客户定制假期行程安排的例子来理解一下这个模式。首先来看设计图：</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Builder1.png" alt="生成器模式设计客户定制假期行程安排 UML 类图"></p>
-<p>客户使用抽象的接口 AbstractBuilder 来创建规划，具体假期安排生成器 VocationBuilder 创建真正的产品，并将产品存储在假期组合结构中。客户可以指示生成器依照一定的步骤，生产一个假期规划。</p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>我们通过一个树林的例子来理解一下享元（蝇量）模式。</p>
+<p>我们需要用程序模拟一个树林，一个每个树通过一个横纵坐标确定位置，通过树龄来确定大小：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Tree&#123;</span><br><span class="line">    public double xCoord;</span><br><span class="line">    public double yCoord;</span><br><span class="line">    public int age;</span><br><span class="line">    </span><br><span class="line">    public void display()&#123;/* 实现省略 */&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们需要在林子里创建大量这样的树，我们当然可以将它们一个个实例化，但这样也未免太麻烦了吧，而且，创建过多的实例会消耗大量的内存，影响性能。因此，我们可以通过享元（蝇量）模式，通过一个管理者实例来创建一片树林：管理者里面有一个数组，保存着所有树的状态，由管理者在对应位置绘制对应树即可。</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Flyweight1.png" alt="使用享元（蝇量）模式实现树林模拟程序示意图"></p>
 
         </div>
         
             <div class="card-image">
                 <span  class="image is-7by1">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Builder">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Flyweight">
                 </span>
             </div>
         
@@ -211,16 +213,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/11/Design Patterns - Chain of Responsibility/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/11/Design Patterns - Interpreter/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Design Patterns - Chain of Responsibility</span>
+                <span class="level-item">Design Patterns - Interpreter</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/11/Design Patterns - Bridge/">
-                <span class="level-item">Design Patterns - Bridge</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/11/Design Patterns - Chain of Responsibility/">
+                <span class="level-item">Design Patterns - Chain of Responsibility</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -241,7 +243,7 @@
     var gitalk = new Gitalk({
         clientID: '80ed07e081b981160e61',
         clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
-        id: '26fd926fdb254210a8b127efbd7bd01b',
+        id: 'd1847e9082f3c9691b79ccf617a4d30e',
         repo: 'leeyatsan.github.io',
         owner: 'LeeYatSan',
         admin: "LeeYatSan",
@@ -302,7 +304,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Design Patterns - Builder" height="28">
+                    <img src="/images/logo.svg" alt="Design Patterns - Flyweight" height="28">
                 
                 </a>
                 <p class="is-size-7">

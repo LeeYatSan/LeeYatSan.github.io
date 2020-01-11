@@ -7,22 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Design Patterns - Builder - LEE YAT-SAN&#39;s ZONE</title>
+<title>Design Patterns - Interpreter - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+    <meta name="description" content="本文将介绍设计模式中的解释器模式（Interpreter）。 定义该模式为语言创建解释器，定义语法的类。该模式将语法规则表示成一个类，方便于实现语言。因为语法由许多类表示，所以可以轻易扩展此语言。通过在类结构中加入新的方法，可以在解释的同时增加新的行为。">
 <meta name="keywords" content="Design Patterns">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Design Patterns - Builder">
-<meta property="og:url" content="https://leeyatsan.cn/2020/01/11/Design Patterns - Builder/index.html">
+<meta property="og:title" content="Design Patterns - Interpreter">
+<meta property="og:url" content="https://leeyatsan.cn/2020/01/11/Design Patterns - Interpreter/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+<meta property="og:description" content="本文将介绍设计模式中的解释器模式（Interpreter）。 定义该模式为语言创建解释器，定义语法的类。该模式将语法规则表示成一个类，方便于实现语言。因为语法由许多类表示，所以可以轻易扩展此语言。通过在类结构中加入新的方法，可以在解释的同时增加新的行为。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
-<meta property="og:updated_time" content="2020-01-11T10:24:43.615Z">
+<meta property="og:updated_time" content="2020-01-11T11:12:36.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Design Patterns - Builder">
-<meta name="twitter:description" content="本文将介绍设计模式中的生成器模式（Builder）。 定义该模式封装一个产品的构造过程，并允许按步骤构造。该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的工厂模式不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。">
+<meta name="twitter:title" content="Design Patterns - Interpreter">
+<meta name="twitter:description" content="本文将介绍设计模式中的解释器模式（Interpreter）。 定义该模式为语言创建解释器，定义语法的类。该模式将语法规则表示成一个类，方便于实现语言。因为语法由许多类表示，所以可以轻易扩展此语言。通过在类结构中加入新的方法，可以在解释的同时增加新的行为。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png">
 
 
@@ -81,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Design Patterns - Builder" height="28">
+                <img src="/images/logo.svg" alt="Design Patterns - Interpreter" height="28">
             
             </a>
         </div>
@@ -139,26 +139,26 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>Design Patterns - Builder
+    <i class="fas fa-angle-double-right"></i>Design Patterns - Interpreter
     
     </h1>
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2020-01-11T10:13:20.107Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey" datetime="2020-01-11T11:03:08.232Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-11</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T10:24:43.615Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T11:12:36.809Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
             
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Creative/">Creative</a>
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 minutes read (About 323 words)
+                    2 minutes read (About 286 words)
                 </span>
                 
                 
@@ -166,19 +166,17 @@
         </div>
         
         <div class="content">
-            <p>本文将介绍设计模式中的生成器模式（Builder）。</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式封装一个产品的构造过程，并允许按步骤构造。</strong>该模式能够将一个复杂对象的创建过程封装起来，它允许对象通过多个步骤来创建，并且可以改变过程（这和只有一个步骤的<a href="http://www.leeyatsan.cn/2019/12/20/Design%20Patterns%20-%20Factory/" target="_blank" rel="noopener">工厂模式</a>不同。）该模式向客户隐藏了产品内部的表现，客户只看到一个抽象的接口，因此产品的实现可以被替换。</p>
+            <p>本文将介绍设计模式中的解释器模式（Interpreter）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式为语言创建解释器，定义语法的类。</strong>该模式将语法规则表示成一个类，方便于实现语言。因为语法由许多类表示，所以可以轻易扩展此语言。通过在类结构中加入新的方法，可以在解释的同时增加新的行为。</p>
 <a id="more"></a>
-<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>该模式经常被用来创建组合结构。</p>
-<p>我们通过一个客户定制假期行程安排的例子来理解一下这个模式。首先来看设计图：</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/Builder1.png" alt="生成器模式设计客户定制假期行程安排 UML 类图"></p>
-<p>客户使用抽象的接口 AbstractBuilder 来创建规划，具体假期安排生成器 VocationBuilder 创建真正的产品，并将产品存储在假期组合结构中。客户可以指示生成器依照一定的步骤，生产一个假期规划。</p>
+<p>当想解释自定义的某种语法语言的时候，调用每个表达式类型的 interpret() 方法。该方法需要传入一个上下文 Context ——也就是我们正字啊解析的语言的字符串输入流——然后进行对比并采取适当动作。</p>
+<h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p>解释器模式用于实现一个简单的语言，可以用于处理脚本语言和编程语言。但当语法规则数目太大时，这个模式可能变得非常复杂，在这种情况下，使用解析器/编译器产生器可能更合适。</p>
 
         </div>
         
             <div class="card-image">
                 <span  class="image is-7by1">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Builder">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Interpreter">
                 </span>
             </div>
         
@@ -210,17 +208,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/11/Design Patterns - Chain of Responsibility/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Design Patterns - Chain of Responsibility</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/11/Design Patterns - Bridge/">
-                <span class="level-item">Design Patterns - Bridge</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/11/Design Patterns - Flyweight/">
+                <span class="level-item">Design Patterns - Flyweight</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -241,7 +232,7 @@
     var gitalk = new Gitalk({
         clientID: '80ed07e081b981160e61',
         clientSecret: '382ed27619498a0da41899f29b8ded4ff68dbfd7',
-        id: '26fd926fdb254210a8b127efbd7bd01b',
+        id: 'fb0948f4cb0021843e96e04e134ab550',
         repo: 'leeyatsan.github.io',
         owner: 'LeeYatSan',
         admin: "LeeYatSan",
@@ -302,7 +293,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Design Patterns - Builder" height="28">
+                    <img src="/images/logo.svg" alt="Design Patterns - Interpreter" height="28">
                 
                 </a>
                 <p class="is-size-7">

@@ -1,3 +1,5 @@
+https://leeyatsan.cn/2020/01/11/Design Patterns - Interpreter/
+https://leeyatsan.cn/2020/01/11/Design Patterns - Flyweight/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Chain of Responsibility/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Builder/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Bridge/
