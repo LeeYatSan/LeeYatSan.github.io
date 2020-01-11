@@ -1,3 +1,4 @@
+https://leeyatsan.cn/2020/01/11/2020-01-11/
 https://leeyatsan.cn/2020/01/05/Design Patterns - Proxy/
 https://leeyatsan.cn/2020/01/04/Design Patterns - State/
 https://leeyatsan.cn/2020/01/04/Design Patterns - Composite/
