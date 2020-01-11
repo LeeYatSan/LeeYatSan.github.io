@@ -1,3 +1,7 @@
+https://leeyatsan.cn/2020/01/11/Design Patterns - Visitor/
+https://leeyatsan.cn/2020/01/11/Design Patterns - Prototype/
+https://leeyatsan.cn/2020/01/11/Design Patterns - Memento/
+https://leeyatsan.cn/2020/01/11/Design Patterns - Mediator/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Interpreter/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Flyweight/
 https://leeyatsan.cn/2020/01/11/Design Patterns - Chain of Responsibility/

@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://leeyatsan.cn/2020/01/11/Design%20Patterns%20-%20Visitor/</loc>
+    
+    <lastmod>2020-01-11T13:09:44.561Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://leeyatsan.cn/2019/12/16/Design%20Patterns/</loc>
     
-    <lastmod>2020-01-11T11:15:44.611Z</lastmod>
+    <lastmod>2020-01-11T12:58:08.679Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://leeyatsan.cn/2020/01/11/Design%20Patterns%20-%20Prototype/</loc>
+    
+    <lastmod>2020-01-11T12:56:10.935Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://leeyatsan.cn/2020/01/11/Design%20Patterns%20-%20Memento/</loc>
+    
+    <lastmod>2020-01-11T12:48:15.395Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://leeyatsan.cn/2020/01/11/Design%20Patterns%20-%20Mediator/</loc>
+    
+    <lastmod>2020-01-11T12:41:05.087Z</lastmod>
     
   </url>
   
