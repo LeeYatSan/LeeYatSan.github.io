@@ -145,6 +145,66 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
+            <a class="has-link-black-ter" href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/">
+                <i class="fas fa-angle-double-right"></i>The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy
+            </a>
+        
+    </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+            <time class="level-item has-text-grey" datetime="2020-01-12T04:38:04.488Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-12</time>
+            
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-12T05:08:26.576Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-12</time>
+            
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 163 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <p>As for well-known reason, <figure class="highlight plain hljs"><figcaption><span>git clone ``` , which is the git command used to clone the resource from remote repository, is not user-friendly to the developers in Chinese Mainland because of the limitation of downloading speed. This article introduces a way of speeding up ```. git clone ``` by Shadowsocks Proxy。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">  </span><br><span class="line"># Premise</span><br><span class="line">1. An Shadowsocks client has been installed on your device.</span><br><span class="line">2. An available Shadowsocks account.</span><br><span class="line"></span><br><span class="line"># Using Proxy</span><br><span class="line">Open your terminal and type in the following commands and execute them.</span><br><span class="line"></span><br><span class="line">**Tips: For macOS with ShadowsocksX-NG client, please use the port 1086 instead of port 1080!**</span><br><span class="line"></span><br><span class="line">```.</span><br><span class="line">git config --global http.proxy &apos;socks5://127.0.0.1:1080&apos;</span><br><span class="line">git config --global https.proxy &apos;socks5://127.0.0.1:1080&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Caution: Choose the https protocol when you clone!</strong></p>
+<p>Making sure your Shadowsocks client is running, you will find that the downloading speed of <figure class="highlight plain hljs"><figcaption><span>git clone ``` is much faster than before!</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Revoke</span><br><span class="line">If you want to revoke the proxy, type the following commands in your teminal:</span><br><span class="line"></span><br><span class="line">```.</span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        
+            <div class="card-image">
+                <a href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/" class="image is-7by1">
+                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Git/git-.jpg" alt="The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy">
+                </a>
+            </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    <div class="card-content article ">
+    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
             <a class="has-link-black-ter" href="/2020/01/11/Design Patterns - Visitor/">
                 <i class="fas fa-angle-double-right"></i>Design Patterns - Visitor
             </a>
@@ -828,82 +888,6 @@
 
 
 
-    
-<div class="card">
-    <div class="card-content article ">
-    <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-            <a class="has-link-black-ter" href="/2020/01/05/Design Patterns - Proxy/">
-                <i class="fas fa-angle-double-right"></i>Design Patterns - Proxy
-            </a>
-        
-    </h1>
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2020-01-05T13:43:35.520Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-05</time>
-            
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-11T04:53:47.709Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-11</time>
-            
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Design-Patterns/Constructive/">Constructive</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    19 minutes read (About 2856 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <div class="content">
-            <p>本文将介绍设计模式中的代理模式（Proxy）。</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>该模式为另一个对象提供一个替身或占位符以控制这个对象的访问。</strong></p>
-        </div>
-        
-            <div class="card-image">
-                <a href="/2020/01/05/Design Patterns - Proxy/" class="image is-7by1">
-                <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Proxy">
-                </a>
-            </div>
-        
-        
-        
-        <!--<div class="level is-mobile">-->
-        <hr style="height:1px;margin:1rem 0"/>
-            <div class="level is-mobile is-flex">
-                <div class="level-start">
-                    
-                    <div class="level-item is-size-7 is-uppercase">
-                        <i class="fas fa-tags has-text-grey"></i>&nbsp;
-                        <a class="has-link-grey -link" href="/tags/Design-Patterns/">Design Patterns</a>
-                    </div>
-                    
-                </div>
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/01/05/Design Patterns - Proxy/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -965,7 +949,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        37
+                        38
                     </p>
                 </div>
             </div>
@@ -1121,7 +1105,7 @@
                 <span class="level-item">Design Patterns</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">23</span>
+                <span class="level-item tag">24</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Design-Patterns/Behavioral/">
@@ -1129,7 +1113,7 @@
                 <span class="level-item">Behavioral</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">12</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Design-Patterns/Constructive/">
@@ -1202,6 +1186,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Git/git-.jpg" alt="The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-12T04:38:04.488Z">2020-01-12</time></div>
+                    <a href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a> / <a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1279,25 +1282,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/11/Design Patterns - Interpreter/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Interpreter">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-11T11:03:08.232Z">2020-01-11</time></div>
-                    <a href="/2020/01/11/Design Patterns - Interpreter/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Design Patterns - Interpreter</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a> / <a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1315,7 +1299,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1434,7 +1418,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Design-Patterns/">
                         <span class="tag">Design Patterns</span>
-                        <span class="tag is-grey">23</span>
+                        <span class="tag is-grey">24</span>
                     </a>
                 </div>
                 
@@ -1526,6 +1510,25 @@
         
         <article class="media">
             
+            <a href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Git/git-.jpg" alt="The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-12T04:38:04.488Z">2020-01-12</time></div>
+                    <a href="/2020/01/12/The Way of Speeding Up 'git clone' By Shadowsocks Proxy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">The Way of Speeding Up &#39;git clone&#39; By Shadowsocks Proxy</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a> / <a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/01/11/Design Patterns - Visitor/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Visitor">
@@ -1600,25 +1603,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/11/Design Patterns - Interpreter/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Design%20Patterns/cover.png" alt="Design Patterns - Interpreter">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-11T11:03:08.232Z">2020-01-11</time></div>
-                    <a href="/2020/01/11/Design Patterns - Interpreter/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Design Patterns - Interpreter</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Design-Patterns/">Design Patterns</a> / <a class="has-link-grey -link" href="/categories/Design-Patterns/Behavioral/">Behavioral</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1636,7 +1620,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1755,7 +1739,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Design-Patterns/">
                         <span class="tag">Design Patterns</span>
-                        <span class="tag is-grey">23</span>
+                        <span class="tag is-grey">24</span>
                     </a>
                 </div>
                 
