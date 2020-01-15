@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文将介绍如何使用 SSH 在本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。 在网络上相关教程大部分是由本地利用 ssh-keygen -t rsa 命令生成密钥进行远程 SSH 登录。而腾讯云则提供了一种由腾讯云代为生成 SSH 密钥的方式，因此，本文将仅介绍这种方式进行本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Linux/ssh_cover.jpg">
-<meta property="og:updated_time" content="2020-01-15T03:31:34.506Z">
+<meta property="og:updated_time" content="2020-01-15T03:55:52.861Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH 免密 root 登录腾讯云 Ubuntu 服务器">
 <meta name="twitter:description" content="本文将介绍如何使用 SSH 在本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。 在网络上相关教程大部分是由本地利用 ssh-keygen -t rsa 命令生成密钥进行远程 SSH 登录。而腾讯云则提供了一种由腾讯云代为生成 SSH 密钥的方式，因此，本文将仅介绍这种方式进行本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2020-01-15T02:21:56.831Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-01-15</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-15T03:31:34.506Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-15</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-01-15T03:55:52.861Z"><i class="far fa-calendar-check">&nbsp;</i>2020-01-15</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1424 words)
+                    10 minutes read (About 1474 words)
                 </span>
                 
                 
@@ -169,6 +169,8 @@
             <p>本文将介绍如何使用 SSH 在本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。</p>
 <p>在网络上相关教程大部分是由本地利用 <em>ssh-keygen -t rsa</em> 命令生成密钥进行远程 SSH 登录。而腾讯云则提供了一种由腾讯云代为生成 SSH 密钥的方式，因此，本文将仅介绍这种方式进行本地终端远程免密 root 登录腾讯云 Ubuntu 服务器。</p>
 <a id="more"></a>
+<p>至于 SSH 免密登录原理，不在此细说，这里给出一个简要的原理示意图：</p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Linux/sshRS6.png" alt="SSH 免密登录示意图"></p>
 <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>腾讯云服务器：Ubuntu 18.04<br>本地：macOS Catalina</p>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="腾讯云服务器系统安装："><a href="#腾讯云服务器系统安装：" class="headerlink" title="腾讯云服务器系统安装："></a>腾讯云服务器系统安装：</h2><p>由于我本身已经有一个腾讯云服务器了，因此选择重装系统：Ubuntu 18.04</p>
 <p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Linux/sshRS1.png" alt="重装系统1"></p>
