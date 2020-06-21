@@ -7,22 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Android布局 - View体系 - LEE YAT-SAN&#39;s ZONE</title>
+<title>View体系 - 概述 - LEE YAT-SAN&#39;s ZONE</title>
 
 
-    <meta name="description" content="对于一个Android APP来说，其核心目的就是与用户进行一系列的交互操作，为用户展示内容，提供服务。而View体系则是上述Android核心目的的具体实现，它在Android中发挥中重要以及必要的作用。接下来的一系列文章中，将会对Android的View体系进行一次系统性的总结。">
+    <meta name="description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android布局 - View体系">
-<meta property="og:url" content="https://leeyatsan.cn/2020/06/21/Android布局 - View体系/index.html">
+<meta property="og:title" content="View体系 - 概述">
+<meta property="og:url" content="https://leeyatsan.cn/2020/06/21/View体系 - 概述/index.html">
 <meta property="og:site_name" content="LEE YAT-SAN&#39;s ZONE">
-<meta property="og:description" content="对于一个Android APP来说，其核心目的就是与用户进行一系列的交互操作，为用户展示内容，提供服务。而View体系则是上述Android核心目的的具体实现，它在Android中发挥中重要以及必要的作用。接下来的一系列文章中，将会对Android的View体系进行一次系统性的总结。">
+<meta property="og:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2020-06-21T10:52:54.769Z">
+<meta property="og:updated_time" content="2020-06-21T11:43:51.601Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android布局 - View体系">
-<meta name="twitter:description" content="对于一个Android APP来说，其核心目的就是与用户进行一系列的交互操作，为用户展示内容，提供服务。而View体系则是上述Android核心目的的具体实现，它在Android中发挥中重要以及必要的作用。接下来的一系列文章中，将会对Android的View体系进行一次系统性的总结。">
+<meta name="twitter:title" content="View体系 - 概述">
+<meta name="twitter:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
 <meta name="twitter:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
 
 
@@ -81,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Android布局 - View体系" height="28">
+                <img src="/images/logo.svg" alt="View体系 - 概述" height="28">
             
             </a>
         </div>
@@ -139,15 +139,15 @@
     <div class="card-content article ">
     <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
         
-    <i class="fas fa-angle-double-right"></i>Android布局 - View体系
+    <i class="fas fa-angle-double-right"></i>View体系 - 概述
     
     </h1>
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-            <time class="level-item has-text-grey" datetime="2020-06-21T10:14:12.928Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-06-21</time>
+            <time class="level-item has-text-grey" datetime="2020-06-21T10:59:28.102Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-06-21</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-21T10:52:54.769Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-21</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-21T11:43:51.601Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-21</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 minutes read (About 370 words)
+                    4 minutes read (About 665 words)
                 </span>
                 
                 
@@ -166,21 +166,29 @@
         </div>
         
         <div class="content">
-            <p>对于一个Android APP来说，其核心目的就是与用户进行一系列的交互操作，为用户展示内容，提供服务。而View体系则是上述Android核心目的的具体实现，它在Android中发挥中重要以及必要的作用。接下来的一系列文章中，将会对Android的View体系进行一次系统性的总结。</p>
+            <p>布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。</p>
+<ul>
+<li><strong>View</strong>，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。</li>
+<li><strong>ViewGroup</strong>，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布局结构的众多类型之一，例如LinearLayout、ConstraintLayout等。<strong>每个布局文件都必须只包含一个根元素，并且该元素必须是视图对象或ViewGroup对象。</strong></li>
+</ul>
 <a id="more"></a>
-<h1 id="View体系概述"><a href="#View体系概述" class="headerlink" title="View体系概述"></a><a href="">View体系概述</a></h1><p>本文将会对介绍View体系的两大构成：View和ViewGroup，并介绍两者的基本属性和基本使用方法。</p>
-<h1 id="View工作流程"><a href="#View工作流程" class="headerlink" title="View工作流程"></a><a href="">View工作流程</a></h1><p>本文将会详细介绍View的工作流程，包括View的工作入口、MeasureSpec、measure流程、layout流程和draw流程。</p>
-<h1 id="View的事件分发机制"><a href="#View的事件分发机制" class="headerlink" title="View的事件分发机制"></a><a href="">View的事件分发机制</a></h1><p>本文将会详细介绍View的事件分发机制。</p>
-<h1 id="布局类型"><a href="#布局类型" class="headerlink" title="布局类型"></a><a href="">布局类型</a></h1><p>本文将会详细介绍目前Android主要的几种布局方式，包括LinearLayout、RelativeLayout、ConstraintLayout、FrameLayout、AbsoluteLayout、MotionLayout、GridView、RecyclerView和CardView。</p>
-<h1 id="布局优化"><a href="#布局优化" class="headerlink" title="布局优化"></a><a href="">布局优化</a></h1><p>本文将会介绍三种主要的Android布局优化方法，包括使用include标签复用组件、merge标签减少层次和ViewStub标签进行延迟加载。</p>
-<h1 id="自定义View"><a href="#自定义View" class="headerlink" title="自定义View"></a><a href="">自定义View</a></h1><p>本文将会介绍自定义View和ViewGroup的方法与相关注意事项。</p>
-<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/View.png" alt="View体系"></p>
+<p><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/View%20%26%20ViewGroup.png" alt="View和ViewGroup定义布局结构"></p>
+<h1 id="声明布局的方法"><a href="#声明布局的方法" class="headerlink" title="声明布局的方法"></a>声明布局的方法</h1><p>可通过两种方式声明布局：</p>
+<ul>
+<li><p><strong>在 XML 中声明界面元素。</strong>Android提供对应View类及其子类的简明XML词汇，如用于微件和布局的词汇。也可使用Android Studio的Layout Editor，并采用拖放界面来构建XML布局。</p>
+</li>
+<li><p><strong>在运行时实例化布局元素。</strong>应用可通过编程创建View对象和ViewGroup对象（并操纵其属性）。通过在XML中声明界面，可以将应用外观代码与控制其行为的代码分开。使用XML文件还有助于为不同屏幕尺寸和屏幕方向提供不同布局（支持不同的屏幕尺寸中将深入阐述此内容）。</p>
+</li>
+</ul>
+<p>借助 Android 框架，您可以灵活选择使用两种或其中一种方法来构建应用界面。例如，您可以在 XML 中声明应用的默认布局，然后在运行时修改布局。</p>
+<h1 id="加载XML布局"><a href="#加载XML布局" class="headerlink" title="加载XML布局"></a>加载XML布局</h1><p>当编译应用时，系统会将每个XML布局文件编译成View资源。您应在<figure class="highlight plain hljs"><figcaption><span>```R.layout.layout_file_name```形式向应用代码传递布局资源的引用，您即可执行此操作。例如，如果您的XML布局保存为main_layout.xml，则您应通过如下方式为Activity加载布局资源：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```java</span><br><span class="line">public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.main_layout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启动Activity时，Android框架会调用Activity中的<code>onCreate()</code>回调方法（请参阅 Activity 文档中有关生命周期的阐述）。</p>
 
         </div>
         
             <div class="card-image">
                 <span  class="image is-7by1">
-                <img class="thumbnail" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png" alt="Android布局 - View体系">
+                <img class="thumbnail" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png" alt="View体系 - 概述">
                 </span>
             </div>
         
@@ -212,17 +220,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/06/21/View体系 - 概述/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">View体系 - 概述</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/15/SSH 免密登录腾讯云 Ubuntu 服务器/">
-                <span class="level-item">SSH 免密 root 登录腾讯云 Ubuntu 服务器</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/06/21/Android布局 - View体系/">
+                <span class="level-item">Android布局 - View体系</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -248,29 +249,13 @@
                 Catálogo
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#View体系概述">
+        <a class="is-flex" href="#声明布局的方法">
         <span class="has-mr-6">1</span>
-        <span>View体系概述</span>
+        <span>声明布局的方法</span>
         </a></li><li>
-        <a class="is-flex" href="#View工作流程">
+        <a class="is-flex" href="#加载XML布局">
         <span class="has-mr-6">2</span>
-        <span>View工作流程</span>
-        </a></li><li>
-        <a class="is-flex" href="#View的事件分发机制">
-        <span class="has-mr-6">3</span>
-        <span>View的事件分发机制</span>
-        </a></li><li>
-        <a class="is-flex" href="#布局类型">
-        <span class="has-mr-6">4</span>
-        <span>布局类型</span>
-        </a></li><li>
-        <a class="is-flex" href="#布局优化">
-        <span class="has-mr-6">5</span>
-        <span>布局优化</span>
-        </a></li><li>
-        <a class="is-flex" href="#自定义View">
-        <span class="has-mr-6">6</span>
-        <span>自定义View</span>
+        <span>加载XML布局</span>
         </a></li></ul>
         </div>
     </div>
@@ -296,7 +281,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Android布局 - View体系" height="28">
+                    <img src="/images/logo.svg" alt="View体系 - 概述" height="28">
                 
                 </a>
                 <p class="is-size-7">
