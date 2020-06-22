@@ -19,7 +19,7 @@
 <meta property="og:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2020-06-21T11:43:51.601Z">
+<meta property="og:updated_time" content="2020-06-22T11:23:48.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View体系 - 概述">
 <meta name="twitter:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
@@ -117,7 +117,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2020-06-21T10:59:28.102Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-06-21</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-21T11:43:51.601Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-21</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-22T11:23:48.927Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-22</time>
             
                 
                 <div class="level-item">
@@ -158,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 665 words)
+                    25 minutes read (About 3763 words)
                 </span>
                 
                 
@@ -181,8 +181,60 @@
 </li>
 </ul>
 <p>借助 Android 框架，您可以灵活选择使用两种或其中一种方法来构建应用界面。例如，您可以在 XML 中声明应用的默认布局，然后在运行时修改布局。</p>
-<h1 id="加载XML布局"><a href="#加载XML布局" class="headerlink" title="加载XML布局"></a>加载XML布局</h1><p>当编译应用时，系统会将每个XML布局文件编译成View资源。您应在<figure class="highlight plain hljs"><figcaption><span>```R.layout.layout_file_name```形式向应用代码传递布局资源的引用，您即可执行此操作。例如，如果您的XML布局保存为main_layout.xml，则您应通过如下方式为Activity加载布局资源：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```java</span><br><span class="line">public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.main_layout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>启动Activity时，Android框架会调用Activity中的<code>onCreate()</code>回调方法（请参阅 Activity 文档中有关生命周期的阐述）。</p>
+<h1 id="加载XML布局"><a href="#加载XML布局" class="headerlink" title="加载XML布局"></a>加载XML布局</h1><p>当编译应用时，系统会将每个XML布局文件编译成View资源。您应在<code>Activity.onCreate()</code>回调实现内加载应用代码中的布局资源。通过调用<code>setContentView()</code>，并以<code>R.layout.layout_file_name</code>形式向应用代码传递布局资源的引用，您即可执行此操作。例如，如果您的XML布局保存为<code>main_layout.xml</code>，则您应通过如下方式为Activity加载布局资源：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.main_layout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启动Activity时，Android框架会调用Activity中的<code>onCreate()</code>回调方法（请参阅<a href="http://www.leeyatsan.cn/2019/12/14/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%20-%20%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%20-%20Activity/" target="_blank" rel="noopener">Activity文档</a>中有关生命周期的阐述）。</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><h2 id="ID"><a href="#ID" class="headerlink" title="ID"></a>ID</h2><p>任何View对象均可拥有与之关联的<strong>整型ID</strong>，用于在结构树中对 View 对象进行唯一标识。编译应用后，系统会以整型形式引用此ID，但<strong>在布局XML文件中，系统通常会以字符串的形式在id属性中指定该ID</strong>。这是所有View对象共有的XML属性（由View类定义），并且您会经常使用该属性。XML 标记内部的ID语法是：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:id=<span class="hljs-string">"@+id/my_button"</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>“<code>@</code>“符号指示XML解析器应解析并展开ID字符串的其余部分，并将其标识为ID资源。</li>
+<li>“<code>+</code>“表示这是一个新的资源名称，必须创建该名称并将其添加到我们的资源（在<code>R.java</code>文件中）内。Android框架还提供许多其他ID资源。<strong>引用Android资源ID时，不需要”<code>+</code>“，但必须添加android软件包命名空间</strong>。添加android软件包命名空间后，我们现在将从<code>android.R</code>资源类而非本地资源类引用ID，具体如下所示：</li>
+</ul>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:id=<span class="hljs-string">"@android:id/empty"</span></span><br></pre></td></tr></table></figure>
+<h2 id="布局参数"><a href="#布局参数" class="headerlink" title="布局参数"></a>布局参数</h2><p>名为<code>layout_XXX</code>的XML布局属性可以为视图定义适合其所在ViewGroup的布局参数。每个ViewGroup类都会实现一个扩展<code>ViewGroup.LayoutParams</code>的嵌套类。此子类包含的属性类型会根据需要为视图组的每个子视图定义尺寸和位置。如图所示，父视图组会为每个子视图（包括子视图组）定义布局参数。<br><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/layoutparams.png" alt="以可视化方式表示的视图层次结构，其中包含与每个视图关联的布局参数"><br>请注意，每个LayoutParams子类都有自己的值设置语法。每个子元素都必须定义适合其父元素的LayoutParams，但父元素也可为其子元素定义不同的LayoutParams。</p>
+<p>所有视图组均包含宽度和高度（<code>layout_width</code>和<code>layout_height</code>），并且每个视图都必须定义它们。许多LayoutParams还包括可选的外边距和边框。您可以指定具有确切尺寸的宽度和高度，但您多半不想经常这样做。更常见的情况是，您会使用以下某种常量来设置宽度或高度：</p>
+<ul>
+<li><code>wrap_content</code>指示您的视图将其大小调整为内容所需的尺寸。</li>
+<li><code>match_parent</code>指示您的视图尽可能采用其父视图组所允许的最大尺寸。</li>
+</ul>
+<p>一般而言，<strong>建议不要使用绝对单位（如像素px）来指定布局宽度和高度</strong>。更好的方法是<strong>使用相对测量单位（如与密度无关的像素单位 (dp)、<code>wrap_content</code>或<code>match_parent</code>）</strong>，因为其有助于确保您的应用在各类尺寸的设备屏幕上正确显示。可用资源文档中定义了可接受的测量单位类型。</p>
+<h1 id="尺寸与边距"><a href="#尺寸与边距" class="headerlink" title="尺寸与边距"></a>尺寸与边距</h1><p>Android的坐标系是以左上角为起点的坐标系。<br><img src="![](https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/Android%20Coordinate.png" alt="Android 坐标系"><br>)</p>
+<h2 id="尺寸"><a href="#尺寸" class="headerlink" title="尺寸"></a>尺寸</h2><p>视图View尺寸通过宽度和高度表示。实际上，视图拥有两对宽度和高度值。</p>
+<h3 id="测量宽度-amp-测量高度"><a href="#测量宽度-amp-测量高度" class="headerlink" title="测量宽度 &amp; 测量高度"></a>测量宽度 &amp; 测量高度</h3><p><strong>测量宽度</strong>和<strong>测量高度</strong>定义视图希望在其父项内具有的大小，应用在绘制视图的<a href="">measure阶段</a>。您可通过调用 <code>getMeasuredWidth()</code>和<code>getMeasuredHeight()</code>来获得这些测量尺寸，即View原始的大小，也就是这个View在XML文件中配置或者是代码中设置的大小。<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Like &#123;<span class="hljs-doctag">@link</span> #getMeasuredWidthAndState()&#125;, but only returns the</span></span><br><span class="line"><span class="hljs-comment">     * raw width component (that is the result is masked by</span></span><br><span class="line"><span class="hljs-comment">     * &#123;<span class="hljs-doctag">@link</span> #MEASURED_SIZE_MASK&#125;).</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> The raw measured width of this view.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMeasuredWidth</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> mMeasuredWidth &amp; MEASURED_SIZE_MASK;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>从源码上看，<code>getMeasuredWidth()</code>获取的是<code>mMeasuredWidth</code>的这个值。这个值是一个8位的十六进制的数字，高两位表示的是这个<a href="">measure阶段</a>的Mode的值，具体可以查看<a href="">MeasureSpec的原理</a>。这里<code>mMeasuredWidth &amp; MEASURED_SIZE_MASK</code>表示的是测量measure阶段结束之后，View真实的值。而且这个值会在调用了<code>setMeasuredDimensionRaw()</code>函数之后会被设置。所以<code>getMeasuredWidth()</code>的值是measure阶段结束之后得到的View的原始的值。</p>
+<h3 id="绘制-宽度-amp-绘制-高度"><a href="#绘制-宽度-amp-绘制-高度" class="headerlink" title="(绘制)宽度 &amp; (绘制)高度"></a>(绘制)宽度 &amp; (绘制)高度</h3><p><strong>绘制宽度</strong>和<strong>绘制高度</strong>（简称<strong>宽度</strong>和<strong>高度</strong>）定义在绘制视图的<a href="">layout阶段</a>后，视图在屏幕上的实际尺寸。这些值可以（但不必）与测量宽度和测量高度不同。您可通过调用<code>getWidth()</code>和<code>getHeight()</code>来获得宽度和高度。<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Return the width of the your view.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> The width of your view, in pixels.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@ViewDebug</span>.ExportedProperty(category = <span class="hljs-string">"layout"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getWidth</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> mRight - mLeft;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>从源码上看，<code>getWidth()</code>是根据<code>mRight</code>和<code>mLeft</code>之间的差值计算出来的，需要在布局之后才能确定它们的坐标，也就是说布局后在<code>onLayout()</code>方法里才能调用getWidth()来获取。因此，getWidth()获取的宽度是在View设定好布局后整个View的宽度。</p>
+<h3 id="如何在onCreate中拿到View的宽度和高度？"><a href="#如何在onCreate中拿到View的宽度和高度？" class="headerlink" title="如何在onCreate中拿到View的宽度和高度？"></a>如何在onCreate中拿到View的宽度和高度？</h3><p>在onCreate()中获取View的高宽有三种方法：</p>
+<h4 id="View-post-runnable"><a href="#View-post-runnable" class="headerlink" title="View.post(runnable)"></a>View.post(runnable)</h4><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">view.post(<span class="hljs-keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="hljs-meta">@Override</span></span><br><span class="line">            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">                <span class="hljs-keyword">int</span> width = view.getWidth();</span><br><span class="line">                <span class="hljs-keyword">int</span> measuredWidth = view.getMeasuredWidth();</span><br><span class="line">                Log.i(TAG, <span class="hljs-string">"width: "</span> + width);</span><br><span class="line">                Log.i(TAG, <span class="hljs-string">"measuredWidth: "</span> + measuredWidth);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>利用Handler通信机制，发送一个Runnable到MessageQueue中，当View布局处理完成时，自动发送消息，通知UI进程。借此机制，巧妙获取View的高宽属性，代码简洁，相比ViewTreeObserver监听处理，还不需要手动移除观察者监听事件。</p>
+<h4 id="ViewTreeObserver-addOnGlobalLayoutListener"><a href="#ViewTreeObserver-addOnGlobalLayoutListener" class="headerlink" title="ViewTreeObserver.addOnGlobalLayoutListener()"></a>ViewTreeObserver.addOnGlobalLayoutListener()</h4><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ViewTreeObserver vto = view.getViewTreeObserver();</span><br><span class="line">        vto.addOnGlobalLayoutListener(<span class="hljs-keyword">new</span> OnGlobalLayoutListener() &#123;</span><br><span class="line">            <span class="hljs-meta">@Override</span></span><br><span class="line">            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onGlobalLayout</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">                view.getViewTreeObserver().removeGlobalOnLayoutListener(<span class="hljs-keyword">this</span>);</span><br><span class="line">                Log.i(TAG, <span class="hljs-string">"width: "</span> + view.getWidth());</span><br><span class="line">                Log.i(TAG, <span class="hljs-string">"height: "</span> + view.getHeight());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>监听View的<code>onLayout()</code>绘制过程，一旦layout触发变化，立即回调<code>onLayoutChange()</code>方法。<br>注意，使用完也要主动调用<code>removeOnGlobalListener()</code>方法移除监听事件。避免后续每一次发生全局View变化均触发该事件，影响性能。</p>
+<h4 id="View-measure-int-widthMeasureSpec-int-heightMeasureSpec"><a href="#View-measure-int-widthMeasureSpec-int-heightMeasureSpec" class="headerlink" title="View.measure(int widthMeasureSpec, int heightMeasureSpec)"></a>View.measure(int widthMeasureSpec, int heightMeasureSpec)</h4><p>除了在<code>onCreate()</code>中获得View的高宽，还可以在Activity的<code>onWindowFocusChanged()</code>方法中获得高宽。</p>
+<h2 id="内边距"><a href="#内边距" class="headerlink" title="内边距"></a>内边距</h2><p>如要<strong>测量尺寸</strong>，视图需将其内边距考虑在内。内边距以视图左侧、顶部、右侧和底部各部分的像素数表示。内边距可用于以特定数量的像素弥补视图内容。例如，若左侧内边距为2，则会将视图内容从左边缘向右推 2个像素。您可以使用<code>setPadding(int, int, int, int)</code>方法设置内边距，并通过调用<code>getPaddingLeft()</code>、<code>getPaddingTop()</code>、<code>getPaddingRight()</code> 和<code>getPaddingBottom()</code>查询内边距。</p>
+<h2 id="外边距"><a href="#外边距" class="headerlink" title="外边距"></a>外边距</h2><p>尽管视图View可以定义内边距，但<strong>其并不提供对外边距的任何支持</strong>。不过，布局ViewGroup可以提供此类支持。</p>
+<h1 id="Scrolling"><a href="#Scrolling" class="headerlink" title="Scrolling"></a>Scrolling</h1><p>视图View本身提供了两个滑动方法：</p>
+<ul>
+<li><code>scrollTo(int, int)</code> 滑动到指定坐标位置</li>
+<li><code>scrollBy(int, int)</code> X、Y轴分别位移指定像素(dp)</li>
+</ul>
+<p>上述两个方法移动的是View的内容，如果在ViewGroup中使用，则移动的是其所有子View。</p>
+<p>值得注意的是，如果要使用上述两个方法<strong>实现移动效果时，需要使用负值</strong>（即向右下移动为负，向左上为正，注意在Android坐标轴中，右下为正方向）。我们可以将屏幕比作放大境，而要移动的报纸比作底下的报纸，要实现固定放大镜而底下的文字内容右/下移，则需要将报纸向左/上移。</p>
+<p>但上述方法都是在一瞬间完成的，因此对用户体验不太友好。为了实现具有过渡效果的位移，可以使用Scroller。<strong>Scroller本身不能实现View的滑动，它需要与View的<code>computeScroll()</code>方法配合才能实现View的弹性滑动效果。</strong></p>
+<p>这里实现CustomView的向右平滑下锅。首先要初始化Scroller：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomView</span><span class="hljs-params">(Context context, AttributeSet attrs)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">super</span>(context, attrs);</span><br><span class="line">    mScroller = <span class="hljs-keyword">new</span> Scroller(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后要重写<code>computeScroll()</code>方法，系统会在绘制View的<a href="">draw()阶段</a>调用该方法。在该方法中，我们调用父类的<code>scrollTo()</code>方法并通过Scroller来不断获得当前的滚动值，每滑动一小段距离，就调用’invalidate()’方法进行重绘，每一次重绘都会经历一次上述的<code>draw()</code>阶段，就会循环触发<code>computeScroll()</code>方法，直至移动完成，从而实现平滑移动的效果。<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@override</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">computeScroll</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">super</span>.computeScroll();</span><br><span class="line">    <span class="hljs-keyword">if</span>(mScroller.computeScrollOffset())&#123;</span><br><span class="line">        ((View)getParent()).scrollTo(mScroller.getCurrX(), mScroller.getCurrY());</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后，我们在CustomView中写一个平滑的方法<code>smoothScrollTo()</code>，调用Scroller的<code>startScroll()</code>方法，在2000ms内沿X轴平移delta像素：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">smoothScrollTo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> destX, <span class="hljs-keyword">int</span> destY)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> scrollX = getScrollX();</span><br><span class="line">    <span class="hljs-keyword">int</span> delta = destX - scrollX;</span><br><span class="line">    mScroller.startScroll(scrollX, <span class="hljs-number">0</span>, delta, <span class="hljs-number">0</span>, <span class="hljs-number">2000</span>);</span><br><span class="line">    invalidate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后，我们在活动中调用<code>smoothScrollTo()</code>使得CustomView沿着X轴向右平移400像素：<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mCustomView.smoothScrollTo(-<span class="hljs-number">400</span>, <span class="hljs-number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="触摸模式"><a href="#触摸模式" class="headerlink" title="触摸模式"></a>触摸模式</h1><p>当用户通过诸如D-pad（方向键）之类的方向键浏览用户界面时，有必要将焦点集中在诸如按钮之类的可操作项上，以便用户可以看到输入内容。但是，如果该设备具有触摸功能，并且用户通过触摸它开始与该界面进行交互，则不再需要始终突出显示或关注特定视图。这便引出了一种称为“触摸模式”的交互模式。</p>
+<p>对于具有触摸功能的设备，一旦用户触摸屏幕，该设备将进入触摸模式。从现在开始，只有<code>isFocusableInTouchMode()</code>为true的视图才是可获得焦点的，例如文本编辑小部件。其他可触摸的视图（例如按钮）在触摸时将不会获得焦点；他们只会触发点击监听器。</p>
+<p>每当用户按下方向键（例如D-pad方向）时，视图设备都会退出触摸模式，并找到获得焦点的视图，以便用户可以继续与用户界面进行交互而无需再次触摸屏幕。</p>
+<p>触摸模式状态在Activity中保持不变。 调用<code>isInTouchMode()</code>以查看设备当前是否处于触摸模式。</p>
+<h1 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h1><p>有时，应用程序必须能够在用户完全了解和同意的情况下验证是否正在执行某项操作，例如授予许可请求，进行购买或点击广告。不幸的是，恶意应用程序可能会通过隐藏视图的预期目的来欺骗用户，使其无意识地执行这些操作。作为补救措施，Android框架提供了一种触摸过滤机制，可用于提高提供对敏感功能的访问的视图的安全性。</p>
+<p>要启用触摸过滤，请调用<code>setFilterTouchesWhenObscured(boolean)</code>或将<code>android:filterTouchesWhenObscured</code>布局属性设置为true。启用后，只要视图的窗口被另一个可见窗口遮盖，框架将丢弃接收到的触摸。结果，只要在视图窗口上方出现气泡提示框、对话框或其他窗口，该视图就不会受到触摸。</p>
+<p>为了更精细地控制安全性，请考虑重写<code>onFilterTouchEventForSecurity(android.view.MotionEvent)</code>方法以实现自己的安全性策略。 </p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ul>
+<li><a href="https://developer.android.com/guide/topics/ui/declaring-layout" target="_blank" rel="noopener">Android官方文档-布局</a></li>
+<li><a href="https://developer.android.com/reference/android/view/View" target="_blank" rel="noopener">Android官方文档-View</a></li>
+<li><a href="https://www.jianshu.com/p/24d40443e7be" target="_blank" rel="noopener">getMeasuredWidth和getWidth的区别</a></li>
+<li>Android进阶之光-刘望舒-第3章：View体系和自定义View</li>
+</ul>
 
         </div>
         
@@ -246,7 +298,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#声明布局的方法">
@@ -256,6 +308,62 @@
         <a class="is-flex" href="#加载XML布局">
         <span class="has-mr-6">2</span>
         <span>加载XML布局</span>
+        </a></li><li>
+        <a class="is-flex" href="#属性">
+        <span class="has-mr-6">3</span>
+        <span>属性</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#ID">
+        <span class="has-mr-6">3.1</span>
+        <span>ID</span>
+        </a></li><li>
+        <a class="is-flex" href="#布局参数">
+        <span class="has-mr-6">3.2</span>
+        <span>布局参数</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#尺寸与边距">
+        <span class="has-mr-6">4</span>
+        <span>尺寸与边距</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#尺寸">
+        <span class="has-mr-6">4.1</span>
+        <span>尺寸</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#测量宽度-amp-测量高度">
+        <span class="has-mr-6">4.1.1</span>
+        <span>测量宽度 &amp; 测量高度</span>
+        </a></li><li>
+        <a class="is-flex" href="#绘制-宽度-amp-绘制-高度">
+        <span class="has-mr-6">4.1.2</span>
+        <span>(绘制)宽度 &amp; (绘制)高度</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何在onCreate中拿到View的宽度和高度？">
+        <span class="has-mr-6">4.1.3</span>
+        <span>如何在onCreate中拿到View的宽度和高度？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#内边距">
+        <span class="has-mr-6">4.2</span>
+        <span>内边距</span>
+        </a></li><li>
+        <a class="is-flex" href="#外边距">
+        <span class="has-mr-6">4.3</span>
+        <span>外边距</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Scrolling">
+        <span class="has-mr-6">5</span>
+        <span>Scrolling</span>
+        </a></li><li>
+        <a class="is-flex" href="#触摸模式">
+        <span class="has-mr-6">6</span>
+        <span>触摸模式</span>
+        </a></li><li>
+        <a class="is-flex" href="#安全">
+        <span class="has-mr-6">7</span>
+        <span>安全</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考文献">
+        <span class="has-mr-6">8</span>
+        <span>参考文献</span>
         </a></li></ul>
         </div>
     </div>
@@ -411,10 +519,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Articles',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Catégories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
