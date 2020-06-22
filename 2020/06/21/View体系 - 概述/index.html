@@ -19,7 +19,7 @@
 <meta property="og:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_symbol_green_2.max-1500x1500.png">
-<meta property="og:updated_time" content="2020-06-22T11:23:48.927Z">
+<meta property="og:updated_time" content="2020-06-22T11:27:29.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View体系 - 概述">
 <meta name="twitter:description" content="布局可定义应用中的界面结构（例如 Activity 的界面结构）。布局中的所有元素均使用View和ViewGroup对象的层次结构进行构建。  View，被称为“微件”，可以是众多子类之一，例如Button或TextView，通常绘制用户可查看并进行交互的内容。 ViewGroup，被称为“布局”，是不可见容器，用于定义View和其他View或其他ViewGroup对象的布局结构，可以是提供其他布">
@@ -147,7 +147,7 @@
             <div class="level-left">
             <time class="level-item has-text-grey" datetime="2020-06-21T10:59:28.102Z"><i class="far fa-calendar-alt">&nbsp;</i>2020-06-21</time>
             
-            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-22T11:23:48.927Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-22</time>
+            <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-06-22T11:27:29.670Z"><i class="far fa-calendar-check">&nbsp;</i>2020-06-22</time>
             
                 
                 <div class="level-item">
@@ -196,7 +196,7 @@
 <li><code>match_parent</code>指示您的视图尽可能采用其父视图组所允许的最大尺寸。</li>
 </ul>
 <p>一般而言，<strong>建议不要使用绝对单位（如像素px）来指定布局宽度和高度</strong>。更好的方法是<strong>使用相对测量单位（如与密度无关的像素单位 (dp)、<code>wrap_content</code>或<code>match_parent</code>）</strong>，因为其有助于确保您的应用在各类尺寸的设备屏幕上正确显示。可用资源文档中定义了可接受的测量单位类型。</p>
-<h1 id="尺寸与边距"><a href="#尺寸与边距" class="headerlink" title="尺寸与边距"></a>尺寸与边距</h1><p>Android的坐标系是以左上角为起点的坐标系。<br><img src="![](https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/Android%20Coordinate.png" alt="Android 坐标系"><br>)</p>
+<h1 id="尺寸与边距"><a href="#尺寸与边距" class="headerlink" title="尺寸与边距"></a>尺寸与边距</h1><p>Android的坐标系是以左上角为起点的坐标系。<br><img src="https://raw.githubusercontent.com/LeeYatSan/LeeYatSanFigureBed/master/blog/Android%20%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/Android%20Coordinate.png" alt="Android 坐标系"></p>
 <h2 id="尺寸"><a href="#尺寸" class="headerlink" title="尺寸"></a>尺寸</h2><p>视图View尺寸通过宽度和高度表示。实际上，视图拥有两对宽度和高度值。</p>
 <h3 id="测量宽度-amp-测量高度"><a href="#测量宽度-amp-测量高度" class="headerlink" title="测量宽度 &amp; 测量高度"></a>测量宽度 &amp; 测量高度</h3><p><strong>测量宽度</strong>和<strong>测量高度</strong>定义视图希望在其父项内具有的大小，应用在绘制视图的<a href="">measure阶段</a>。您可通过调用 <code>getMeasuredWidth()</code>和<code>getMeasuredHeight()</code>来获得这些测量尺寸，即View原始的大小，也就是这个View在XML文件中配置或者是代码中设置的大小。<br><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Like &#123;<span class="hljs-doctag">@link</span> #getMeasuredWidthAndState()&#125;, but only returns the</span></span><br><span class="line"><span class="hljs-comment">     * raw width component (that is the result is masked by</span></span><br><span class="line"><span class="hljs-comment">     * &#123;<span class="hljs-doctag">@link</span> #MEASURED_SIZE_MASK&#125;).</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> The raw measured width of this view.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMeasuredWidth</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> mMeasuredWidth &amp; MEASURED_SIZE_MASK;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 <p>从源码上看，<code>getMeasuredWidth()</code>获取的是<code>mMeasuredWidth</code>的这个值。这个值是一个8位的十六进制的数字，高两位表示的是这个<a href="">measure阶段</a>的Mode的值，具体可以查看<a href="">MeasureSpec的原理</a>。这里<code>mMeasuredWidth &amp; MEASURED_SIZE_MASK</code>表示的是测量measure阶段结束之后，View真实的值。而且这个值会在调用了<code>setMeasuredDimensionRaw()</code>函数之后会被设置。所以<code>getMeasuredWidth()</code>的值是measure阶段结束之后得到的View的原始的值。</p>
@@ -519,9 +519,9 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Articles',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Catégories',
+                CATEGORIES: 'Categories',
                 TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
